@@ -10,16 +10,16 @@ protocol NftDetailPresenter {
 // MARK: - State
 
 enum NftDetailState {
-    case initial, loading, failed(Error), data(Nft)
+    case initial, loading, failed(any Error), data(Nft)
 }
 
 final class NftDetailPresenterImpl: NftDetailPresenter {
 
     // MARK: - Properties
 
-    weak var view: NftDetailView?
+    weak var view: (any NftDetailView)?
     private let input: NftDetailInput
-    private let service: NftService
+    private let service: any NftService
     private var state = NftDetailState.initial {
         didSet {
             Task {
@@ -30,7 +30,7 @@ final class NftDetailPresenterImpl: NftDetailPresenter {
 
     // MARK: - Init
 
-    init(input: NftDetailInput, service: NftService) {
+    init(input: NftDetailInput, service: any NftService) {
         self.input = input
         self.service = service
     }
@@ -68,7 +68,7 @@ final class NftDetailPresenterImpl: NftDetailPresenter {
         }
     }
 
-    private func makeErrorModel(_ error: Error) -> ErrorModel {
+    private func makeErrorModel(_ error: any Error) -> ErrorModel {
         let message: String
         switch error {
             case is NetworkClientError:

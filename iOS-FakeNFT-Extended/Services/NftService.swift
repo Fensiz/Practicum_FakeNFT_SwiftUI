@@ -1,5 +1,6 @@
 import Foundation
 
+@MainActor
 protocol NftService {
     func loadNft(id: String) async throws -> Nft
 }
@@ -7,10 +8,10 @@ protocol NftService {
 @MainActor
 final class NftServiceImpl: NftService {
 
-    private let networkClient: NetworkClient
-    private let storage: NftStorage
+    private let networkClient: any NetworkClient
+    private let storage: any NftStorage
 
-    init(networkClient: NetworkClient, storage: NftStorage) {
+    init(networkClient: any NetworkClient, storage: any NftStorage) {
         self.storage = storage
         self.networkClient = networkClient
     }

@@ -1,6 +1,6 @@
 import UIKit
 
-extension UIFont {
+@MainActor extension UIFont {
     // Ниже приведены примеры шрифтов, настоящие шрифты надо взять из фигмы
 
     // Headline Fonts

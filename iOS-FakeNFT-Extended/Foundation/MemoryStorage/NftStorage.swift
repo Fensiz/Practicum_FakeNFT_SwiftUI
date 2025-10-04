@@ -1,6 +1,6 @@
 import Foundation
 
-protocol NftStorage: AnyObject {
+protocol NftStorage: Actor {
     func saveNft(_ nft: Nft) async
     func getNft(with id: String) async -> Nft?
 }

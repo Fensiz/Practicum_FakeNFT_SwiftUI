@@ -1,13 +1,13 @@
 import UIKit
 import Kingfisher
 
-protocol NftDetailView: AnyObject, ErrorView, LoadingView {
+@MainActor protocol NftDetailView: AnyObject, ErrorView, LoadingView {
     func displayCells(_ cellModels: [NftDetailCellModel])
 }
 
 final class NftDetailViewController: UIViewController {
 
-    private let presenter: NftDetailPresenter
+    private let presenter: any NftDetailPresenter
 
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -39,7 +39,7 @@ final class NftDetailViewController: UIViewController {
 
     // MARK: - Init
 
-    init(presenter: NftDetailPresenter) {
+    init(presenter: any NftDetailPresenter) {
         self.presenter = presenter
         super.init(nibName: nil, bundle: nil)
     }

@@ -6,7 +6,7 @@ struct ErrorModel {
     let action: () -> Void
 }
 
-protocol ErrorView {
+@MainActor protocol ErrorView {
     func showError(_ model: ErrorModel)
 }
 

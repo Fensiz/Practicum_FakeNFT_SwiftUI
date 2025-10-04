@@ -98,6 +98,7 @@
 		ABC5E1E52C320585002B4068 /* LinePageControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinePageControl.swift; sourceTree = "<group>"; };
 		ABC5E1E72C320610002B4068 /* NftDetailBridgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NftDetailBridgeView.swift; sourceTree = "<group>"; };
 		ABC5E1EA2C32084F002B4068 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		F4A8BCEC2E913C6D00A01863 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -150,6 +151,7 @@
 		ABC5E16A2C31F5AF002B4068 /* iOS-FakeNFT-Extended */ = {
 			isa = PBXGroup;
 			children = (
+				F4A8BCEC2E913C6D00A01863 /* Info.plist */,
 				ABC5E16B2C31F5AF002B4068 /* iOS_FakeNFT_ExtendedApp.swift */,
 				ABC5E1E92C32084F002B4068 /* Localizable.strings */,
 				ABC5E1952C31F64A002B4068 /* DesignSystem */,
@@ -373,7 +375,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1530;
-				LastUpgradeCheck = 1530;
+				LastUpgradeCheck = 2600;
 				TargetAttributes = {
 					ABC5E1672C31F5AF002B4068 = {
 						CreatedOnToolsVersion = 15.3;
@@ -576,8 +578,11 @@
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_UPCOMING_FEATURE_EXISTENTIAL_ANY = YES;
+				SWIFT_VERSION = 6.0;
 			};
 			name = Debug;
 		};
@@ -632,7 +637,10 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_UPCOMING_FEATURE_EXISTENTIAL_ANY = YES;
+				SWIFT_VERSION = 6.0;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -647,6 +655,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"iOS-FakeNFT-Extended/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "iOS-FakeNFT-Extended/Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -660,7 +669,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "Yandex-Practicum.iOS-FakeNFT-Extended";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -675,6 +684,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"iOS-FakeNFT-Extended/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "iOS-FakeNFT-Extended/Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -688,7 +698,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "Yandex-Practicum.iOS-FakeNFT-Extended";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -696,7 +706,6 @@
 		ABC5E1902C31F5B0002B4068 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -706,7 +715,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "Yandex-Practicum.iOS-FakeNFT-ExtendedTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/iOS-FakeNFT-Extended.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/iOS-FakeNFT-Extended";
 			};
@@ -715,7 +724,6 @@
 		ABC5E1912C31F5B0002B4068 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -725,7 +733,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "Yandex-Practicum.iOS-FakeNFT-ExtendedTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/iOS-FakeNFT-Extended.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/iOS-FakeNFT-Extended";
 			};
@@ -734,7 +742,6 @@
 		ABC5E1932C31F5B0002B4068 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -742,7 +749,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "Yandex-Practicum.iOS-FakeNFT-ExtendedUITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = "iOS-FakeNFT-Extended";
 			};
@@ -751,7 +758,6 @@
 		ABC5E1942C31F5B0002B4068 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -759,7 +765,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "Yandex-Practicum.iOS-FakeNFT-ExtendedUITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = "iOS-FakeNFT-Extended";
 			};

@@ -2,15 +2,15 @@ import Foundation
 
 enum NetworkClientError: Error {
     case httpStatusCode(Int)
-    case urlRequestError(Error)
+    case urlRequestError(any Error)
     case urlSessionError
     case parsingError
     case incorrectRequest(String)
 }
 
-protocol NetworkClient {
-    func send(request: NetworkRequest) async throws -> Data
-    func send<T: Decodable>(request: NetworkRequest) async throws -> T
+protocol NetworkClient: Actor {
+    func send(request: any NetworkRequest) async throws -> Data
+    func send<T: Decodable>(request: any NetworkRequest) async throws -> T
 }
 
 actor DefaultNetworkClient: NetworkClient {
@@ -28,7 +28,7 @@ actor DefaultNetworkClient: NetworkClient {
         self.encoder = encoder
     }
 
-    func send(request: NetworkRequest) async throws -> Data {
+    func send(request: any NetworkRequest) async throws -> Data {
         let urlRequest = try create(request: request)
         let (data, response) = try await session.data(for: urlRequest)
         guard let response = response as? HTTPURLResponse else {
@@ -40,14 +40,14 @@ actor DefaultNetworkClient: NetworkClient {
         return data
     }
 
-    func send<T: Decodable>(request: NetworkRequest) async throws -> T {
+    func send<T: Decodable>(request: any NetworkRequest) async throws -> T {
         let data = try await send(request: request)
         return try await parse(data: data)
     }
 
     // MARK: - Private
 
-    private func create(request: NetworkRequest) throws -> URLRequest {
+    private func create(request: any NetworkRequest) throws -> URLRequest {
         guard let endpoint = request.endpoint else {
             throw NetworkClientError.incorrectRequest("Empty endpoint")
         }
