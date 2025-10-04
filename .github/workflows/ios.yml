@@ -1,0 +1,15 @@
+name: iOS Build
+
+on:
+  pull_request:
+    branches: [ develop, main ]
+
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Xcode
+        run: sudo xcode-select -switch /Applications/Xcode_16.4.app
+      - name: Build
+        run: xcodebuild -scheme iOS-FakeNFT-Extended -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 16'
