@@ -7,7 +7,7 @@ struct ContentView: View {
 		TabBarView(
 			rootCoordinator: coordinator,
 			viewFactory: factory,
-			tabs: [.catalog]
+			tabs: [.catalog, .cart]
 		)
 	}
 }

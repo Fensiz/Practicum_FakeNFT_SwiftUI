@@ -22,12 +22,14 @@ final class ViewFactory {
 		switch screen {
 			case .dummy:
 				EmptyView()
-			case .payment:
+			case let .payment(coordinartor, action):
+				let service = MockPaymentServiceImpl()
+				let viewModel = PaymentViewModel(paymentService: service, onSuccess: action)
+				PaymentView(coordinator: coordinartor, viewModel: viewModel)
+			case .web(let url):
 				EmptyView()
-			case .web:
-				EmptyView()
-			case .successPayment:
-				EmptyView()
+			case .successPayment(let action):
+				SuccessPaymentScreen(action: action)
 		}
 	}
 
@@ -40,8 +42,14 @@ final class ViewFactory {
 		switch coverType {
 			case .dummy:
 				EmptyView()
-			case .deleteConfirmation:
-				EmptyView()
+			case let .deleteConfirmation(item, onDelete, onCancel):
+				DeleteConfirmationView(item: item) {
+					onDelete()
+					self.rootCoordinator.hideCover()
+				} cancelAction: {
+					onCancel()
+					self.rootCoordinator.hideCover()
+				}
 		}
 	}
 
@@ -51,7 +59,10 @@ final class ViewFactory {
 			case .catalog:
 				TestCatalogView()
 			case .cart:
-				EmptyView()
+				let cartService = MockCartServiceImpl()
+				let viewModel = CartViewModel(cartService: cartService)
+				let cartCoordinator = CartCoordinatorImpl(rootCoordinator: rootCoordinator)
+				CartView(viewModel: viewModel, coordinator: cartCoordinator)
 			case .profile:
 				EmptyView()
 			case .statistic:
