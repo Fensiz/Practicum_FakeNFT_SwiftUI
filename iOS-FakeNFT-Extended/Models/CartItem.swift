@@ -7,15 +7,19 @@
 
 import SwiftUI
 
-struct CartItem {
+struct CartItem: Identifiable, Equatable, Hashable {
+	let id: UUID = UUID()
 	let image: Image
 	let name: String
 	let rating: Int
 	let price: Double
-	let crncy: Currency
 
 	var priceText: String {
-		"\(String(format: "%.2f", price)) \(crncy.rawValue.uppercased())"
+		"\(String(format: "%.2f", price)) ETH"
 			.replacingOccurrences(of: ".", with: ",")
+	}
+	
+	func hash(into hasher: inout Hasher) {
+		hasher.combine(id)
 	}
 }

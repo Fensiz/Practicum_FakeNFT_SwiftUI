@@ -33,7 +33,7 @@ struct CartCell: View {
 						.lineLimit(1)
 				}
 			}
-			.frame(maxWidth: .infinity)
+			.frame(maxWidth: .infinity, alignment: .leading)
 			Button {
 				removeAction()
 			} label: {
@@ -48,7 +48,12 @@ struct CartCell: View {
 	LightDarkPreviewWrapper {
 		CartCell(
 			removeAction: { print("remove") },
-			cartItem: .init(image: Image("mock_1"), name: "Springfieldowquidwqhhudqwiuhdqwiuhdqiwuhdiwquhdiwq", rating: 4, price: 212324234234234234231.6789, crncy: .eth)
+			cartItem: .init(image: Image(.mock1), name: "Springfieldowquidwqhhudqwiuhdqwiuhdqiwuhdiwquhdiwq", rating: 4, price: 212324234234234234231.6789)
+		)
+		.border(.ypBlack)
+		CartCell(
+			removeAction: { print("remove") },
+			cartItem: .init(image: Image(.mock1), name: "Spring", rating: 4, price: 1.87)
 		)
 		.border(.ypBlack)
 	}

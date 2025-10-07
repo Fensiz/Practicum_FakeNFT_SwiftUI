@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct LightDarkPreviewWrapper<Content: View>: View {
+struct `LightDarkPreviewWrapper`<Content: View>: View {
 	@State private var isDarkMode = false
 	let content: () -> Content
 	init(@ViewBuilder content: @escaping () -> Content) {
@@ -21,7 +21,9 @@ struct LightDarkPreviewWrapper<Content: View>: View {
 				Toggle("Dark Mode", isOn: $isDarkMode)
 					.padding()
 			}
-			content()
+			VStack {
+				content()
+			}
 		}
 		.preferredColorScheme(isDarkMode ? .dark : .light)
 	}
