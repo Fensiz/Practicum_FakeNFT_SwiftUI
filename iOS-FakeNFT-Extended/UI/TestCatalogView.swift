@@ -16,7 +16,7 @@ struct TestCatalogView: View {
 			NftDetailBridgeView()
 		}
 	}
-	
+
 	func showNft() {
 		presentingNft = true
 	}

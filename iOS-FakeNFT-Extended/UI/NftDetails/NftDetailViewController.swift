@@ -105,9 +105,11 @@ extension NftDetailViewController: UICollectionViewDataSource {
 	func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
 		cellModels.count
 	}
-	
-	func collectionView(_ collectionView: UICollectionView,
-						cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+
+	func collectionView(
+		_ collectionView: UICollectionView,
+		cellForItemAt indexPath: IndexPath
+	) -> UICollectionViewCell {
 		let cell: NftImageCollectionViewCell = collectionView.dequeueReusableCell(indexPath: indexPath)
 
 		let cellModel = cellModels[indexPath.row]
@@ -120,9 +122,11 @@ extension NftDetailViewController: UICollectionViewDataSource {
 // MARK: - UICollectionViewDelegateFlowLayout
 
 extension NftDetailViewController: UICollectionViewDelegateFlowLayout {
-	func collectionView(_ collectionView: UICollectionView,
-						layout collectionViewLayout: UICollectionViewLayout,
-						sizeForItemAt indexPath: IndexPath) -> CGSize {
+	func collectionView(
+		_ collectionView: UICollectionView,
+		layout collectionViewLayout: UICollectionViewLayout,
+		sizeForItemAt indexPath: IndexPath
+	) -> CGSize {
 		collectionView.bounds.size
 	}
 
