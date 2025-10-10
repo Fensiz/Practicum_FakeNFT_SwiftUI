@@ -2,6 +2,8 @@ import SwiftUI
 
 struct ContentView: View {
 	var body: some View {
-		TabBarView()
+		let coordinator = RootCoordinatorImpl()
+		let factory = ViewFactory(rootCoordinator: coordinator)
+		TabBarView(rootCoordinator: coordinator, viewFactory: factory)
 	}
 }
