@@ -15,6 +15,7 @@ struct ProfileEditView: View {
     var body: some View {
         VStack(spacing: 24) {
             ProfileImage(image: Image(.mockProfile), canEdit: true) {
+                // TODO: Edit Image action
                 print("Edit Image")
             }
             VStack(alignment: .leading, spacing: 8) {
@@ -30,8 +31,7 @@ struct ProfileEditView: View {
                     .applyTextInputStyle()
                     .scrollContentBackground(.hidden)
             }
-            .frame(maxHeight: 155)
-            
+            .frame(maxHeight: 155) /// Не знаю как тут сделать hagContent–поведение, помогите
             VStack(alignment: .leading, spacing: 8) {
                 Text("Сайт")
                     .font(Font(UIFont.headline3))
@@ -39,12 +39,30 @@ struct ProfileEditView: View {
                     .applyTextInputStyle()
                     .disabled(true)
                     .onTapGesture {
+                        // TODO: Alert site edit action
                         print("Edit Site")
                     }
             }
             Spacer()
         }
         .frame(maxWidth: .infinity)
+        .overlay(alignment: .bottom, content: {
+            // TODO: Show it when data was changed
+            Button(action: {
+                // TODO: Save action
+                print("Saved")
+            }) {
+                Text("Сохранить")
+                    .frame(maxWidth: .infinity)
+                    .font(Font(UIFont.bodyBold))
+                    .foregroundColor(.ypWhite)
+                    .padding(.vertical, 19)
+                    .padding(.horizontal, 8)
+                    .background(Color.ypBlack.cornerRadius(16))
+            }
+            .padding()
+            
+        })
         .padding(.horizontal)
         .background(Color.ypWhite)
     }
