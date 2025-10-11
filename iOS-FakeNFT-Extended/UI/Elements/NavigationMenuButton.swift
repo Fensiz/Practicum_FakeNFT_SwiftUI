@@ -8,7 +8,7 @@ import SwiftUI
 
 struct NavigationMenuButton: ToolbarContent {
 
-    let icon: String
+    let icon: ImageResource
     let defaultColor: Color = .ypBlack
 
     var action: () -> Void
@@ -27,12 +27,12 @@ struct NavigationMenuButton: ToolbarContent {
     NavigationStack {
         Text("Preview NavigationMenuButton")
             .toolbar {
-                NavigationMenuButton(icon: "sort") {
+                NavigationMenuButton(icon: .sort) {
                     print("Asset tapped")
                 }
             }
             .toolbar {
-                NavigationMenuButton(icon: "square_and_pencil") {
+                NavigationMenuButton(icon: .squareAndPencil) {
                     print("Asset tapped")
                 }
             }
