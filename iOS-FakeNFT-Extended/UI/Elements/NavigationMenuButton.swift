@@ -6,43 +6,36 @@
 //
 import SwiftUI
 
-struct NavigationMenuButton: View {
+struct NavigationMenuButton: ToolbarContent {
 
-    enum Constants {
-        static let defaultIconSize: CGFloat = 24
-        static let defaultButtonSize: CGFloat = 42
-        static let defaultColor: Color = .ypBlack
-    }
-
-    let icon: String
-    var color: Color = Constants.defaultColor
-    var iconSize: CGFloat = Constants.defaultIconSize
-    var buttonSize: CGFloat = Constants.defaultButtonSize
+    let icon: ImageResource
+    let defaultColor: Color = .ypBlack
 
     var action: () -> Void
 
-    var body: some View {
-        Button(action: action) {
-            Image(icon)
-                .resizable()
-                .scaledToFit()
-                .foregroundColor(color)
-                .frame(width: iconSize, height: iconSize)
+    var body: some ToolbarContent {
+        ToolbarItem(placement: .topBarTrailing) {
+            Button(action: action) {
+                Image(icon)
+                    .foregroundColor(defaultColor)
+            }
         }
-        .frame(width: buttonSize, height: buttonSize)
-        .contentShape(Rectangle())
     }
 }
 
 #Preview {
-    VStack(spacing: 20) {
-        NavigationMenuButton(icon: "text_left") {
-            print("Asset tapped")
-        }
-
-        NavigationMenuButton(icon: "square_and_pencil") {
-            print("Asset tapped")
-        }
+    NavigationStack {
+        Text("Preview NavigationMenuButton")
+            .toolbar {
+                NavigationMenuButton(icon: .sort) {
+                    print("Asset tapped")
+                }
+            }
+            .toolbar {
+                NavigationMenuButton(icon: .squareAndPencil) {
+                    print("Asset tapped")
+                }
+            }
     }
     .padding()
 }
