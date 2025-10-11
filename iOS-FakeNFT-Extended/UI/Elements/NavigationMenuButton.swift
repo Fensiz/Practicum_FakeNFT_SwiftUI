@@ -6,7 +6,7 @@
 //
 import SwiftUI
 
-struct NavigationMenuButton: View {
+struct NavigationMenuButton: ToolbarContent {
 
     enum Constants {
         static let defaultIconSize: CGFloat = 24
@@ -21,28 +21,34 @@ struct NavigationMenuButton: View {
 
     var action: () -> Void
 
-    var body: some View {
-        Button(action: action) {
-            Image(icon)
-                .resizable()
-                .scaledToFit()
-                .foregroundColor(color)
-                .frame(width: iconSize, height: iconSize)
+    var body: some ToolbarContent {
+        ToolbarItem(placement: .topBarTrailing) {
+            Button(action: action) {
+                Image(icon)
+                    .resizable()
+                    .scaledToFit()
+                    .foregroundColor(color)
+                    .frame(width: iconSize, height: iconSize)
+            }
+            .frame(width: buttonSize, height: buttonSize)
+            .contentShape(Rectangle())
         }
-        .frame(width: buttonSize, height: buttonSize)
-        .contentShape(Rectangle())
     }
 }
 
 #Preview {
-    VStack(spacing: 20) {
-        NavigationMenuButton(icon: "text_left") {
-            print("Asset tapped")
-        }
-
-        NavigationMenuButton(icon: "square_and_pencil") {
-            print("Asset tapped")
-        }
+    NavigationStack {
+        Text("Preview NavigationMenuButton")
+            .toolbar {
+                NavigationMenuButton(icon: "text_left") {
+                    print("Asset tapped")
+                }
+            }
+            .toolbar {
+                NavigationMenuButton(icon: "square_and_pencil") {
+                    print("Asset tapped")
+                }
+            }
     }
     .padding()
 }
