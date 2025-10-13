@@ -1,5 +1,5 @@
 //
-//  ProfieInfo.swift
+//  ProfileInfo.swift
 //  iOS-FakeNFT-Extended
 //
 //  Created by Hajime4life on 12.10.2025.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ProfieInfo: View {
+struct ProfileInfo: View {
     let user: User
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
@@ -26,7 +26,7 @@ struct ProfieInfo: View {
 
 #Preview {
     LightDarkPreviewWrapper {
-        ProfieInfo(user: User(
+        ProfileInfo(user: User(
             id: "sdfsd",
             name: "Joaquin Phoenix",
             avatar: URL(string: "https://i.ibb.co/fVLFtWrM/c1f8f42c5f5bd684e27d93131dc6ffd4696cdfd3.jpg") ?? nil,
