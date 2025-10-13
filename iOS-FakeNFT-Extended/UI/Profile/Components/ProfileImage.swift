@@ -65,7 +65,7 @@ struct ProfileImage: View {
     Group {
         VStack {
             ProfileImage(
-                imageUrl: User.mock.avatar,
+                imageUrl: URL(string: "https://i.ibb.co/fVLFtWrM/c1f8f42c5f5bd684e27d93131dc6ffd4696cdfd3.jpg") ?? nil,
                 canEdit: true
             ) {
                 print("test")
@@ -88,7 +88,7 @@ struct ProfileImage: View {
         .colorScheme(.dark)
         VStack {
             ProfileImage(
-                imageUrl: User.mock.avatar,
+                imageUrl: URL(string: "https://i.ibb.co/fVLFtWrM/c1f8f42c5f5bd684e27d93131dc6ffd4696cdfd3.jpg") ?? nil,
                 canEdit: true
             ) {
                 print("test")
