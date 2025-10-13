@@ -10,21 +10,20 @@ import SwiftUI
 struct ProfileView: View {
     var body: some View {
         VStack {
-            HStack(spacing: 16) {
-                ProfileImage(image: Image(.mockProfile))
-                Text("Joaquin Phoenix")
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .font(Font(UIFont.headline3))
-                    .font(Font(UIFont.bodyRegular))
-            }
-            Group {
-                Text("Дизайнер из Казани, люблю цифровое искусство и бейглы. В моей коллекции уже 100+ NFT, и еще больше — на моём сайте. Открыт к коллаборациям.")
-                    .font(Font(UIFont.bodyRegular))
-                    .padding(.top, 20)
-                Text("Joaquin Phoenix.com")
-                    .foregroundColor(.ypUBlue)
-                    .padding(.top, 8)
-            }
+            ProfieInfo(
+                user:
+                    User(
+                        id: "sdsddadasf",
+                        name: "Joaquin Phoenix",
+                        avatar: URL(string: "https://i.ibb.co/fVLFtWrM/c1f8f42c5f5bd684e27d93131dc6ffd4696cdfd3.jpg") ?? nil,
+                        nfts: [],
+                        rating: "4.6",
+                        description: "Дизайнер из Казани, люблю цифровое искусство и бейглы. В моей коллекции уже 100+ NFT, и еще больше — на моём сайте. Открыт к коллаборациям."
+                    )
+            )
+            Text("Joaquin Phoenix.com")
+                .foregroundColor(.ypUBlue)
+                .padding(.top, 8)
             .frame(maxWidth: .infinity, alignment: .leading)
             navButton(title: "Мои NFT", count: 112)
                 .padding(.top, 40)

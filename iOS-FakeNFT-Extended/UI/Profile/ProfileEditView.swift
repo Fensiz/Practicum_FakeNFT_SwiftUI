@@ -10,12 +10,15 @@ import SwiftUI
 struct ProfileEditView: View {
     @State private var name = "Joaquin Phoenix"
     @State private var description = "Дизайнер из Казани, люблю цифровое искусство и бейглы. В моей коллекции уже 100+ NFT, и еще больше — на моём сайте. Открыт к коллаборациям."
-    @State private var site = "https://hello.com"
+    @State private var siteUrlString: String = "https://hello.com"
     @State private var showContextMednu: Bool = false
-
+    @State private var showSiteEditAlert: Bool = false
+    @State private var avatarUrlString: String = "https://i.ibb.co/fVLFtWrM/c1f8f42c5f5bd684e27d93131dc6ffd4696cdfd3.jpg"
+    @State private var newAvatarUrlString: String = ""
+    
     var body: some View {
         VStack(spacing: 24) {
-            ProfileImage(image: Image(.mockProfile), canEdit: true) {
+            ProfileImage(imageUrl: URL(string: avatarUrlString) ?? nil, canEdit: true) {
                 showContextMednu = true
             }
             .actionSheet(isPresented: $showContextMednu) {
@@ -23,17 +26,27 @@ struct ProfileEditView: View {
                     title: Text("Фото профиля"),
                     buttons: [
                         .default(Text("Изменить фото")) {
-                            // TODO: Edit Picture action here
-                            print("Edit Picture")
+                            showSiteEditAlert = true
                         },
                         .destructive(Text("Удалить фото")) {
-                            // TODO: Delete Picture action here
-                            print("Delete Picture")
+                            avatarUrlString = ""
                         },
-                        .cancel(Text("Отмена"))]
+                        .cancel(Text("Отмена"))
+                    ]
                 )
             }
-
+            .alert("Ссылка на фото", isPresented: $showSiteEditAlert) {
+                TextField(avatarUrlString, text: $newAvatarUrlString)
+                    .keyboardType(.URL)
+                Button("Отмена") {
+                    showSiteEditAlert = false
+                    newAvatarUrlString = ""
+                }
+                Button("Сохранить") {
+                    avatarUrlString = newAvatarUrlString
+                }
+            }
+            
             VStack(alignment: .leading, spacing: 8) {
                 Text("Имя")
                     .font(Font(UIFont.headline3))
@@ -51,7 +64,7 @@ struct ProfileEditView: View {
             VStack(alignment: .leading, spacing: 8) {
                 Text("Сайт")
                     .font(Font(UIFont.headline3))
-                TextField("", text: $site)
+                TextField("", text: $siteUrlString)
                     .applyTextInputStyle()
             }
             Spacer()

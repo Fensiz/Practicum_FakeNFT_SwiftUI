@@ -8,36 +8,106 @@
 import SwiftUI
 
 struct ProfileImage: View {
-    let image: Image
+    @Environment(\.colorScheme) private var coloScheme
+    var imageUrl: URL?
     var canEdit: Bool
     let onTap: () -> Void
-    
-    init(image: Image, canEdit: Bool = false, onTap: @escaping () -> Void = {}) {
-        self.image = image
+    init(
+        imageUrl: URL? = nil,
+        canEdit: Bool = false,
+        onTap: @escaping () -> Void = {}
+    ) {
+        self.imageUrl = imageUrl
         self.canEdit = canEdit
         self.onTap = onTap
     }
-    
     var body: some View {
-        image
-            .resizable()
-            .aspectRatio(contentMode: .fit)
-            .frame(width: 70)
-            .clipShape(Circle())
-            .overlay {
-                Circle()
-                    .frame(width: 23)
-                    .foregroundColor(.ypLightGrey)
-                    .overlay {
-                        Image(.camera)
-                    }
-                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomTrailing)
-                    .opacity(canEdit ? 1 : 0)
-            }
-            .onTapGesture {
-                if canEdit {
-                    onTap()
+        Group {
+            if let imageUrl {
+                AsyncImage(url: imageUrl) { image in
+                    image
+                        .resizable()
+                        .scaledToFill()
+                } placeholder: {
+                    Circle()
+                        .foregroundColor(coloScheme == .dark ? .ypUBlack : .ypUWhite)
+                        .overlay {
+                            ProgressView()
+                        }
+                        .frame(width: 70, height: 70)
+                        .clipShape(Circle())
                 }
+            } else {
+                Image("emtpy_avatar")
             }
+        }
+        .frame(width: 70, height: 70)
+        .clipShape(Circle())
+        .overlay {
+            Circle()
+                .frame(width: 24)
+                .foregroundColor(.ypLightGrey)
+                .overlay {
+                    Image(.camera)
+                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomTrailing)
+                .opacity(canEdit ? 1 : 0)
+                .onTapGesture {
+                    if canEdit {
+                        onTap()
+                    }
+                }
+        }
+    }
+}
+
+#Preview {
+    Group {
+        VStack {
+            ProfileImage(
+                imageUrl: URL(string: "https://i.ibb.co/fVLFtWrM/c1f8f42c5f5bd684e27d93131dc6ffd4696cdfd3.jpg") ?? nil,
+                canEdit: true
+            ) {
+                print("test")
+            }
+            ProfileImage(
+                imageUrl: nil,
+                canEdit: true
+            ) {
+                print("test")
+            }
+            ProfileImage(
+                imageUrl: nil,
+                canEdit: false
+            ) {
+                print("test")
+            }
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(Color.ypWhite)
+        .colorScheme(.dark)
+        VStack {
+            ProfileImage(
+                imageUrl: URL(string: "https://i.ibb.co/fVLFtWrM/c1f8f42c5f5bd684e27d93131dc6ffd4696cdfd3.jpg") ?? nil,
+                canEdit: true
+            ) {
+                print("test")
+            }
+            ProfileImage(
+                imageUrl: nil,
+                canEdit: true
+            ) {
+                print("test")
+            }
+            ProfileImage(
+                imageUrl: nil,
+                canEdit: false
+            ) {
+                print("test")
+            }
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(Color.ypWhite)
+        .colorScheme(.light)
     }
 }

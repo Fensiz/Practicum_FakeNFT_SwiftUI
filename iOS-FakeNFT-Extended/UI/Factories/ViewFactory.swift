@@ -36,4 +36,18 @@ final class ViewFactory {
 				EmptyView()
 		}
 	}
+
+	@ViewBuilder
+	func makeTabView(for tab: Tab) -> some View {
+		switch tab {
+			case .catalog:
+				TestCatalogView()
+			case .cart:
+				EmptyView()
+			case .profile:
+				EmptyView()
+			case .statistic:
+				EmptyView()
+		}
+	}
 }
