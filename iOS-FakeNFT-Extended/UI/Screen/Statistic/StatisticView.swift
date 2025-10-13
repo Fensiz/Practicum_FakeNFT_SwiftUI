@@ -7,13 +7,28 @@
 import SwiftUI
 
 struct StatisticView: View {
+    @State private var selectedSort = StatisticList.SortOption.byRating
+    @State private var showSortDialog = false
+
     var body: some View {
         NavigationStack {
-            StatisticList()
+            StatisticList(sortOption: selectedSort)
                 .toolbar {
                     NavigationMenuButton(icon: .sort) {
-                        print("Button tapped")
+                        showSortDialog = true
                     }
+                }
+                .toolbar(.visible, for: .navigationBar)
+                .confirmationDialog("Сортировка", isPresented: $showSortDialog, titleVisibility: .visible) {
+                    Button("По имени") {
+                        selectedSort = .byName
+                    }
+
+                    Button("По рейтингу") {
+                        selectedSort = .byRating
+                    }
+
+                    Button("Закрыть", role: .cancel) { }
                 }
         }
     }
