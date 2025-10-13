@@ -65,6 +65,7 @@
 		F476A4042E9C17B300D6386D /* CartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F476A4032E9C17B300D6386D /* CartViewModel.swift */; };
 		F4A8BCEF2E9163DE00A01863 /* CartCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A8BCEE2E9163D600A01863 /* CartCell.swift */; };
 		F4A8BCF12E928F9000A01863 /* RatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A8BCF02E928F9000A01863 /* RatingView.swift */; };
+        E7D77D182E98FCAF00F9E290 /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D77D172E98FCAC00F9E290 /* WebView.swift */; };
 		F4A8BCF52E92A06500A01863 /* CartItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A8BCF42E92A06500A01863 /* CartItem.swift */; };
 		F4A8BCF72E92A07B00A01863 /* Currency.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A8BCF62E92A07B00A01863 /* Currency.swift */; };
 		F4A8BCF92E9589D500A01863 /* CartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A8BCF82E9589CD00A01863 /* CartView.swift */; };
@@ -136,6 +137,8 @@
 		ABC5E1E72C320610002B4068 /* NftDetailBridgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NftDetailBridgeView.swift; sourceTree = "<group>"; };
 		C7A3956A2E9A993F00E9A9DB /* NavigationMenuButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationMenuButton.swift; sourceTree = "<group>"; };
 		E7D77D192E9918A600F9E290 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		ABC5E1EA2C32084F002B4068 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+        E7D77D172E98FCAC00F9E290 /* WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
 		F400A6392E98508E00F1BD93 /* RootCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootCoordinator.swift; sourceTree = "<group>"; };
 		F400A63C2E9850C900F1BD93 /* Screen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Screen.swift; sourceTree = "<group>"; };
 		F400A63E2E98517100F1BD93 /* Cover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cover.swift; sourceTree = "<group>"; };
@@ -236,6 +239,7 @@
 		ABC5E16A2C31F5AF002B4068 /* iOS-FakeNFT-Extended */ = {
 			isa = PBXGroup;
 			children = (
+				E7D77D152E98F04100F9E290 /* UIElements */,
 				F4AAD4F42E99889500F4AB77 /* Localizable.xcstrings */,
 				F4A8BCEC2E913C6D00A01863 /* Info.plist */,
 				ABC5E16B2C31F5AF002B4068 /* iOSFakeNFTExtendedApp.swift */,
@@ -416,6 +420,14 @@
 			path = Elements;
 			sourceTree = "<group>";
 		};
+		E7D77D152E98F04100F9E290 /* UIElements */ = {
+			isa = PBXGroup;
+			children = (
+				E7D77D172E98FCAC00F9E290 /* WebView.swift */,
+			);
+			path = UIElements;
+            sourceTree = "<group>";
+        };
 		F400A6382E98507800F1BD93 /* Navigation */ = {
 			isa = PBXGroup;
 			children = (
@@ -686,6 +698,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				ABC5E1992C31F666002B4068 /* Fonts.swift in Sources */,
+				E7D77D182E98FCAF00F9E290 /* WebView.swift in Sources */,
 				F476A3E42E9BFD3B00D6386D /* ToolbarButtonDescriptor.swift in Sources */,
 				F4AAD57F2E9BA1FB00F4AB77 /* PrimaryButtonModifier.swift in Sources */,
 				ABC5E1CF2C32041D002B4068 /* NftDetailViewController.swift in Sources */,
