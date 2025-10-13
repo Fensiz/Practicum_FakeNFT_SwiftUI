@@ -9,10 +9,17 @@ import Foundation
 
 enum Cover: Equatable {
 	case dummy
+	case deleteConfirmation(
+		item: CartItem,
+		deleteAction: () -> Void,
+		cancelAction: () -> Void
+	)
 
 	static func == (lhs: Cover, rhs: Cover) -> Bool {
 		switch (lhs, rhs) {
 			case (.dummy, .dummy): true
+			case (.deleteConfirmation, .deleteConfirmation): true
+			default: false
 		}
 	}
 }

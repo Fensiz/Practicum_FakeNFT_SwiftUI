@@ -36,23 +36,4 @@ struct User: Codable, Identifiable, Sendable {
         self.description = description
         self.website = website
     }
-    static var mock: User {
-        .init(
-            id: "ADFasda2sadasd",
-            name: "Joaquin Phoenix",
-            avatar: URL(string: "https://i.ibb.co/fVLFtWrM/c1f8f42c5f5bd684e27d93131dc6ffd4696cdfd3.jpg")!,
-            nfts: ["1", "2", "3"],
-            rating: "4.5"
-        )
-    }
-    static var mock2: User {
-        .init(
-            id: "ADFasda2sadasd",
-            name: "Joaquin Phoenix",
-            avatar: URL(string: "https://i.ibb.co/fVLFtWrM/c1f8f42c5f5bd684e27d93131dc6ffd4696cdfd3.jpg")!,
-            nfts: ["1", "2", "3"],
-            rating: "4.5",
-            description: "Дизайнер из Казани, люблю цифровое искусство и бейглы. В моей коллекции уже 100+ NFT, и еще больше — на моём сайте. Открыт к коллаборациям."
-        )
-    }
 }

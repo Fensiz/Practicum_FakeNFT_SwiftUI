@@ -62,52 +62,24 @@ struct ProfileImage: View {
 }
 
 #Preview {
-    Group {
-        VStack {
-            ProfileImage(
-                imageUrl: User.mock.avatar,
-                canEdit: true
-            ) {
-                print("test")
-            }
-            ProfileImage(
-                imageUrl: nil,
-                canEdit: true
-            ) {
-                print("test")
-            }
-            ProfileImage(
-                imageUrl: nil,
-                canEdit: false
-            ) {
-                print("test")
-            }
+    LightDarkPreviewWrapper {
+        ProfileImage(
+            imageUrl: URL(string: "https://i.ibb.co/fVLFtWrM/c1f8f42c5f5bd684e27d93131dc6ffd4696cdfd3.jpg") ?? nil,
+            canEdit: true
+        ) {
+            print("test")
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(Color.ypWhite)
-        .colorScheme(.dark)
-        VStack {
-            ProfileImage(
-                imageUrl: User.mock.avatar,
-                canEdit: true
-            ) {
-                print("test")
-            }
-            ProfileImage(
-                imageUrl: nil,
-                canEdit: true
-            ) {
-                print("test")
-            }
-            ProfileImage(
-                imageUrl: nil,
-                canEdit: false
-            ) {
-                print("test")
-            }
+        ProfileImage(
+            imageUrl: nil,
+            canEdit: true
+        ) {
+            print("test")
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(Color.ypWhite)
-        .colorScheme(.light)
+        ProfileImage(
+            imageUrl: nil,
+            canEdit: false
+        ) {
+            print("test")
+        }
     }
 }
