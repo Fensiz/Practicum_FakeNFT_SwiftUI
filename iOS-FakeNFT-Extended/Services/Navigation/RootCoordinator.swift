@@ -17,6 +17,7 @@ protocol RootCoordinator: CoverShowerCoordinator {
 	func hideCover()
 	func open(screen: Screen)
 	func popToRoot()
+	func goBack()
 }
 
 @Observable
@@ -38,5 +39,9 @@ class RootCoordinatorImpl: RootCoordinator {
 
 	func popToRoot() {
 		navigationPath.removeAll()
+	}
+
+	func goBack() {
+		_ = navigationPath.popLast()
 	}
 }

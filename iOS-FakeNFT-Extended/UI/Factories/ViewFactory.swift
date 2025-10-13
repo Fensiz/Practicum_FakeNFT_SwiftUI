@@ -22,6 +22,12 @@ final class ViewFactory {
 		switch screen {
 			case .dummy:
 				EmptyView()
+			case .payment:
+				EmptyView()
+			case .web:
+				EmptyView()
+			case .successPayment:
+				EmptyView()
 		}
 	}
 
@@ -33,6 +39,8 @@ final class ViewFactory {
 	func makeCoverView(for coverType: Cover) -> some View {
 		switch coverType {
 			case .dummy:
+				EmptyView()
+			case .deleteConfirmation:
 				EmptyView()
 		}
 	}
