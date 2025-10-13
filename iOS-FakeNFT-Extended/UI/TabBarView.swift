@@ -2,6 +2,8 @@ import SwiftUI
 
 struct TabBarView: View {
 	@State var rootCoordinator: any RootCoordinator
+	@State private var toolbarButtons: [Int: ToolbarButtonDescriptor?] = [:]
+	@State private var selectedTab = 0
 	private let viewFactory: ViewFactory
 	private let tabs: [Tab]
 
@@ -18,17 +20,35 @@ struct TabBarView: View {
 	var body: some View {
 		ZStack {
 			NavigationStack(path: $rootCoordinator.navigationPath) {
-				TabView {
-					ForEach(tabs) { tab in
+				TabView(selection: $selectedTab) {
+					ForEach(Array(tabs.enumerated()), id: \.offset) { index, tab in
 						viewFactory.makeTabView(for: tab)
 							.tabItem {
 								Label(tab.title, image: tab.image)
 							}
-							.backgroundStyle(.background)
+							.tag(index)
+							.backgroundStyle(.ypWhite)
+							.environment(\.selectedTabIndex, index)
+					}
+				}
+				.toolbar {
+					if let toolBarData = toolbarButtons[selectedTab], let toolBarData {
+						ToolbarItem(placement: .topBarTrailing) {
+							Button {
+								toolBarData.action()
+							} label: {
+								Image(toolBarData.imageName)
+									.foregroundStyle(.ypBlack)
+									.background(.ypWhite)
+							}
+						}
 					}
 				}
 				.navigationDestination(for: Screen.self) { screen in
 					viewFactory.makeScreenView(for: screen)
+				}
+				.onPreferenceChange(ToolbarButtonKey.self) { item in
+					toolbarButtons = item
 				}
 			}
 			if let cover = rootCoordinator.activeCover {

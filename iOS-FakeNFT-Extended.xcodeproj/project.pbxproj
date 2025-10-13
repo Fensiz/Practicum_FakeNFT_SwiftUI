@@ -50,10 +50,31 @@
 		F400A63D2E9850C900F1BD93 /* Screen.swift in Sources */ = {isa = PBXBuildFile; fileRef = F400A63C2E9850C900F1BD93 /* Screen.swift */; };
 		F400A63F2E98517100F1BD93 /* Cover.swift in Sources */ = {isa = PBXBuildFile; fileRef = F400A63E2E98517100F1BD93 /* Cover.swift */; };
 		F400A6432E9851DA00F1BD93 /* ViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = F400A6422E9851DA00F1BD93 /* ViewFactory.swift */; };
+		F476A3E02E9BFCF000D6386D /* ToolbarPreferenceModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = F476A3DF2E9BFCF000D6386D /* ToolbarPreferenceModifier.swift */; };
+		F476A3E22E9BFD0B00D6386D /* SelectedTabKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = F476A3E12E9BFD0B00D6386D /* SelectedTabKey.swift */; };
+		F476A3E42E9BFD3B00D6386D /* ToolbarButtonDescriptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F476A3E32E9BFD3B00D6386D /* ToolbarButtonDescriptor.swift */; };
+		F476A3E62E9BFD4C00D6386D /* ToolbarButtonKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = F476A3E52E9BFD4C00D6386D /* ToolbarButtonKey.swift */; };
+		F476A3EA2E9C079000D6386D /* PaymentMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = F476A3E92E9C079000D6386D /* PaymentMethod.swift */; };
+		F476A3EC2E9C07BB00D6386D /* PaymentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F476A3EB2E9C07BB00D6386D /* PaymentViewModel.swift */; };
+		F476A3EE2E9C07D100D6386D /* PaymentMethodCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F476A3ED2E9C07D100D6386D /* PaymentMethodCell.swift */; };
+		F476A3F02E9C07FD00D6386D /* PaymentService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F476A3EF2E9C07FD00D6386D /* PaymentService.swift */; };
+		F476A3F42E9C082700D6386D /* MockPaymentServiceImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = F476A3F32E9C082700D6386D /* MockPaymentServiceImpl.swift */; };
+		F476A3FE2E9C174B00D6386D /* CartService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F476A3FD2E9C174B00D6386D /* CartService.swift */; };
+		F476A4002E9C175800D6386D /* MockCartServiceImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = F476A3FF2E9C175800D6386D /* MockCartServiceImpl.swift */; };
+		F476A4022E9C177D00D6386D /* CartCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F476A4012E9C177D00D6386D /* CartCoordinator.swift */; };
+		F476A4042E9C17B300D6386D /* CartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F476A4032E9C17B300D6386D /* CartViewModel.swift */; };
+		F4A8BCEF2E9163DE00A01863 /* CartCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A8BCEE2E9163D600A01863 /* CartCell.swift */; };
+		F4A8BCF12E928F9000A01863 /* RatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A8BCF02E928F9000A01863 /* RatingView.swift */; };
 		F4A8BCF52E92A06500A01863 /* CartItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A8BCF42E92A06500A01863 /* CartItem.swift */; };
 		F4A8BCF72E92A07B00A01863 /* Currency.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A8BCF62E92A07B00A01863 /* Currency.swift */; };
+		F4A8BCF92E9589D500A01863 /* CartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A8BCF82E9589CD00A01863 /* CartView.swift */; };
 		F4AAD4F32E9986E700F4AB77 /* Tab.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4AAD4EE2E9986E700F4AB77 /* Tab.swift */; };
 		F4AAD4F52E99889500F4AB77 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = F4AAD4F42E99889500F4AB77 /* Localizable.xcstrings */; };
+		F4AAD4F72E99943600F4AB77 /* PaymentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4AAD4F62E99942E00F4AB77 /* PaymentView.swift */; };
+		F4AAD57C2E9B922500F4AB77 /* SuccessPaymentScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4AAD57B2E9B921800F4AB77 /* SuccessPaymentScreen.swift */; };
+		F4AAD57F2E9BA1FB00F4AB77 /* PrimaryButtonModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4AAD57E2E9BA1FB00F4AB77 /* PrimaryButtonModifier.swift */; };
+		F4AAD5842E9BC35E00F4AB77 /* FooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4AAD5832E9BC35E00F4AB77 /* FooterView.swift */; };
+		F4D0B3062E986517002F927A /* DeleteConfirmationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4D0B3052E986517002F927A /* DeleteConfirmationView.swift */; };
 		F4D0B3082E98652F002F927A /* LightDarkPreviewWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4D0B3072E98652F002F927A /* LightDarkPreviewWrapper.swift */; };
 /* End PBXBuildFile section */
 
@@ -119,11 +140,32 @@
 		F400A63C2E9850C900F1BD93 /* Screen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Screen.swift; sourceTree = "<group>"; };
 		F400A63E2E98517100F1BD93 /* Cover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cover.swift; sourceTree = "<group>"; };
 		F400A6422E9851DA00F1BD93 /* ViewFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewFactory.swift; sourceTree = "<group>"; };
+		F476A3DF2E9BFCF000D6386D /* ToolbarPreferenceModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolbarPreferenceModifier.swift; sourceTree = "<group>"; };
+		F476A3E12E9BFD0B00D6386D /* SelectedTabKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedTabKey.swift; sourceTree = "<group>"; };
+		F476A3E32E9BFD3B00D6386D /* ToolbarButtonDescriptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolbarButtonDescriptor.swift; sourceTree = "<group>"; };
+		F476A3E52E9BFD4C00D6386D /* ToolbarButtonKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolbarButtonKey.swift; sourceTree = "<group>"; };
+		F476A3E92E9C079000D6386D /* PaymentMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentMethod.swift; sourceTree = "<group>"; };
+		F476A3EB2E9C07BB00D6386D /* PaymentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentViewModel.swift; sourceTree = "<group>"; };
+		F476A3ED2E9C07D100D6386D /* PaymentMethodCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentMethodCell.swift; sourceTree = "<group>"; };
+		F476A3EF2E9C07FD00D6386D /* PaymentService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentService.swift; sourceTree = "<group>"; };
+		F476A3F32E9C082700D6386D /* MockPaymentServiceImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPaymentServiceImpl.swift; sourceTree = "<group>"; };
+		F476A3FD2E9C174B00D6386D /* CartService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartService.swift; sourceTree = "<group>"; };
+		F476A3FF2E9C175800D6386D /* MockCartServiceImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockCartServiceImpl.swift; sourceTree = "<group>"; };
+		F476A4012E9C177D00D6386D /* CartCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartCoordinator.swift; sourceTree = "<group>"; };
+		F476A4032E9C17B300D6386D /* CartViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartViewModel.swift; sourceTree = "<group>"; };
 		F4A8BCEC2E913C6D00A01863 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		F4A8BCEE2E9163D600A01863 /* CartCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartCell.swift; sourceTree = "<group>"; };
+		F4A8BCF02E928F9000A01863 /* RatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingView.swift; sourceTree = "<group>"; };
 		F4A8BCF42E92A06500A01863 /* CartItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartItem.swift; sourceTree = "<group>"; };
 		F4A8BCF62E92A07B00A01863 /* Currency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Currency.swift; sourceTree = "<group>"; };
+		F4A8BCF82E9589CD00A01863 /* CartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartView.swift; sourceTree = "<group>"; };
 		F4AAD4EE2E9986E700F4AB77 /* Tab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tab.swift; sourceTree = "<group>"; };
 		F4AAD4F42E99889500F4AB77 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
+		F4AAD4F62E99942E00F4AB77 /* PaymentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentView.swift; sourceTree = "<group>"; };
+		F4AAD57B2E9B921800F4AB77 /* SuccessPaymentScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuccessPaymentScreen.swift; sourceTree = "<group>"; };
+		F4AAD57E2E9BA1FB00F4AB77 /* PrimaryButtonModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryButtonModifier.swift; sourceTree = "<group>"; };
+		F4AAD5832E9BC35E00F4AB77 /* FooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FooterView.swift; sourceTree = "<group>"; };
+		F4D0B3052E986517002F927A /* DeleteConfirmationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteConfirmationView.swift; sourceTree = "<group>"; };
 		F4D0B3072E98652F002F927A /* LightDarkPreviewWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightDarkPreviewWrapper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -263,6 +305,7 @@
 		ABC5E19E2C31F6C1002B4068 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				F476A3E92E9C079000D6386D /* PaymentMethod.swift */,
 				F400A63B2E9850B800F1BD93 /* Navigation */,
 				F4A8BCF62E92A07B00A01863 /* Currency.swift */,
 				0415C1CF2E9BF95F0074401F /* User.swift */,
@@ -292,6 +335,9 @@
 		ABC5E1A92C31FABA002B4068 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				F476A3FD2E9C174B00D6386D /* CartService.swift */,
+				F476A3F22E9C082400D6386D /* Mocks */,
+				F476A3EF2E9C07FD00D6386D /* PaymentService.swift */,
 				F400A6382E98507800F1BD93 /* Navigation */,
 				ABC5E1AC2C31FB6C002B4068 /* Requests */,
 				ABC5E1AA2C31FACD002B4068 /* NftService.swift */,
@@ -315,7 +361,9 @@
 			children = (
 				0415C1D22E9BF9A60074401F /* Profile */,
 				C7A395692E9A991E00E9A9DB /* Elements */,
-				F4A8C1142E96AA9900A01863 /* PreviewWrappers */,
+				F4AAD57D2E9BA1E600F4AB77 /* CoreElements */,
+				F4A9FC4E2E9937D100D7FEDF /* CartScreen */,
+				F4A8BCED2E9163B900A01863 /* PreviewWrappers */,
 				ABC5E16D2C31F5AF002B4068 /* ContentView.swift */,
 				ABC5E1B42C31FC57002B4068 /* TabBarView.swift */,
 				ABC5E1B82C31FD51002B4068 /* TestCatalogView.swift */,
@@ -371,6 +419,7 @@
 		F400A6382E98507800F1BD93 /* Navigation */ = {
 			isa = PBXGroup;
 			children = (
+				F476A4012E9C177D00D6386D /* CartCoordinator.swift */,
 				F400A6392E98508E00F1BD93 /* RootCoordinator.swift */,
 			);
 			path = Navigation;
@@ -394,12 +443,82 @@
 			path = Factories;
 			sourceTree = "<group>";
 		};
-		F4A8C1142E96AA9900A01863 /* PreviewWrappers */ = {
+		F476A3DE2E9BFCD600D6386D /* ToolbarPreference */ = {
+			isa = PBXGroup;
+			children = (
+				F476A3E52E9BFD4C00D6386D /* ToolbarButtonKey.swift */,
+				F476A3E32E9BFD3B00D6386D /* ToolbarButtonDescriptor.swift */,
+				F476A3E12E9BFD0B00D6386D /* SelectedTabKey.swift */,
+				F476A3DF2E9BFCF000D6386D /* ToolbarPreferenceModifier.swift */,
+			);
+			path = ToolbarPreference;
+			sourceTree = "<group>";
+		};
+		F476A3F22E9C082400D6386D /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				F476A3FF2E9C175800D6386D /* MockCartServiceImpl.swift */,
+				F476A3F32E9C082700D6386D /* MockPaymentServiceImpl.swift */,
+			);
+			path = Mocks;
+			sourceTree = "<group>";
+		};
+		F4A8BCED2E9163B900A01863 /* PreviewWrappers */ = {
 			isa = PBXGroup;
 			children = (
 				F4D0B3072E98652F002F927A /* LightDarkPreviewWrapper.swift */,
 			);
 			path = PreviewWrappers;
+			sourceTree = "<group>";
+		};
+		F4A9FC4E2E9937D100D7FEDF /* CartScreen */ = {
+			isa = PBXGroup;
+			children = (
+				F4AAD5822E9BC14800F4AB77 /* SuccessScreen */,
+				F4AAD5812E9BC13300F4AB77 /* MainScreen */,
+				F4AAD5802E9BC0E800F4AB77 /* PaymentScreen */,
+			);
+			path = CartScreen;
+			sourceTree = "<group>";
+		};
+		F4AAD57D2E9BA1E600F4AB77 /* CoreElements */ = {
+			isa = PBXGroup;
+			children = (
+				F476A3DE2E9BFCD600D6386D /* ToolbarPreference */,
+				F4AAD57E2E9BA1FB00F4AB77 /* PrimaryButtonModifier.swift */,
+				F4A8BCF02E928F9000A01863 /* RatingView.swift */,
+			);
+			path = CoreElements;
+			sourceTree = "<group>";
+		};
+		F4AAD5802E9BC0E800F4AB77 /* PaymentScreen */ = {
+			isa = PBXGroup;
+			children = (
+				F476A3ED2E9C07D100D6386D /* PaymentMethodCell.swift */,
+				F476A3EB2E9C07BB00D6386D /* PaymentViewModel.swift */,
+				F4AAD4F62E99942E00F4AB77 /* PaymentView.swift */,
+			);
+			path = PaymentScreen;
+			sourceTree = "<group>";
+		};
+		F4AAD5812E9BC13300F4AB77 /* MainScreen */ = {
+			isa = PBXGroup;
+			children = (
+				F476A4032E9C17B300D6386D /* CartViewModel.swift */,
+				F4AAD5832E9BC35E00F4AB77 /* FooterView.swift */,
+				F4A8BCEE2E9163D600A01863 /* CartCell.swift */,
+				F4D0B3052E986517002F927A /* DeleteConfirmationView.swift */,
+				F4A8BCF82E9589CD00A01863 /* CartView.swift */,
+			);
+			path = MainScreen;
+			sourceTree = "<group>";
+		};
+		F4AAD5822E9BC14800F4AB77 /* SuccessScreen */ = {
+			isa = PBXGroup;
+			children = (
+				F4AAD57B2E9B921800F4AB77 /* SuccessPaymentScreen.swift */,
+			);
+			path = SuccessScreen;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -493,6 +612,7 @@
 			knownRegions = (
 				en,
 				Base,
+				ru,
 			);
 			mainGroup = ABC5E15F2C31F5AF002B4068;
 			packageReferences = (
@@ -566,20 +686,30 @@
 			buildActionMask = 2147483647;
 			files = (
 				ABC5E1992C31F666002B4068 /* Fonts.swift in Sources */,
+				F476A3E42E9BFD3B00D6386D /* ToolbarButtonDescriptor.swift in Sources */,
+				F4AAD57F2E9BA1FB00F4AB77 /* PrimaryButtonModifier.swift in Sources */,
 				ABC5E1CF2C32041D002B4068 /* NftDetailViewController.swift in Sources */,
 				F4A8BCF52E92A06500A01863 /* CartItem.swift in Sources */,
 				F4AAD4F32E9986E700F4AB77 /* Tab.swift in Sources */,
 				ABC5E1B72C31FC70002B4068 /* ServicesAssembly.swift in Sources */,
+				F4A8BCF12E928F9000A01863 /* RatingView.swift in Sources */,
 				ABC5E19D2C31F6A6002B4068 /* NftStorage.swift in Sources */,
+				F476A3EE2E9C07D100D6386D /* PaymentMethodCell.swift in Sources */,
+				F476A3E62E9BFD4C00D6386D /* ToolbarButtonKey.swift in Sources */,
 				F4A8BCF72E92A07B00A01863 /* Currency.swift in Sources */,
 				ABC5E1E82C320610002B4068 /* NftDetailBridgeView.swift in Sources */,
 				ABC5E1E62C320585002B4068 /* LinePageControl.swift in Sources */,
 				ABC5E1DD2C3204DC002B4068 /* CellsReusingUtils.swift in Sources */,
+				F476A3F42E9C082700D6386D /* MockPaymentServiceImpl.swift in Sources */,
 				ABC5E1B52C31FC57002B4068 /* TabBarView.swift in Sources */,
 				ABC5E1E42C32055B002B4068 /* ErrorView.swift in Sources */,
 				ABC5E1A62C31F815002B4068 /* NetworkRequest.swift in Sources */,
+				F4D0B3062E986517002F927A /* DeleteConfirmationView.swift in Sources */,
 				ABC5E1D52C320446002B4068 /* NftDetailInput.swift in Sources */,
+				F4AAD5842E9BC35E00F4AB77 /* FooterView.swift in Sources */,
 				F400A6432E9851DA00F1BD93 /* ViewFactory.swift in Sources */,
+				F476A4002E9C175800D6386D /* MockCartServiceImpl.swift in Sources */,
+				F476A3F02E9C07FD00D6386D /* PaymentService.swift in Sources */,
 				ABC5E16E2C31F5AF002B4068 /* ContentView.swift in Sources */,
 				0415C1D42E9BF9B50074401F /* ProfileImage.swift in Sources */,
 				F400A63F2E98517100F1BD93 /* Cover.swift in Sources */,
@@ -588,8 +718,12 @@
 				0415C1D72E9BFEB10074401F /* ProfieInfo.swift in Sources */,
 				ABC5E1DF2C3204FB002B4068 /* LoadingView.swift in Sources */,
 				ABC5E1972C31F656002B4068 /* Colors.swift in Sources */,
+				F476A3E02E9BFCF000D6386D /* ToolbarPreferenceModifier.swift in Sources */,
+				F476A4022E9C177D00D6386D /* CartCoordinator.swift in Sources */,
 				ABC5E1A42C31F800002B4068 /* NetworkClient.swift in Sources */,
+				F4A8BCF92E9589D500A01863 /* CartView.swift in Sources */,
 				ABC5E1D32C320438002B4068 /* NftDetailAssembly.swift in Sources */,
+				F476A3E22E9BFD0B00D6386D /* SelectedTabKey.swift in Sources */,
 				ABC5E1A12C31F6D7002B4068 /* Nft.swift in Sources */,
 				F400A63D2E9850C900F1BD93 /* Screen.swift in Sources */,
 				C7A3956B2E9A994100E9A9DB /* NavigationMenuButton.swift in Sources */,
@@ -598,10 +732,17 @@
 				ABC5E16C2C31F5AF002B4068 /* iOSFakeNFTExtendedApp.swift in Sources */,
 				ABC5E1CB2C3203FC002B4068 /* NftDetailCellModel.swift in Sources */,
 				ABC5E1AB2C31FACD002B4068 /* NftService.swift in Sources */,
+				F476A3FE2E9C174B00D6386D /* CartService.swift in Sources */,
+				F4AAD57C2E9B922500F4AB77 /* SuccessPaymentScreen.swift in Sources */,
 				F400A63A2E98508E00F1BD93 /* RootCoordinator.swift in Sources */,
+				F4A8BCEF2E9163DE00A01863 /* CartCell.swift in Sources */,
+				F476A3EC2E9C07BB00D6386D /* PaymentViewModel.swift in Sources */,
+				F476A4042E9C17B300D6386D /* CartViewModel.swift in Sources */,
 				ABC5E1B22C31FBD4002B4068 /* ExampleRequest.swift in Sources */,
 				ABC5E1CD2C32040C002B4068 /* NftImageCollectionViewCell.swift in Sources */,
 				ABC5E1A82C31FA90002B4068 /* DateFormatters+Presets.swift in Sources */,
+				F4AAD4F72E99943600F4AB77 /* PaymentView.swift in Sources */,
+				F476A3EA2E9C079000D6386D /* PaymentMethod.swift in Sources */,
 				ABC5E1D12C32042C002B4068 /* NftDetailPresenter.swift in Sources */,
 				ABC5E1B02C31FB90002B4068 /* RequestConstants.swift in Sources */,
 				F4D0B3082E98652F002F927A /* LightDarkPreviewWrapper.swift in Sources */,
@@ -700,6 +841,7 @@
 				SDKROOT = iphoneos;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_UPCOMING_FEATURE_EXISTENTIAL_ANY = YES;
 				SWIFT_VERSION = 6.0;
@@ -759,6 +901,7 @@
 				SDKROOT = iphoneos;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_UPCOMING_FEATURE_EXISTENTIAL_ANY = YES;
 				SWIFT_VERSION = 6.0;
 				VALIDATE_PRODUCT = YES;
