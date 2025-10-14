@@ -56,6 +56,7 @@ struct PaymentView: View {
 							}
 						}
 						.buttonStyle(PrimaryButtonStyle())
+						.disabled(viewModel.isButtonDisabled)
 					}
 					.padding(16)
 					.background(

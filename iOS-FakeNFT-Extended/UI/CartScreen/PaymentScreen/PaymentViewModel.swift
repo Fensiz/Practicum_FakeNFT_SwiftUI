@@ -10,13 +10,15 @@ import SwiftUI
 @MainActor
 @Observable
 final class PaymentViewModel {
-	var paymentMethods: [PaymentMethod] = []
-	var selectedMethod: PaymentMethod?
+	let onSuccess: () -> Void
 	var isLoading = false
 	var isAlertPresented = false
-	var saveSuccessAction: (() -> Void)?
-	let onSuccess: () -> Void
-
+	var paymentMethods: [PaymentMethod] = []
+	var selectedMethod: PaymentMethod?
+	var isButtonDisabled: Bool {
+		selectedMethod == nil || isLoading
+	}
+	private var saveSuccessAction: (() -> Void)?
 	private let paymentService: any PaymentService
 
 	init(paymentService: any PaymentService, onSuccess: @escaping () -> Void) {

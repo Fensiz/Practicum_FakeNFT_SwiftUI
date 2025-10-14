@@ -38,7 +38,11 @@ final actor MockPaymentServiceImpl: PaymentService {
 			)
 		]
 	}
+	nonisolated(unsafe) static var count: Int = 0
 	func performPayment() async throws {
-
+		if MockPaymentServiceImpl.count < 3 {
+			MockPaymentServiceImpl.count += 1
+			throw NSError(domain: "123", code: 1)
+		}
 	}
 }
