@@ -10,7 +10,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Install Tuist
-        run: brew install --formula tuist@4.84.1
+        run: brew install --formula tuist
       - name: Set up Xcode
         run: sudo xcode-select -switch /Applications/Xcode_16.4.app
       - name: Generate project
