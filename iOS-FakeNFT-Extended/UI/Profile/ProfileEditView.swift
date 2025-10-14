@@ -15,6 +15,7 @@ struct ProfileEditView: View {
     @State private var showSiteEditAlert: Bool = false
     @State private var avatarUrlString: String = "https://i.ibb.co/fVLFtWrM/c1f8f42c5f5bd684e27d93131dc6ffd4696cdfd3.jpg"
     @State private var newAvatarUrlString: String = ""
+    @State private var isSaveInProgress: Bool = false
     
     var body: some View {
         VStack(spacing: 24) {
@@ -85,8 +86,18 @@ struct ProfileEditView: View {
                     .background(Color.ypBlack.cornerRadius(16))
             }
             .padding()
-            
         })
+        .overlay {
+            ZStack {
+                Color.ypLightGrey.cornerRadius(8)
+                    .frame(width: 82, height: 82)
+                    .colorScheme(.light)
+                ProgressView()
+                    .scaleEffect(1.3)
+                    .colorScheme(.light)
+            }
+            .opacity(isSaveInProgress ? 1 : 0)
+        }
         .padding(.horizontal)
         .background(Color.ypWhite)
     }
