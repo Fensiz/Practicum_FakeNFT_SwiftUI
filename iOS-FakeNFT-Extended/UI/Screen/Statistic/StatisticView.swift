@@ -9,21 +9,28 @@ import SwiftUI
 struct StatisticView: View {
     @AppStorage(AppStorageKeys.statisticSortOption)
     private var sortRaw = StatisticList.SortOption.byRating.rawValue
-    private var selectedSort: StatisticList.SortOption { StatisticList.SortOption(rawValue: sortRaw) ?? .byRating }
+
+    private var selectedSort: StatisticList.SortOption {
+        StatisticList.SortOption(rawValue: sortRaw) ?? .byRating
+    }
+
     @State private var showSortDialog = false
+    @State private var viewModel = StatisticViewModel()
 
     var body: some View {
         NavigationStack {
-            StatisticList(sortOption: selectedSort)
-                .toolbarPreference(imageName: .sort) {
-                    showSortDialog = true
-                }
+            StatisticList(users: viewModel.sortedUsers, sortOption: viewModel.sortOption)
+                .toolbarPreference(imageName: .sort) { showSortDialog = true }
                 .toolbar(.visible, for: .navigationBar)
                 .confirmationDialog("Сортировка", isPresented: $showSortDialog, titleVisibility: .visible) {
                     Button("По имени") { sortRaw = StatisticList.SortOption.byName.rawValue }
                     Button("По рейтингу") { sortRaw = StatisticList.SortOption.byRating.rawValue }
                     Button("Закрыть", role: .cancel) { }
                 }
+        }
+        .onAppear { viewModel.makeSetSort(selectedSort) }
+        .onChange(of: sortRaw) { _, _ in
+            viewModel.makeSetSort(selectedSort)
         }
     }
 }
