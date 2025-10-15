@@ -64,7 +64,7 @@ struct ProfileImage: View {
 #Preview {
     LightDarkPreviewWrapper {
         ProfileImage(
-            imageUrl: URL(string: "https://i.ibb.co/fVLFtWrM/c1f8f42c5f5bd684e27d93131dc6ffd4696cdfd3.jpg") ?? nil,
+            imageUrl: URL(string: "https://tinyurl.com/mrxzhdb7") ?? nil,
             canEdit: true
         ) {
             print("test")

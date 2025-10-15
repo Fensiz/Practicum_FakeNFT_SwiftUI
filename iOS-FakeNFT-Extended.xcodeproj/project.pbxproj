@@ -10,6 +10,13 @@
 		0415C1D02E9BF95F0074401F /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0415C1CF2E9BF95F0074401F /* User.swift */; };
 		0415C1D42E9BF9B50074401F /* ProfileImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0415C1D32E9BF9B50074401F /* ProfileImage.swift */; };
 		0415C1D72E9BFEB10074401F /* ProfileInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0415C1D62E9BFE990074401F /* ProfileInfo.swift */; };
+		0415C1FF2E9CF8910074401F /* View+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0415C1FB2E9CF8910074401F /* View+Ext.swift */; };
+		0415C2002E9CF8910074401F /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0415C1FE2E9CF8910074401F /* ProfileView.swift */; };
+		0415C2012E9CF8910074401F /* ProfileEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0415C1FD2E9CF8910074401F /* ProfileEditView.swift */; };
+		0415C2032E9CF8BB0074401F /* TextInputStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0415C2022E9CF8BB0074401F /* TextInputStyle.swift */; };
+		0415C2112E9E40450074401F /* ProfileServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0415C2102E9E40410074401F /* ProfileServiceProtocol.swift */; };
+		0415C2132E9E40BB0074401F /* ProfileService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0415C2122E9E40B50074401F /* ProfileService.swift */; };
+		0415C2162E9E49AE0074401F /* ProfileUpdateDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0415C2152E9E49AD0074401F /* ProfileUpdateDTO.swift */; };
 		ABC5E16C2C31F5AF002B4068 /* iOSFakeNFTExtendedApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC5E16B2C31F5AF002B4068 /* iOSFakeNFTExtendedApp.swift */; };
 		ABC5E16E2C31F5AF002B4068 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC5E16D2C31F5AF002B4068 /* ContentView.swift */; };
 		ABC5E1702C31F5AF002B4068 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ABC5E16F2C31F5AF002B4068 /* Assets.xcassets */; };
@@ -100,6 +107,13 @@
 		0415C1CF2E9BF95F0074401F /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		0415C1D32E9BF9B50074401F /* ProfileImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImage.swift; sourceTree = "<group>"; };
 		0415C1D62E9BFE990074401F /* ProfileInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileInfo.swift; sourceTree = "<group>"; };
+		0415C1FB2E9CF8910074401F /* View+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Ext.swift"; sourceTree = "<group>"; };
+		0415C1FD2E9CF8910074401F /* ProfileEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditView.swift; sourceTree = "<group>"; };
+		0415C1FE2E9CF8910074401F /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		0415C2022E9CF8BB0074401F /* TextInputStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextInputStyle.swift; sourceTree = "<group>"; };
+		0415C2102E9E40410074401F /* ProfileServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileServiceProtocol.swift; sourceTree = "<group>"; };
+		0415C2122E9E40B50074401F /* ProfileService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileService.swift; sourceTree = "<group>"; };
+		0415C2152E9E49AD0074401F /* ProfileUpdateDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileUpdateDTO.swift; sourceTree = "<group>"; };
 		ABC5E1682C31F5AF002B4068 /* iOS-FakeNFT-Extended.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "iOS-FakeNFT-Extended.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABC5E16B2C31F5AF002B4068 /* iOSFakeNFTExtendedApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSFakeNFTExtendedApp.swift; sourceTree = "<group>"; };
 		ABC5E16D2C31F5AF002B4068 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -202,6 +216,9 @@
 			isa = PBXGroup;
 			children = (
 				0415C1D52E9BF9C20074401F /* Components */,
+				0415C1FC2E9CF8910074401F /* Extentions */,
+				0415C1FD2E9CF8910074401F /* ProfileEditView.swift */,
+				0415C1FE2E9CF8910074401F /* ProfileView.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -211,8 +228,35 @@
 			children = (
 				0415C1D62E9BFE990074401F /* ProfileInfo.swift */,
 				0415C1D32E9BF9B50074401F /* ProfileImage.swift */,
+				0415C2022E9CF8BB0074401F /* TextInputStyle.swift */,
 			);
 			path = Components;
+			sourceTree = "<group>";
+		};
+		0415C1FC2E9CF8910074401F /* Extentions */ = {
+			isa = PBXGroup;
+			children = (
+				0415C1FB2E9CF8910074401F /* View+Ext.swift */,
+			);
+			path = Extentions;
+			sourceTree = "<group>";
+		};
+		0415C20F2E9E40320074401F /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				0415C2142E9E49A00074401F /* DTOs */,
+				0415C2122E9E40B50074401F /* ProfileService.swift */,
+				0415C2102E9E40410074401F /* ProfileServiceProtocol.swift */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
+		0415C2142E9E49A00074401F /* DTOs */ = {
+			isa = PBXGroup;
+			children = (
+				0415C2152E9E49AD0074401F /* ProfileUpdateDTO.swift */,
+			);
+			path = DTOs;
 			sourceTree = "<group>";
 		};
 		ABC5E15F2C31F5AF002B4068 = {
@@ -338,6 +382,7 @@
 		ABC5E1A92C31FABA002B4068 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				0415C20F2E9E40320074401F /* Profile */,
 				F476A3FD2E9C174B00D6386D /* CartService.swift */,
 				F476A3F22E9C082400D6386D /* Mocks */,
 				F476A3EF2E9C07FD00D6386D /* PaymentService.swift */,
@@ -721,9 +766,11 @@
 				F4AAD5842E9BC35E00F4AB77 /* FooterView.swift in Sources */,
 				F400A6432E9851DA00F1BD93 /* ViewFactory.swift in Sources */,
 				F476A4002E9C175800D6386D /* MockCartServiceImpl.swift in Sources */,
+				0415C2112E9E40450074401F /* ProfileServiceProtocol.swift in Sources */,
 				F476A3F02E9C07FD00D6386D /* PaymentService.swift in Sources */,
 				ABC5E16E2C31F5AF002B4068 /* ContentView.swift in Sources */,
 				0415C1D42E9BF9B50074401F /* ProfileImage.swift in Sources */,
+				0415C2032E9CF8BB0074401F /* TextInputStyle.swift in Sources */,
 				F400A63F2E98517100F1BD93 /* Cover.swift in Sources */,
 				ABC5E1B92C31FD51002B4068 /* TestCatalogView.swift in Sources */,
 				0415C1D02E9BF95F0074401F /* User.swift in Sources */,
@@ -732,6 +779,10 @@
 				ABC5E1972C31F656002B4068 /* Colors.swift in Sources */,
 				F476A3E02E9BFCF000D6386D /* ToolbarPreferenceModifier.swift in Sources */,
 				F476A4022E9C177D00D6386D /* CartCoordinator.swift in Sources */,
+				0415C1FF2E9CF8910074401F /* View+Ext.swift in Sources */,
+				0415C2002E9CF8910074401F /* ProfileView.swift in Sources */,
+				0415C2012E9CF8910074401F /* ProfileEditView.swift in Sources */,
+				0415C2132E9E40BB0074401F /* ProfileService.swift in Sources */,
 				ABC5E1A42C31F800002B4068 /* NetworkClient.swift in Sources */,
 				F4A8BCF92E9589D500A01863 /* CartView.swift in Sources */,
 				ABC5E1D32C320438002B4068 /* NftDetailAssembly.swift in Sources */,
@@ -745,6 +796,7 @@
 				ABC5E1CB2C3203FC002B4068 /* NftDetailCellModel.swift in Sources */,
 				ABC5E1AB2C31FACD002B4068 /* NftService.swift in Sources */,
 				F476A3FE2E9C174B00D6386D /* CartService.swift in Sources */,
+				0415C2162E9E49AE0074401F /* ProfileUpdateDTO.swift in Sources */,
 				F4AAD57C2E9B922500F4AB77 /* SuccessPaymentScreen.swift in Sources */,
 				F400A63A2E98508E00F1BD93 /* RootCoordinator.swift in Sources */,
 				F4A8BCEF2E9163DE00A01863 /* CartCell.swift in Sources */,
