@@ -15,10 +15,11 @@ struct NFTCollectionCellView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 4) {
             image
-                .frame(width: 343, height: 140)
+                .frame(height: 140)
                 .clipShape(RoundedRectangle(cornerRadius: 12))
             title
         }
+        .padding(.bottom, 13)
     }
 
     private var image: some View {
