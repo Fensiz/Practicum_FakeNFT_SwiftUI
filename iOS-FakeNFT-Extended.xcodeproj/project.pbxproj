@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -184,6 +184,10 @@
 		F4D0B3052E986517002F927A /* DeleteConfirmationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteConfirmationView.swift; sourceTree = "<group>"; };
 		F4D0B3072E98652F002F927A /* LightDarkPreviewWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightDarkPreviewWrapper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		043A75B82E9FE052001626E3 /* FavoritesNFT */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = FavoritesNFT; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		ABC5E1652C31F5AF002B4068 /* Frameworks */ = {
@@ -407,6 +411,7 @@
 		ABC5E1B32C31FC03002B4068 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				043A75B82E9FE052001626E3 /* FavoritesNFT */,
 				0415C1D22E9BF9A60074401F /* Profile */,
 				C7A395692E9A991E00E9A9DB /* Elements */,
 				F4AAD57D2E9BA1E600F4AB77 /* CoreElements */,
@@ -592,6 +597,9 @@
 			buildRules = (
 			);
 			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				043A75B82E9FE052001626E3 /* FavoritesNFT */,
 			);
 			name = "iOS-FakeNFT-Extended";
 			packageProductDependencies = (
