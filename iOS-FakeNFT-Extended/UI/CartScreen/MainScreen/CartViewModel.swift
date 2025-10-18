@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+@MainActor
 @Observable
 final class CartViewModel {
 	enum SortType {
@@ -16,6 +17,7 @@ final class CartViewModel {
 		items.map(\.price).reduce(0, +)
 	}
 	var items: [CartItem] = []
+	var isLoading: Bool = false
 	var isSortMenuShowing: Bool = false
 	private let cartService: any CartService
 
@@ -27,17 +29,29 @@ final class CartViewModel {
 		isSortMenuShowing = true
 	}
 
+	func fetchItems() {
+		isLoading = true
+		Task {
+			items = try await cartService.fetchOrderItems()
+			isLoading = false
+		}
+	}
 	func updateItems() {
-		items = cartService.fetchItems()
+		Task {
+			try await cartService.updateOrder(with: items.map(\.id))
+		}
 	}
 
 	func remove(_ item: CartItem) {
-		cartService.remove(item)
+		items.removeAll { $0.id == item.id }
 		updateItems()
 	}
 
 	func clearCart() {
-		cartService.clearCart()
+		Task {
+			try await cartService.updateOrder(with: [])
+			items.removeAll()
+		}
 	}
 
 	func isFirstItem(at index: Int) -> Bool {

@@ -10,9 +10,26 @@ import SwiftUI
 @MainActor
 final class ViewFactory {
 	private let rootCoordinator: any RootCoordinator
+	private let cartService: any CartService
+	private let paymentService: any PaymentService
+	private let cartViewModel: CartViewModel
+	private let cartCoordinator: CartCoordinatorImpl
+
+	// MARK: - Views
+
+	private lazy var cartView: some View = CartView(viewModel: cartViewModel, coordinator: cartCoordinator)
 
 	init(rootCoordinator: any RootCoordinator) {
+		let networkService = DefaultNetworkClient()
+		let storageService = NftStorageImpl()
+		let nftService = NftServiceImpl(networkClient: networkService, storage: storageService)
+
 		self.rootCoordinator = rootCoordinator
+		self.cartService = CartServiceImpl(networkService: networkService, nftService: nftService)//MockCartServiceImpl()
+		self.cartViewModel = CartViewModel(cartService: cartService)
+		self.cartCoordinator = CartCoordinatorImpl(rootCoordinator: rootCoordinator)
+
+		self.paymentService = PaymentServiceImpl(networkService: networkService)
 	}
 
 	// сюда добавляются все экраны, которые перекрывают tabView,
@@ -23,8 +40,7 @@ final class ViewFactory {
 			case .dummy:
 				EmptyView()
 			case let .payment(coordinartor, action):
-				let service = MockPaymentServiceImpl()
-				let viewModel = PaymentViewModel(paymentService: service, onSuccess: action)
+				let viewModel = PaymentViewModel(paymentService: paymentService, onSuccess: action)
 				PaymentView(coordinator: coordinartor, viewModel: viewModel)
 			case .web(let url):
 				WebView(url: url, isAppearenceEnabled: true)
@@ -59,10 +75,7 @@ final class ViewFactory {
 			case .catalog:
 				TestCatalogView()
 			case .cart:
-				let cartService = MockCartServiceImpl()
-				let viewModel = CartViewModel(cartService: cartService)
-				let cartCoordinator = CartCoordinatorImpl(rootCoordinator: rootCoordinator)
-				CartView(viewModel: viewModel, coordinator: cartCoordinator)
+				cartView
 			case .profile:
 				EmptyView()
 			case .statistic:

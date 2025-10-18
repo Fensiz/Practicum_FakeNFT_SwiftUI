@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct DeleteConfirmationView: View {
 	let item: CartItem
@@ -20,8 +21,9 @@ struct DeleteConfirmationView: View {
 				.edgesIgnoringSafeArea(.all)
 			VStack(spacing: 20) {
 				VStack(spacing: 12) {
-					item.image
+					KFImage(item.image)
 						.resizable()
+						.scaledToFit()
 						.frame(width: 108, height: 108)
 						.clipShape(RoundedRectangle(cornerRadius: 12))
 					Text("Вы уверены, что хотите\nудалить объект из корзины?")

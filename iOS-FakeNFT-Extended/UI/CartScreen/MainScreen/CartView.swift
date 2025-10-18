@@ -6,14 +6,21 @@
 //
 
 import SwiftUI
+import ProgressHUD
 
 struct CartView: View {
 	@State var viewModel: CartViewModel
 	@State var coordinator: any CartCoordinator
 
+	init(viewModel: CartViewModel, coordinator: any CartCoordinator) {
+		self.viewModel = viewModel
+		self.coordinator = coordinator
+		print("INIT")
+	}
+
 	var body: some View {
 		Group {
-			if viewModel.items.isEmpty {
+			if viewModel.items.isEmpty && !viewModel.isLoading {
 				Text("У вас еще нет NFT")
 					.font(.system(size: 17, weight: .bold))
 					.foregroundStyle(.ypBlack)
@@ -43,15 +50,16 @@ struct CartView: View {
 						}
 					}
 					.listStyle(.plain)
-
-					FooterView(
-						totalCount: viewModel.items.count,
-						totalPrice: viewModel.total
-					) {
-						coordinator.openPayScreen(onSuccess: viewModel.clearCart)
+					if !viewModel.isLoading {
+						FooterView(
+							totalCount: viewModel.items.count,
+							totalPrice: viewModel.total
+						) {
+							coordinator.openPayScreen(onSuccess: viewModel.clearCart)
+						}
+						.toolbarPreference(imageName: .sort, action: viewModel.showSortDialog)
 					}
 				}
-				.toolbarPreference(imageName: .sort, action: viewModel.showSortDialog)
 			}
 		}
 		.background(.ypWhite, ignoresSafeAreaEdges: .all)
@@ -71,8 +79,15 @@ struct CartView: View {
 			}
 			Button("Отмена", role: .cancel) {}
 		}
+		.onChange(of: viewModel.isLoading) { _, newValue in
+			if newValue {
+				ProgressHUD.animate()
+			} else {
+				ProgressHUD.dismiss()
+			}
+		}
 		.onAppear {
-			viewModel.updateItems()
+			viewModel.fetchItems()
 		}
 	}
 }

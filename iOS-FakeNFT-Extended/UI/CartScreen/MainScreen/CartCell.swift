@@ -6,17 +6,18 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct CartCell: View {
 	let removeAction: () -> Void
 	let cartItem: CartItem
 	var body: some View {
 		HStack(spacing: 20) {
-			cartItem.image
+			KFImage(cartItem.image)
 				.resizable()
 				.scaledToFit()
 				.frame(width: 108, height: 108)
-				.cornerRadius(12)
+				.clipShape(RoundedRectangle(cornerRadius: 12))
 			VStack(alignment: .leading, spacing: 12) {
 				VStack(alignment: .leading, spacing: 4) {
 					Text(cartItem.name)
@@ -48,18 +49,15 @@ struct CartCell: View {
 #Preview {
 	LightDarkPreviewWrapper {
 		CartCell(
-			removeAction: { print("remove") },
+			removeAction: { print("remove")
+			},
 			cartItem: .init(
-				image: Image(.mock1),
-				name: "Springfieldowquidwqhhudqwiuhdqwiuhdqiwuhdiwquhdiwq",
-				rating: 4,
-				price: 212324234234234234231.6789
+				id: "qwkpwoqkp",
+				image: URL(string: "https://code.s3.yandex.net/Mobile/iOS/NFT/Pink/Calder/1.png")!,
+				name: "aijoijdioajoid",
+				rating: 2,
+				price: 22.2
 			)
-		)
-		.border(.ypBlack)
-		CartCell(
-			removeAction: { print("remove") },
-			cartItem: .init(image: Image(.mock1), name: "Spring", rating: 4, price: 1.87)
 		)
 		.border(.ypBlack)
 	}

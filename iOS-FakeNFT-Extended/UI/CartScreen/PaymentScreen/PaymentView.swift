@@ -86,7 +86,7 @@ struct PaymentView: View {
 			}
 		}
 		.alert(
-			"Не далось произвести оплату",
+			"Не удалось произвести оплату",
 			isPresented: $viewModel.isAlertPresented,
 			actions: {
 				Button("Отмена", role: .cancel, action: {})
@@ -95,7 +95,7 @@ struct PaymentView: View {
 				}
 			})
 		.task {
-			await viewModel.load()
+			viewModel.load()
 		}
 	}
 }

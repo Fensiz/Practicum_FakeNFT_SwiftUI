@@ -6,6 +6,7 @@
 //
 
 protocol PaymentService: Actor {
+	typealias UserId = String
 	func fetchPaymentMethods() async throws -> [PaymentMethod]
-	func performPayment() async throws
+	func performPayment(for user: UserId, with paymentMethod: PaymentMethod) async throws
 }

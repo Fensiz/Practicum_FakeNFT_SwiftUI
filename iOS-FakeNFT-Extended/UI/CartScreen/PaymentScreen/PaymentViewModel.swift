@@ -18,41 +18,49 @@ final class PaymentViewModel {
 	var isButtonDisabled: Bool {
 		selectedMethod == nil || isLoading
 	}
-	private var saveSuccessAction: (() -> Void)?
 	private let paymentService: any PaymentService
+	private var lastAction: (() -> Void)?
 
 	init(paymentService: any PaymentService, onSuccess: @escaping () -> Void) {
 		self.paymentService = paymentService
 		self.onSuccess = onSuccess
 	}
 
-	func load() async {
+	func load() {
 		isLoading = true
-		do {
-			paymentMethods = try await paymentService.fetchPaymentMethods()
-		} catch {
-			print("Ошибка загрузки методов оплаты: \(error)")
+		Task {
+			do {
+				paymentMethods = try await paymentService.fetchPaymentMethods()
+				isLoading = false
+			} catch {
+				print("Ошибка загрузки методов оплаты: \(error)")
+				isLoading = false
+				lastAction = load
+				isAlertPresented = true
+			}
 		}
-		isLoading = false
 	}
 
 	func pay(onSuccess: @escaping () -> Void) {
 		Task {
 			do {
-				try await paymentService.performPayment()
-				saveSuccessAction = nil
+				guard let selectedMethod else { return }
+				try await paymentService.performPayment(for: "1", with: selectedMethod)
+				lastAction = nil
 				onSuccess()
 			} catch {
 				print(error.localizedDescription)
-				saveSuccessAction = onSuccess
+				lastAction = { [weak self] in
+					self?.pay(onSuccess: onSuccess)
+				}
 				isAlertPresented = true
 			}
 		}
 	}
 
 	func repeatAction() {
-		guard let action = saveSuccessAction else { return }
-		pay(onSuccess: action)
+		lastAction?()
+		isAlertPresented = false
 	}
 
 	func select(_ method: PaymentMethod) {

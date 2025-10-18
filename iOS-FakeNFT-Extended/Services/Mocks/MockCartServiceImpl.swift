@@ -7,28 +7,31 @@
 
 import SwiftUI
 
-class MockCartServiceImpl: CartService {
-	var items = (1...10).map { _ in
-		CartItem(
-			image: Image(.mock1),
-			name: "April",
-			rating: 3,
-			price: 1.78
-		)
+actor MockCartServiceImpl: CartService {
+	func fetchOrderItems() async throws -> [CartItem] {
+		print("fetch")
+		return items
 	}
 
-	func add(_ item: CartItem) {
+	func updateOrder(with items: [NftId]) async throws {
+
 	}
 
-	func fetchItems() -> [CartItem] {
-		items
-	}
-
-	func remove(_ item: CartItem) {
-		items.removeAll(where: { $0.id == item.id })
-	}
-
-	func clearCart() {
-		items = []
-	}
+	var items =
+		[
+			CartItem(
+				id: "1",
+				image: URL(string: "https://code.s3.yandex.net/Mobile/iOS/NFT/Pink/Calder/1.png")!,
+				name: "Edmund Flowers",
+				rating: 1,
+				price: 21.27
+			),
+			CartItem(
+				id: "2",
+				image: URL(string: "https://code.s3.yandex.net/Mobile/iOS/NFT/Pink/Calder/1.png")!,
+				name: "Edmund Flowers",
+				rating: 3,
+				price: 21.27
+			)
+		]
 }
