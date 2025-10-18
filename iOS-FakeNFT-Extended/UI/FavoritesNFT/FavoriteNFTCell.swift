@@ -18,6 +18,14 @@ struct FavoriteNFTCell: View {
                     .cornerRadius(12)
             } placeholder: {}
             .aspectRatio(contentMode: .fit)
+            .overlay(alignment: .topTrailing) {
+                Image(.active)
+                    .foregroundColor(.ypURed)
+                    .onTapGesture {
+                        // TODO: тут сервис избранных отработает
+                    }
+                    .offset(x: 5, y: -5)
+            }
             VStack(alignment: .leading, spacing: 5) {
                 Text("April")
                     .foregroundColor(.ypBlack)
