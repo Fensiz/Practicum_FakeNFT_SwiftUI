@@ -14,8 +14,8 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "ABC5E1672C31F5AF002B4068"
-               BuildableName = "iOS-FakeNFT-Extended.app"
+               BlueprintIdentifier = "85D5DB68A39EC196209ECC75"
+               BuildableName = "iOS_FakeNFT_Extended.app"
                BlueprintName = "iOS-FakeNFT-Extended"
                ReferencedContainer = "container:iOS-FakeNFT-Extended.xcodeproj">
             </BuildableReference>
@@ -33,18 +33,19 @@
             parallelizable = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "ABC5E1772C31F5B0002B4068"
-               BuildableName = "iOS-FakeNFT-ExtendedTests.xctest"
+               BlueprintIdentifier = "4FA699ECE1DEBCA9663B364B"
+               BuildableName = "iOS_FakeNFT_ExtendedTests.xctest"
                BlueprintName = "iOS-FakeNFT-ExtendedTests"
                ReferencedContainer = "container:iOS-FakeNFT-Extended.xcodeproj">
             </BuildableReference>
          </TestableReference>
          <TestableReference
-            skipped = "NO">
+            skipped = "NO"
+            parallelizable = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "ABC5E1812C31F5B0002B4068"
-               BuildableName = "iOS-FakeNFT-ExtendedUITests.xctest"
+               BlueprintIdentifier = "37CFAE3AF20D167AC91F051D"
+               BuildableName = "iOS_FakeNFT_ExtendedUITests.xctest"
                BlueprintName = "iOS-FakeNFT-ExtendedUITests"
                ReferencedContainer = "container:iOS-FakeNFT-Extended.xcodeproj">
             </BuildableReference>
@@ -65,8 +66,8 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "ABC5E1672C31F5AF002B4068"
-            BuildableName = "iOS-FakeNFT-Extended.app"
+            BlueprintIdentifier = "85D5DB68A39EC196209ECC75"
+            BuildableName = "iOS_FakeNFT_Extended.app"
             BlueprintName = "iOS-FakeNFT-Extended"
             ReferencedContainer = "container:iOS-FakeNFT-Extended.xcodeproj">
          </BuildableReference>
@@ -82,8 +83,8 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "ABC5E1672C31F5AF002B4068"
-            BuildableName = "iOS-FakeNFT-Extended.app"
+            BlueprintIdentifier = "85D5DB68A39EC196209ECC75"
+            BuildableName = "iOS_FakeNFT_Extended.app"
             BlueprintName = "iOS-FakeNFT-Extended"
             ReferencedContainer = "container:iOS-FakeNFT-Extended.xcodeproj">
          </BuildableReference>

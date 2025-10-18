@@ -7,10 +7,10 @@
 
 import SwiftUI
 
-struct FavoriteNFTCell: View {
+struct MyNFTCell: View {
     var body: some View {
         HStack(spacing: 0) {
-            AsyncImage(url: URL(string: "https://h1.nu/1hvI2")!) { image in
+            AsyncImage(url: URL(string: "https://i.yapx.ru/a4wfK.png")!) { image in
                 image
                     .resizable()
                     .aspectRatio(contentMode: .fit)
@@ -58,6 +58,7 @@ struct FavoriteNFTCell: View {
 
 #Preview {
     LightDarkPreviewWrapper {
-        FavoriteNFTCell()
+        MyNFTCell()
+            .padding(.horizontal)
     }
 }
