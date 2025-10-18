@@ -14,6 +14,15 @@ enum Avatar {
     static let user5 = "https://clck.ru/3DUYFN"
     static let user6 = "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/255.jpg"
     static let user7 = "https://pixelbox.ru/wp-content/uploads/2021/04/ava-mult-vk-49.jpg"
+    static let user8 = "https://i.ibb.co/fVLFtWrM/c1f8f42c5f5bd684e27d93131dc6ffd4696cdfd3.jpg"
+}
+
+enum Bio {
+    static let statisticCard =
+        """
+        Дизайнер из Казани, люблю цифровое искусство и бейглы. В моей коллекции уже 100+ NFT,
+        и еще больше — на моём сайте. Открыт к коллаборациям.
+        """
 }
 
 struct MockData {
@@ -31,6 +40,8 @@ struct MockData {
         User(id: "6", name: "Lea", avatar: URL(string: Avatar.user6), nfts: Array(repeating: "NFT", count: 23),
              rating: "2"),
         User(id: "1", name: "Eric", avatar: URL(string: Avatar.user7), nfts: Array(repeating: "NFT", count: 11),
-             rating: "1")
+             rating: "1"),
+        User(id: "1", name: "Joaquin Phoenix", avatar: URL(string: Avatar.user8),
+             nfts: Array(repeating: "NFT", count: 11), rating: "1", description: Bio.statisticCard)
     ]
 }
