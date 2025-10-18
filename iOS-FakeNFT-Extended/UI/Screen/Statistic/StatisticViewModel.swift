@@ -16,10 +16,8 @@ final class StatisticViewModel {
 
     var sortedUsers: [User] {
         switch sortOption {
-            case .byName:
-                return users.sorted { $0.name < $1.name }
-            case .byRating:
-                return users.sorted { $0.ratingValue > $1.ratingValue }
+            case .byName: users.sorted { $0.name < $1.name }
+            case .byRating: users.sorted { $0.ratingValue > $1.ratingValue }
         }
     }
 
@@ -27,7 +25,7 @@ final class StatisticViewModel {
         makeLoad()
     }
 
-    func makeLoad() {
+    private func makeLoad() {
         users = MockData.users
     }
 
