@@ -7,9 +7,9 @@
 
 import SwiftUI
 
-struct CartItem: Identifiable, Equatable, Hashable {
-	let id: UUID = UUID()
-	let image: Image
+struct CartItem: Identifiable, Equatable, Hashable, Decodable {
+	let id: String
+	let image: URL
 	let name: String
 	let rating: Int
 	let price: Double
