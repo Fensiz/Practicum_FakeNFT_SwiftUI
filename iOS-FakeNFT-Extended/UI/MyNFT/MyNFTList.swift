@@ -9,6 +9,7 @@
 import SwiftUI
 
 struct MyNFTList: View {
+    @State private var showContextMenu: Bool = false
     @Environment(\.dismiss) private var dismiss
     var body: some View {
         ScrollView {
@@ -26,10 +27,27 @@ struct MyNFTList: View {
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 // TODO: Добавить сортировку
-                Button(action: { print("Sort Tapped!") }) {
+                Button(action: { showContextMenu = true }) {
                     Image(.sort)
                 }
                 .foregroundColor(.ypBlack)
+                .actionSheet(isPresented: $showContextMenu) {
+                    ActionSheet(
+                        title: Text("Сортировка"),
+                        buttons: [
+                            .default(Text("По цене")) {
+                                
+                            },
+                            .default(Text("По рейтингу")) {
+                                
+                            },
+                            .default(Text("По названию")) {
+                                
+                            },
+                            .cancel(Text("Закрыть"))
+                        ]
+                    )
+                }
             }
             ToolbarItem(placement: .topBarLeading) {
                 Button(action: { dismiss() } ) {
