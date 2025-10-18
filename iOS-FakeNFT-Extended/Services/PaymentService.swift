@@ -8,5 +8,5 @@
 protocol PaymentService: Actor {
 	typealias UserId = String
 	func fetchPaymentMethods() async throws -> [PaymentMethod]
-	func performPayment(for user: UserId, with paymentMethod: PaymentMethod) async throws
+	func performPayment(with paymentMethod: PaymentMethod) async throws
 }

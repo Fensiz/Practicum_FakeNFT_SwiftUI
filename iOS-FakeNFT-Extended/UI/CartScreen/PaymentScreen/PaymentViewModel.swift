@@ -42,11 +42,13 @@ final class PaymentViewModel {
 	}
 
 	func pay(onSuccess: @escaping () -> Void) {
+		isLoading = true
 		Task {
 			do {
 				guard let selectedMethod else { return }
-				try await paymentService.performPayment(for: "1", with: selectedMethod)
+				try await paymentService.performPayment(with: selectedMethod)
 				lastAction = nil
+				isLoading = false
 				onSuccess()
 			} catch {
 				print(error.localizedDescription)
@@ -59,8 +61,8 @@ final class PaymentViewModel {
 	}
 
 	func repeatAction() {
-		lastAction?()
 		isAlertPresented = false
+		lastAction?()
 	}
 
 	func select(_ method: PaymentMethod) {

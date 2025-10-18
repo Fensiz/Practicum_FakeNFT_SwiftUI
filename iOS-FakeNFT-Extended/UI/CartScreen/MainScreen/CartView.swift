@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import ProgressHUD
 
 struct CartView: View {
 	@State var viewModel: CartViewModel
@@ -81,9 +80,9 @@ struct CartView: View {
 		}
 		.onChange(of: viewModel.isLoading) { _, newValue in
 			if newValue {
-				ProgressHUD.animate()
+				UIBlockingProgressHUD.show()
 			} else {
-				ProgressHUD.dismiss()
+				UIBlockingProgressHUD.dismiss()
 			}
 		}
 		.onAppear {

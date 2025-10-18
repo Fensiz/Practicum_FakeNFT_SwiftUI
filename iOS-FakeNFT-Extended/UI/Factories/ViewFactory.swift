@@ -21,11 +21,12 @@ final class ViewFactory {
 
 	init(rootCoordinator: any RootCoordinator) {
 		let networkService = DefaultNetworkClient()
-		let storageService = NftStorageImpl()
+		let context = SwiftDataStack.shared.container.mainContext
+		let storageService = NftStorageSwiftDataImpl(context: context)
 		let nftService = NftServiceImpl(networkClient: networkService, storage: storageService)
 
 		self.rootCoordinator = rootCoordinator
-		self.cartService = CartServiceImpl(networkService: networkService, nftService: nftService)//MockCartServiceImpl()
+		self.cartService = CartServiceImpl(networkService: networkService, nftService: nftService)
 		self.cartViewModel = CartViewModel(cartService: cartService)
 		self.cartCoordinator = CartCoordinatorImpl(rootCoordinator: rootCoordinator)
 

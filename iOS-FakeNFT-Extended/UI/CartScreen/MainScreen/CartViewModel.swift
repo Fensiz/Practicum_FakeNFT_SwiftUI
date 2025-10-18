@@ -44,13 +44,18 @@ final class CartViewModel {
 
 	func remove(_ item: CartItem) {
 		items.removeAll { $0.id == item.id }
+		print(items)
 		updateItems()
 	}
 
 	func clearCart() {
+		print("CLEAR CART")
+		print(items)
+		isLoading = true
 		Task {
 			try await cartService.updateOrder(with: [])
 			items.removeAll()
+			isLoading = false
 		}
 	}
 

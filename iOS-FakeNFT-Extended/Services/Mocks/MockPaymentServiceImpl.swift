@@ -8,13 +8,13 @@
 import Foundation
 
 final actor MockPaymentServiceImpl: PaymentService {
-	func performPayment(for user: UserId, with paymentMethod: PaymentMethod) async throws {
+	func performPayment(with paymentMethod: PaymentMethod) async throws {
 		if MockPaymentServiceImpl.count < 3 {
 			MockPaymentServiceImpl.count += 1
 			throw NSError(domain: "123", code: 1)
 		}
 	}
-	
+
 	func fetchPaymentMethods() async throws -> [PaymentMethod] {
 		// эмуляция задержки и подгрузки данных
 		try await Task.sleep(for: .seconds(0.5))

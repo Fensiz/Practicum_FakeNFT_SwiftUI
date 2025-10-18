@@ -22,9 +22,7 @@ struct PaymentView: View {
 	var body: some View {
 		ZStack {
 			Color.ypWhite.ignoresSafeArea()
-			if viewModel.isLoading {
-				ProgressView("Loading...")
-			} else {
+			if !viewModel.isLoading {
 				VStack {
 					LazyVGrid(columns: columns, spacing: 7) {
 						ForEach(viewModel.paymentMethods) { method in
@@ -83,6 +81,13 @@ struct PaymentView: View {
 					Image(.chevronLeft)
 						.foregroundStyle(.ypBlack)
 				}
+			}
+		}
+		.onChange(of: viewModel.isLoading) { _, newValue in
+			if newValue {
+				UIBlockingProgressHUD.show()
+			} else {
+				UIBlockingProgressHUD.dismiss()
 			}
 		}
 		.alert(

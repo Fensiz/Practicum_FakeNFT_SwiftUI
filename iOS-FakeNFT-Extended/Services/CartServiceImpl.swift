@@ -40,7 +40,7 @@ actor CartServiceImpl: CartService {
 	func updateOrder(with itemIds: [NftId]) async throws {
 		let request = OrdersRequest(
 			httpMethod: .put,
-			dto: itemIds
+			nfts: itemIds
 		)
 
 		_ = try await networkService.send(request: request)

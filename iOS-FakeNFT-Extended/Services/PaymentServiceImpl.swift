@@ -20,8 +20,8 @@ actor PaymentServiceImpl: PaymentService {
 		return result
 	}
 
-	func performPayment(for userId: UserId, with paymentMethod: PaymentMethod) async throws {
-		let request = PaymentRequest(userId: userId, currencyId: paymentMethod.id)
+	func performPayment(with paymentMethod: PaymentMethod) async throws {
+		let request = PaymentRequest(currencyId: paymentMethod.id)
 		_ = try await networkService.send(request: request)
 	}
 }
