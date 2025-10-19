@@ -12,4 +12,5 @@ protocol ProfileService {
     func loadProfile() async throws -> User
     func saveProfile(_ user: User) async throws -> User
     func hasChanges(original: User, current: User) -> Bool
+    func updateLikes(to likes: [String]) async throws -> User
 }

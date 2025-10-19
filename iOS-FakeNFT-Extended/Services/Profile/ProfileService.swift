@@ -23,24 +23,40 @@ final class ProfileServiceImpl: ProfileService {
     init(networkClient: any NetworkClient) {
         self.networkClient = networkClient
     }
+    /// получить профиль
     func loadProfile() async throws -> User {
         let request = ProfileRequest(httpMethod: .get)
         return try await networkClient.send(request: request)
     }
+    /// этим мы обновляем только профиль, без лайков
     func saveProfile(_ user: User) async throws -> User {
         let dto = ProfileUpdateDTO(
             name: user.name,
             avatar: user.avatar?.absoluteString,
             description: user.description,
-            website: user.website?.absoluteString
+            website: user.website?.absoluteString,
+            likes: nil
         )
         let request = ProfileRequest(httpMethod: .put, dto: dto)
         return try await networkClient.send(request: request)
     }
+    /// проверка на изменения пользователя
     func hasChanges(original: User, current: User) -> Bool {
         original.name != current.name ||
         original.description != current.description ||
         original.website != current.website ||
         original.avatar != current.avatar
+    }
+    /// для обновления только состояния лайкнутых nft
+    func updateLikes(to likes: [String]) async throws -> User {
+        let dto = ProfileUpdateDTO(
+            name: nil,
+            avatar: nil,
+            description: nil,
+            website: nil,
+            likes: likes
+        )
+        let request = ProfileRequest(httpMethod: .put, dto: dto)
+        return try await networkClient.send(request: request)
     }
 }

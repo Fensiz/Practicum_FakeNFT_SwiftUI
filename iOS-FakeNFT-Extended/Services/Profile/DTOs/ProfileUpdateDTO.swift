@@ -8,18 +8,39 @@
 import Foundation
 
 struct ProfileUpdateDTO: Encodable {
-    let name: String
+    let name: String?
     let avatar: String?
     let description: String?
     let website: String?
+    let likes: [String]?
+
     func toFormURLEncoded() -> Data? {
         var components = URLComponents()
-        components.queryItems = [
-            URLQueryItem(name: "name", value: name),
-            avatar.map { URLQueryItem(name: "avatar", value: $0) },
-            description.map { URLQueryItem(name: "description", value: $0) },
-            website.map { URLQueryItem(name: "website", value: $0) }
-        ].compactMap { $0 }
+        var queryItems = [URLQueryItem]()
+
+        if let name = name {
+            queryItems.append(URLQueryItem(name: "name", value: name))
+        }
+        if let avatar = avatar {
+            queryItems.append(URLQueryItem(name: "avatar", value: avatar))
+        }
+        if let description = description {
+            queryItems.append(URLQueryItem(name: "description", value: description))
+        }
+        if let website = website {
+            queryItems.append(URLQueryItem(name: "website", value: website))
+        }
+        if let likes = likes {
+            if likes.isEmpty {
+                queryItems.append(URLQueryItem(name: "likes", value: "null"))  // ключевое
+            } else {
+                for id in likes {
+                    queryItems.append(URLQueryItem(name: "likes[]", value: id))
+                }
+            }
+        }
+
+        components.queryItems = queryItems
         return components.query?.data(using: .utf8)
     }
 }
