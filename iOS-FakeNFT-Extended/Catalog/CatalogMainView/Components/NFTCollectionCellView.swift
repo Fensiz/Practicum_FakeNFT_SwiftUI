@@ -41,7 +41,7 @@ struct NFTCollectionCellView: View {
         HStack(spacing: 4) {
             Group {
                 Text("\(model.title.capitalized)")
-                Text("(\(model.nftIDs.count))")
+                Text("(\(model.nfts.count))")
             }
             .font(.system(size: 17, weight: .bold))
             .foregroundStyle(.ypBlack)
@@ -55,15 +55,22 @@ struct NFTCollectionCellView: View {
 }
 
 #Preview {
-    NFTCollectionCellView(
-        collection: .init(
-            imageURL: URL(string: "https://code.s3.yandex.net/Mobile/iOS/NFT/Обложки_коллекций/Beige.png"),
-            title: "Beige",
-            nftIDs: [1, 2, 3, 4],
-            description: "A series of ...",
-            authorID: 49,
-            id: 1
-        )
-    )
-    .frame(width: 300, height: 500)
+	NFTCollectionCellView(
+		collection: .init(
+			id: UUID(),
+			title: "unum reque",
+			imageURL: URL(string: "https://code.s3.yandex.net/Mobile/iOS/NFT/Обложки_коллекций/White.png")!,
+			nfts: [],
+			description: "dictas ...",
+			author: .init(
+				id: UUID(),
+		  name: "Jimmie Reilly",
+		  description: "daddsd",
+		  nfts: [],
+		  websiteURL: URL(string: "https://student7.students.practicum.org")!,
+		  avatarURL: URL(string: "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/594.jpg")!
+	  )
+		)
+	)
+	.frame(width: 300, height: 500)
 }

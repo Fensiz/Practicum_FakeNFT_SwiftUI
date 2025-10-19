@@ -73,7 +73,6 @@ struct NFTCollectionsListView: View {
 }
 
 #Preview {
-
     NavigationStack {
         NFTCollectionsListView(
             viewModel: NFTCollectionsListViewModel(

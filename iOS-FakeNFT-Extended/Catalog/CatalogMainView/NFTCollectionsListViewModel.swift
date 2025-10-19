@@ -34,7 +34,7 @@ final class NFTCollectionsListViewModel {
         case .byTitle:
             collections.sort(by: { $0.title < $1.title })
         case .bySize:
-            collections.sort(by: { $0.nftIDs.count < $1.nftIDs.count })
+            collections.sort(by: { $0.nfts.count < $1.nfts.count })
         }
     }
 
