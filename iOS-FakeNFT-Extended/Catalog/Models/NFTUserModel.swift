@@ -1,5 +1,5 @@
 //
-//  NFTAuthorModel.swift
+//  NFTUserModel.swift
 //  iOS-FakeNFT-Extended
 //
 //  Created by Vladimir on 19.10.2025.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct NFTAuthorModel: Identifiable, Equatable {
+struct NFTUserModel: Identifiable, Equatable {
 	let id: UUID
 	let name: String
 	let description: String
