@@ -18,6 +18,11 @@ struct NFTCardView: View {
 	private let isFavorite: Bool
 	private let isAddedToCart: Bool
 
+	private var priceString: String {
+		Decimal(price)
+			.formatted(.number.precision(.fractionLength(0...2)))
+	}
+
 	init(
 		name: String,
 		imageURL: URL?,
@@ -79,7 +84,7 @@ struct NFTCardView: View {
 					Group {
 						Text(name)
 							.font(.system(size: 17, weight: .bold))
-						Text("\(String(format: "%.2f%", price)) \(currency.rawValue.uppercased())")
+					Text("\(priceString) \(currency.rawValue.uppercased())")
 					}
 					.foregroundStyle(.ypBlack)
 				}
