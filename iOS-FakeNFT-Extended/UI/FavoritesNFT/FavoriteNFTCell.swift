@@ -6,35 +6,35 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct FavoriteNFTCell: View {
+    let nft: NftEntity
+    let onLikeTap: () -> Void
     var body: some View {
         HStack(spacing: 0) {
-            AsyncImage(url: URL(string: "https://i.yapx.ru/a4wfK.png")!) { image in
-                image
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 80, height: 80)
-                    .cornerRadius(12)
-            } placeholder: {}
-            .aspectRatio(contentMode: .fit)
-            .overlay(alignment: .topTrailing) {
-                Image(.active)
-                    .foregroundColor(.ypURed)
-                    .onTapGesture {
-                        // TODO: тут сервис избранных отработает
-                    }
-                    .offset(x: 5, y: -5)
-            }
+            KFImage(nft.imageURLs.first)
+                .placeholder {
+                    Color.gray.opacity(0.3)
+                }
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(width: 80, height: 80)
+                .cornerRadius(12)
+                .aspectRatio(contentMode: .fit)
+                .overlay(alignment: .topTrailing) {
+                    Image(.active)
+                        .foregroundColor(.ypURed)
+                        .onTapGesture(perform: onLikeTap)
+                        .offset(x: 5, y: -5)
+                }
             VStack(alignment: .leading, spacing: 5) {
-                Text("April")
+                Text(nft.name)
                     .foregroundColor(.ypBlack)
                     .font(Font(UIFont.bodyBold))
-               
-                RatingView(Int.random(in: 1...5))
-                
+                RatingView(nft.rating)
                 HStack(spacing: 4) {
-                    Text("1,78 ETH")
+                    Text("\(String(format: "%.2f", nft.price)) ETH")
                         .foregroundColor(.ypBlack)
                         .font(Font(UIFont.caption1))
                 }
@@ -46,7 +46,18 @@ struct FavoriteNFTCell: View {
 
 #Preview {
     LightDarkPreviewWrapper {
-        FavoriteNFTCell()
-            .padding(.horizontal)
+        FavoriteNFTCell(
+            nft: NftEntity(
+                id: "1",
+                name: "April",
+                images: [URL(string: "https://i.yapx.ru/a4wfK.png")!],
+                rating: 4,
+                descriptionText: "Description",
+                price: 1.78,
+                authorURL: URL(string: "https://example.com")!
+            ),
+            onLikeTap: {}
+        )
+        .padding(.horizontal)
     }
 }

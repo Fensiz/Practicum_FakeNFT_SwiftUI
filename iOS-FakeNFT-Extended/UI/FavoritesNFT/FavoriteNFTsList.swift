@@ -17,8 +17,16 @@ struct FavoriteNFTsList: View {
                 GridItem(.flexible(), spacing: 7),
                 GridItem(.flexible(), spacing: 7)
             ], spacing: 20) {
-                ForEach(1..<7) { _ in
-                    FavoriteNFTCell()
+                ForEach(1..<7) { id in
+                    FavoriteNFTCell(nft: NftEntity(
+                        id: "\(id)",
+                        name: "Name",
+                        images: [URL(string: "https://i.yapx.ru/a4wfK.png")!],
+                        rating: 3,
+                        descriptionText: "tralalelo tralala",
+                        price: 1.2,
+                        authorURL: URL(string: "https://gracious_noether.fakenfts.org/")!)
+                    ) {}
                 }
             }
             .padding(20)
