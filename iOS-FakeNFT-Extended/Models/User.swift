@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct User: Codable, Identifiable, Sendable {
+struct User: Codable, Identifiable, Sendable, Equatable {
     let name: String
     let avatar: URL?
     let description: String?

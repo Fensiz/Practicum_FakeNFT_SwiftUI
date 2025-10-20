@@ -42,13 +42,12 @@ final class ProfileServiceImpl: ProfileService {
         let request = ProfileRequest(httpMethod: .put, dto: dto)
         return try await networkClient.send(request: request)
     }
+    
     /// проверка на изменения пользователя
     func hasChanges(original: User, current: User) -> Bool {
-        original.name != current.name ||
-        original.description != current.description ||
-        original.website != current.website ||
-        original.avatar != current.avatar
+        original != current
     }
+    
     /// для обновления только состояния лайкнутых nft
     func updateLikes(to likes: [String]) async throws -> User {
         let dto = ProfileUpdateDTO(
