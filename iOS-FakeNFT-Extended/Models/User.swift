@@ -24,6 +24,13 @@ struct User: Codable, Identifiable, Sendable {
     var likesArray: [String] {
         likes ?? []
     }
+    
+    static func == (lhs: User, rhs: User) -> Bool {
+        lhs.name == rhs.name &&
+        lhs.description == rhs.description &&
+        lhs.website == rhs.website &&
+        lhs.avatar == rhs.avatar
+    }
 
     init(
         id: String,

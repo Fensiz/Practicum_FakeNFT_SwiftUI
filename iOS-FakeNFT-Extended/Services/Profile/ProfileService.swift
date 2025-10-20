@@ -23,12 +23,14 @@ final class ProfileServiceImpl: ProfileService {
     init(networkClient: any NetworkClient) {
         self.networkClient = networkClient
     }
+    
     /// получить профиль
     func loadProfile() async throws -> User {
         let request = ProfileRequest(httpMethod: .get)
         return try await networkClient.send(request: request)
     }
-    /// этим мы обновляем только профиль, без лайков
+    
+    /// обновляем только профиль, без лайков
     func saveProfile(_ user: User) async throws -> User {
         let dto = ProfileUpdateDTO(
             name: user.name,
