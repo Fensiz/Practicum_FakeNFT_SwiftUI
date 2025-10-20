@@ -135,7 +135,7 @@ actor NFTCollectionDetailsMockService: NFTCollectionDetailsServiceProtocol {
 		name: "Jimmie Reilly",
 		description: "daddsd",
 		nftIDs: [],
-		websiteURL: URL(string: "https://student7.students.practicum.org")!,
+		websiteURL: URL(string: "https://apple.com")!,
 		avatarURL: URL(string: "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/594.jpg")!
 	)
 

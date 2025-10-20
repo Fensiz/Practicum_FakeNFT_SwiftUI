@@ -22,7 +22,7 @@ actor NFTCollectionsMockProvider: NFTCollectionsProviderProtocol {
 			title: "singulis epicuri",
 			imageURL: URL(string: "https://code.s3.yandex.net/Mobile/iOS/NFT/Обложки_коллекций/Brown.png")!,
 			nftIDs: Array(repeating: UUID(), count: 3),
-			description: "curabitur ...",
+			description: "curabitur feugait a definitiones singulis movet eros aeque mucius evertitur assueverit et eam",
 			authorID: UUID()
 		),
 		.init(
@@ -30,7 +30,7 @@ actor NFTCollectionsMockProvider: NFTCollectionsProviderProtocol {
 			title: "Beige",
 			imageURL: URL(string: "https://code.s3.yandex.net/Mobile/iOS/NFT/Обложки_коллекций/Beige.png")!,
 			nftIDs: Array(repeating: UUID(), count: 4),
-			description: "A series of ...",
+			description: "suscipiantur alienum ad habitant venenatis rhoncus maximus impetus elaboraret scripta disputationi esse quot aliquid",
 			authorID: UUID()
 		),
 		.init(
@@ -38,7 +38,7 @@ actor NFTCollectionsMockProvider: NFTCollectionsProviderProtocol {
 			title: "unum reque",
 			imageURL: URL(string: "https://code.s3.yandex.net/Mobile/iOS/NFT/Обложки_коллекций/White.png")!,
 			nftIDs: Array(repeating: UUID(), count: 2),
-			description: "dictas ...",
+			description: "dictas singulis placerat interdum maximus referrentur partiendo explicari verear molestiae",
 			authorID: UUID()
 		)
     ]
