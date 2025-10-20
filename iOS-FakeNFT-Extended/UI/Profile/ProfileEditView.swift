@@ -8,12 +8,13 @@
 import SwiftUI
 
 struct ProfileEditView: View {
+    let coordinator: RootCoordinatorImpl
     @State private var name = "Joaquin Phoenix"
     @State private var description = "Дизайнер из Казани, люблю цифровое искусство и бейглы."
     @State private var siteUrlString: String = "https://hello.com"
     @State private var showContextMenu: Bool = false
     @State private var showSiteEditAlert: Bool = false
-    @State private var avatarUrlString: String = "https://tinyurl.com/mrxzhdb7"
+    @State private var avatarUrlString: String = "https://i.ibb.co/fVLFtWrM/c1f8f42c5f5bd684e27d93131dc6ffd4696cdfd3.jpg" // не могу сделать короче строку сейчас
     @State private var newAvatarUrlString: String = ""
     @State private var isSaveInProgress: Bool = false
     @State private var wantExitHasChanges: Bool = false
@@ -63,6 +64,9 @@ struct ProfileEditView: View {
                     .font(Font(UIFont.headline3))
                 TextField("Joaquin Phoenix", text: $name)
                     .applyTextInputStyle()
+                    .onChange(of: name) {
+                        coordinator.showSaveButton()
+                    } // TODO: потом поменяю логику, это для демо
             }
             VStack(alignment: .leading, spacing: 8) {
                 Text("Описание")
@@ -70,6 +74,9 @@ struct ProfileEditView: View {
                 TextEditor(text: $description)
                     .applyTextInputStyle()
                     .scrollContentBackground(.hidden)
+                    .onChange(of: description) {
+                        coordinator.showSaveButton()
+                    } // TODO: потом поменяю логику, это для демо
             }
             .frame(minHeight: 40, maxHeight: 155)
             .fixedSize(horizontal: false, vertical: true)
@@ -79,26 +86,19 @@ struct ProfileEditView: View {
                     .font(Font(UIFont.headline3))
                 TextField("", text: $siteUrlString)
                     .applyTextInputStyle()
+                    .onChange(of: siteUrlString) {
+                        coordinator.showSaveButton()
+                    } // TODO: потом поменяю логику, это для демо
             }
             Spacer()
         }
         .frame(maxWidth: .infinity)
-        .overlay(alignment: .bottom, content: {
-            // TODO: Show it when data was changed
-            Button(action: {
-                // TODO: Save action
-                print("Saved")
-            }) {
-                Text("Сохранить")
-                    .frame(maxWidth: .infinity)
-                    .font(Font(UIFont.bodyBold))
-                    .foregroundColor(.ypWhite)
-                    .padding(.vertical, 19)
-                    .padding(.horizontal, 8)
-                    .background(Color.ypBlack.cornerRadius(16))
-            }
-            .padding()
-        })
+        .overlay(alignment: .bottom) {
+            SaveButtonView(
+                isVisible: coordinator.shouldShowSaveButton,
+                onSave: { print("Saved") }
+            )
+        }
         .overlay {
             ZStack {
                 Color.ypLightGrey.cornerRadius(8)
@@ -125,6 +125,9 @@ struct ProfileEditView: View {
                 }
             }
         )
+        .onAppear {
+            coordinator.hideSaveButton()
+        }
     }
 }
 
@@ -145,6 +148,8 @@ struct NavigationControllerIntrospection: UIViewControllerRepresentable {
 
 #Preview {
     NavigationView {
-        ProfileEditView()
+        ProfileEditView(
+            coordinator: RootCoordinatorImpl()
+        )
     }
 }
