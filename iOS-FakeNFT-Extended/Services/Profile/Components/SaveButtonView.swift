@@ -16,10 +16,10 @@ struct SaveButtonView: View {
             Text("Сохранить")
                 .frame(maxWidth: .infinity)
                 .font(Font(UIFont.bodyBold))
-                .foregroundColor(.ypWhite)
+                .foregroundStyle(.ypWhite)
                 .padding(.vertical, 19)
                 .padding(.horizontal, 8)
-                .background(Color.ypBlack.cornerRadius(16))
+                .background(Color.ypBlack.clipShape(RoundedRectangle(cornerRadius: 16)))
         }
         .padding()
         .opacity(isVisible ? 1 : 0)  /// Показываю/скрываю через координатор

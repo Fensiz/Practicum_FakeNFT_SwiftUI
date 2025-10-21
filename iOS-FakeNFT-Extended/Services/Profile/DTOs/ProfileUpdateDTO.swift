@@ -18,19 +18,19 @@ struct ProfileUpdateDTO: Encodable {
         var components = URLComponents()
         var queryItems = [URLQueryItem]()
 
-        if let name = name {
+        if let name {
             queryItems.append(URLQueryItem(name: "name", value: name))
         }
-        if let avatar = avatar {
+        if let avatar {
             queryItems.append(URLQueryItem(name: "avatar", value: avatar))
         }
-        if let description = description {
+        if let description {
             queryItems.append(URLQueryItem(name: "description", value: description))
         }
-        if let website = website {
+        if let website {
             queryItems.append(URLQueryItem(name: "website", value: website))
         }
-        if let likes = likes {
+        if let likes {
             if likes.isEmpty {
                 queryItems.append(URLQueryItem(name: "likes", value: "null"))  // ключевое
             } else {

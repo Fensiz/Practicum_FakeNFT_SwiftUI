@@ -16,7 +16,7 @@ struct MyNFTList: View {
             VStack(spacing: 0) {
                 ForEach(1..<4) { _ in
                     MyNFTCell()
-                        .padding([.top, .bottom, .leading])
+                        .padding([.vertical, .leading])
                         .padding(.trailing, 39)
                 }
             }
