@@ -23,7 +23,6 @@ final class ProfileServiceImpl: ProfileService {
     init(networkClient: any NetworkClient) {
         self.networkClient = networkClient
     }
-    
     func loadProfile() async throws -> User {
         let request = ProfileRequest(httpMethod: .get)
         return try await networkClient.send(request: request)

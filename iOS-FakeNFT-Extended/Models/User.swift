@@ -15,7 +15,7 @@ struct User: Codable, Identifiable, Sendable, Equatable {
     let nfts: [String]
     let rating: String?
     let id: String
-    let likes: [String]?  // ОПЦИОНАЛЬНЫЙ  для GET
+    let likes: [String]? // ОПЦИОНАЛЬНЫЙ для GET
 
     var ratingValue: Int {
         nfts.count
@@ -24,7 +24,6 @@ struct User: Codable, Identifiable, Sendable, Equatable {
     var likesArray: [String] {
         likes ?? []
     }
-    
     static func == (lhs: User, rhs: User) -> Bool {
         lhs.name == rhs.name &&
         lhs.description == rhs.description &&
