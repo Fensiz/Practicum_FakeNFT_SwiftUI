@@ -4,19 +4,32 @@
 //
 //  Created by Алина on 11.10.2025.
 //
+
 import SwiftUI
 
-struct User: Codable, Identifiable, Sendable {
+struct User: Codable, Identifiable, Sendable, Equatable {
     let name: String
     let avatar: URL?
     let description: String?
     let website: URL?
     let nfts: [String]
-    let rating: String
+    let rating: String?
     let id: String
+    let likes: [String]?  // ОПЦИОНАЛЬНЫЙ  для GET
 
     var ratingValue: Int {
         nfts.count
+    }
+
+    var likesArray: [String] {
+        likes ?? []
+    }
+    
+    static func == (lhs: User, rhs: User) -> Bool {
+        lhs.name == rhs.name &&
+        lhs.description == rhs.description &&
+        lhs.website == rhs.website &&
+        lhs.avatar == rhs.avatar
     }
 
     init(
@@ -24,9 +37,10 @@ struct User: Codable, Identifiable, Sendable {
         name: String,
         avatar: URL?,
         nfts: [String],
-        rating: String,
+        rating: String? = nil,
         description: String? = nil,
-        website: URL? = nil
+        website: URL? = nil,
+        likes: [String]? = nil
     ) {
         self.id = id
         self.name = name
@@ -35,5 +49,6 @@ struct User: Codable, Identifiable, Sendable {
         self.rating = rating
         self.description = description
         self.website = website
+        self.likes = likes
     }
 }
