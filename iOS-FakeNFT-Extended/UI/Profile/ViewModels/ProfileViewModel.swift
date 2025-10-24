@@ -147,8 +147,8 @@ final class ProfileViewModel: ObservableObject {
         editingUser?.avatar = nil
         updateSaveButton()
     }
-    func checkExit() {
-        wantExitHasChanges = hasChanges()
+    func checkExit() -> Bool {
+        return hasChanges()
     }
     func cancelExit() {
         wantExitHasChanges = false

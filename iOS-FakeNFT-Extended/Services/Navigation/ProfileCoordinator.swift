@@ -26,20 +26,12 @@ final class ProfileCoordinatorImpl: ProfileCoordinator {
     private let rootCoordinator: any RootCoordinator
     private var _shouldShowSaveButton = false
     var shouldShowSaveButton: Bool { _shouldShowSaveButton }
-    init(rootCoordinator: any RootCoordinator) {
-        self.rootCoordinator = rootCoordinator
-    }
+    init(rootCoordinator: any RootCoordinator) { self.rootCoordinator = rootCoordinator }
     func showSaveButton() { _shouldShowSaveButton = true }
     func hideSaveButton() { _shouldShowSaveButton = false }
-    func openProfileEdit() {
-        rootCoordinator.open(screen: .profileEdit)
-    }
-    func openMyNFTs() {
-        rootCoordinator.open(screen: .myNfts)
-    }
-    func openLikedNFTs() {
-        rootCoordinator.open(screen: .favorites)
-    }
+    func openProfileEdit() { rootCoordinator.open(screen: .profileEdit) }
+    func openMyNFTs() { rootCoordinator.open(screen: .myNfts) }
+    func openLikedNFTs() { rootCoordinator.open(screen: .favorites) }
     func goBack() { rootCoordinator.goBack() }
     func openUserAgreement() {
         guard let url = URL(string: "https://yandex.ru/legal/practicum_termsofuse") else { return }

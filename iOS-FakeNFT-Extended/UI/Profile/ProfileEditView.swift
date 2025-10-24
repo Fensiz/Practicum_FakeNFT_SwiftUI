@@ -14,6 +14,13 @@ struct ProfileEditView: View {
 
     var body: some View {
         VStack(spacing: 24) {
+            HStack {
+                Button(action: { exitEditing() }) {
+                    Image(.chevronLeft)
+                        .foregroundColor(.ypBlack)
+                }
+                Spacer()
+            }
             ProfileImage(
                 imageUrl: viewModel.editingUser?.avatar,
                 canEdit: true
@@ -116,7 +123,7 @@ struct ProfileEditView: View {
             DragGesture(minimumDistance: 30, coordinateSpace: .global)
                 .onEnded { value in
                     if value.translation.width > 50 {
-                        viewModel.checkExit()
+                        exitEditing()
                     }
                 }
         )
@@ -124,6 +131,14 @@ struct ProfileEditView: View {
             Task {
                 await viewModel.loadProfile()
             }
+        }
+    }
+    
+    private func exitEditing() {
+        if viewModel.checkExit() {
+            viewModel.wantExitHasChanges = true
+        } else {
+            coordinator.goBack()
         }
     }
 }
