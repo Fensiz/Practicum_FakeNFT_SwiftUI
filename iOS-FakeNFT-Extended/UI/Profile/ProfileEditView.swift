@@ -24,15 +24,12 @@ struct ProfileEditView: View {
 	private let onSave: ProfileSaveAction
 	private let onCancel: ProfileCancelAction
 	private let coordinator: any ProfileCoordinator
-	
-	// Локальное состояние
 	@State private var data: ProfileEditData
 	@State private var showAvatarMenu = false
 	@State private var showAvatarUrlAlert = false
 	@State private var avatarUrlInput = ""
 	@State private var showExitAlert = false
 	@State private var isSaving = false
-	
 	init(
 		initialData: ProfileEditData,
 		onSave: @escaping ProfileSaveAction,
@@ -178,24 +175,3 @@ struct ProfileEditView: View {
 		}
 	}
 }
-
-// MARK: - Preview
-//#Preview {
-//	ProfileEditView(
-//		initialData: ProfileEditData(
-//			name: "Герман",
-//			description: "iOS-разработчик, люблю SwiftUI",
-//			website: "https://github.com",
-//			avatarURL: URL(string: "https://i.pravatar.cc/300")
-//		),
-//		onSave: { data in
-//			print("Сохраняем:", data)
-//		},
-//		onCancel: {
-//			print("Отмена")
-//		},
-//		coordinator: ProfileCoordinatorImpl(
-//			rootCoordinator: RootCoordinatorImpl(), profileViewModel: <#ProfileViewModel#>
-//		)
-//	)
-//}

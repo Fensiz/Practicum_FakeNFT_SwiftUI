@@ -15,21 +15,11 @@ struct User: Codable, Identifiable, Sendable, Equatable {
     let nfts: [String]
     let rating: String?
     let id: String
-    var likes: [String]? // ОПЦИОНАЛЬНЫЙ для GET
+    var likes: [String]? // ОПЦИОНАЛЬНЫЙ для profile
 
     var ratingValue: Int {
         nfts.count
     }
-
-    var likesArray: [String] { // TODO: Может убрать?
-        likes ?? []
-    }
-//    static func == (lhs: User, rhs: User) -> Bool {
-//        lhs.name == rhs.name &&
-//        lhs.description == rhs.description &&
-//        lhs.website == rhs.website &&
-//        lhs.avatar == rhs.avatar
-//    }
 
     init(
         id: String,
