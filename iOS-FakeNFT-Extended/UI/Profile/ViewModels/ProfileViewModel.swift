@@ -71,8 +71,8 @@ final class ProfileViewModel: ObservableObject {
 			return
 		}
 		isLoadingMyNFTs = true
-		errorMessage = nil
 		defer { isLoadingMyNFTs = false }
+		
 		do {
 			self.myNfts = try await loadNfts(for: user.nfts)
 			errorMessage = nil
@@ -86,7 +86,6 @@ final class ProfileViewModel: ObservableObject {
 			return
 		}
 		isLoadingLikedNFTs = true
-		errorMessage = nil
 		defer { isLoadingLikedNFTs = false }
 		do {
 			self.likedNfts = try await loadNfts(for: likes)
@@ -127,17 +126,21 @@ final class ProfileViewModel: ObservableObject {
 	}
 	func toggleLike(nftId: String) async {
 		guard var likes = user?.likes else { return }
+		
 		if likes.contains(nftId) {
 			likes.removeAll { $0 == nftId }
 		} else {
 			likes.append(nftId)
 		}
+		
 		do {
 			let updatedUser = try await profileService.updateLikes(to: likes)
 			self.user = updatedUser
 			await loadMyNFTs()
 		} catch {
-			errorMessage = "Не удалось обновить лайк"
+			await MainActor.run {
+				errorMessage = "Не удалось обновить лайк"
+			}
 		}
 	}
 	func sortMyNFTs(by criteria: SortCriteria) {

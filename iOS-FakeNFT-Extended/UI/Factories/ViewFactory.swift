@@ -48,10 +48,10 @@ final class ViewFactory {
 		case .profileEdit:
 			ProfileEditView(
 				initialData: ProfileEditData(
-					name: self.profileViewModel.editingUser?.name ?? "",
-					description: self.profileViewModel.editingUser?.description ?? "",
-					website: self.profileViewModel.editingUser?.website?.absoluteString ?? "",
-					avatarURL: self.profileViewModel.editingUser?.avatar
+					name: profileViewModel.editingUser?.name ?? "",
+					description: profileViewModel.editingUser?.description ?? "",
+					website: profileViewModel.editingUser?.website?.absoluteString ?? "",
+					avatarURL: profileViewModel.editingUser?.avatar
 				),
 				onSave: { editedData in await self.profileViewModel.updateProfile(with: editedData) },
 				onCancel: { self.profileViewModel.cancelEditing() },

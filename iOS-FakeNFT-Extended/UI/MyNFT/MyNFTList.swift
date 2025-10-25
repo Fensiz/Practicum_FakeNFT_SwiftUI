@@ -11,6 +11,7 @@ import SwiftUI
 struct MyNFTList: View {
 	@Environment(\.dismiss) private var dismiss
 	@State var viewModel: ProfileViewModel
+	@State private var togglingLikeId: String?
 	var body: some View {
 		VStack {
 			if viewModel.isLoadingMyNFTs {
@@ -25,9 +26,19 @@ struct MyNFTList: View {
 								author: viewModel.user?.name,
 								isLiked: viewModel.isLiked(nftId: nft.id),
 								onLikeTap: {
-									Task { await viewModel.toggleLike(nftId: nft.id) }
+									let id = nft.id
+									guard togglingLikeId != id else { return }
+									togglingLikeId = id
+									Task {
+										await viewModel.toggleLike(nftId: id)
+										await MainActor.run {
+											togglingLikeId = nil
+										}
+									}
 								}
 							)
+							.opacity(togglingLikeId == nft.id ? 0.6 : 1.0)
+							.animation(.easeInOut(duration: 0.2), value: togglingLikeId)
 							.padding([.vertical, .leading])
 							.padding(.trailing, 39)
 						}
@@ -54,10 +65,10 @@ struct MyNFTList: View {
 				}
 			}
 			ToolbarItem(placement: .topBarLeading) {
-				Button(action: { dismiss() }) {
+				Button { dismiss() } label: {
 					Image(.chevronLeft)
+						.foregroundColor(.ypBlack)
 				}
-				.foregroundColor(.ypBlack)
 			}
 		}
 		.background(Color.ypWhite)
