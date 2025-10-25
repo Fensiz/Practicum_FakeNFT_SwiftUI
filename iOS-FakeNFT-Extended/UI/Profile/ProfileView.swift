@@ -25,10 +25,12 @@ struct ProfileView: View {
 							.frame(maxWidth: .infinity, alignment: .leading)
 					}
 				}
-                Button(action: {/* TODO: nav - MyNFTList().env*/}) {
-                    navButton(title: "Мои NFT", count: user.nfts.count)
-                }
-                .padding(.top, 40)
+				Button(action: {
+					coordinator.openMyNFTs()
+				}) {
+					navButton(title: "Мои NFT", count: user.nfts.count)
+				}
+				.padding(.top, 40)
                 
                 Button(action: {/* TODO: nav - FavoriteNFTsList().env*/}) {
                     navButton(title: "Избранные NFT", count: user.likes?.count ?? 0)

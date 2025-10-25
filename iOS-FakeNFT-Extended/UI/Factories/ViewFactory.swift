@@ -11,10 +11,16 @@ import SwiftUI
 final class ViewFactory {
 	private let rootCoordinator: any RootCoordinator
 	private let profileViewModel: ProfileViewModel
+//	private let profileCoordinator: ProfileCoordinatorImpl
 	
-	init(rootCoordinator: any RootCoordinator, profileViewModel: ProfileViewModel) {
+	init(
+		rootCoordinator: any RootCoordinator,
+		profileViewModel: ProfileViewModel,
+//		profileCoordinator: ProfileCoordinatorImpl
+	) {
 		self.rootCoordinator = rootCoordinator
 		self.profileViewModel = profileViewModel
+//		self.profileCoordinator = profileCoordinator
 	}
 	
 	// сюда добавляются все экраны, которые перекрывают tabView,
@@ -31,9 +37,8 @@ final class ViewFactory {
 		case .successPayment:
 			EmptyView()
 		case .myNfts:
-			EmptyView()
-			//            MyNFTList()
-			//                .environmentObject(profileViewModel)
+			MyNFTList()
+				.environmentObject(profileViewModel)
 		case .favorites:
 			EmptyView()
 			//            FavoriteNFTsList()
@@ -54,7 +59,7 @@ final class ViewFactory {
 			)
 		}
 	}
-
+	
 	// сюда вроде бы кроме корзины никто ничего не добавляет,
 	// но мне эта заготовка нужна в корне проекта
 	// в теории можно добавлять свои экраны, которые
@@ -68,7 +73,7 @@ final class ViewFactory {
 			EmptyView()
 		}
 	}
-
+	
 	@ViewBuilder
 	func makeTabView(for tab: Tab) -> some View {
 		switch tab {
@@ -77,12 +82,10 @@ final class ViewFactory {
 		case .cart:
 			EmptyView()
 		case .profile:
-			let profileCoordinator = ProfileCoordinatorImpl(
-				rootCoordinator: rootCoordinator,
-				profileViewModel: profileViewModel
-			)
-			ProfileView(coordinator: profileCoordinator)
-				.environmentObject(profileViewModel)
+			EmptyView()
+//			ProfileView(coordinator: profileCoordinator)
+//				.environmentObject(profileViewModel)
+			
 		case .statistic:
 			EmptyView()
 		}
