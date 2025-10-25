@@ -10,19 +10,24 @@ import SwiftUI
 @MainActor
 final class ViewFactory {
 	private let rootCoordinator: any RootCoordinator
+	private let profileService: any ProfileService
 	private let profileViewModel: ProfileViewModel
-//	private let profileCoordinator: ProfileCoordinatorImpl
-	
-	init(
-		rootCoordinator: any RootCoordinator,
-		profileViewModel: ProfileViewModel,
-//		profileCoordinator: ProfileCoordinatorImpl
-	) {
+	private let profileCoordinator: ProfileCoordinatorImpl
+	private lazy var profileView: some View = ProfileView(
+		viewModel: profileViewModel,
+		coordinator: profileCoordinator
+	)
+	init(rootCoordinator: any RootCoordinator) {
+		let networkClient = DefaultNetworkClient()
+		let context = SwiftDataStack.shared.container.mainContext
+		let storageService = NftStorageSwiftDataImpl(context: context)
+		let nftService = NftServiceImpl(networkClient: networkClient, storage: storageService)
+		let profileService = ProfileServiceImpl(networkClient: networkClient)
 		self.rootCoordinator = rootCoordinator
-		self.profileViewModel = profileViewModel
-//		self.profileCoordinator = profileCoordinator
+		self.profileService = profileService
+		self.profileViewModel = ProfileViewModel(profileService: profileService, nftsService: nftService)
+		self.profileCoordinator = ProfileCoordinatorImpl(rootCoordinator: rootCoordinator)
 	}
-	
 	// сюда добавляются все экраны, которые перекрывают tabView,
 	// и относятся к navigationStack
 	@ViewBuilder
@@ -37,12 +42,9 @@ final class ViewFactory {
 		case .successPayment:
 			EmptyView()
 		case .myNfts:
-			MyNFTList()
-				.environmentObject(profileViewModel)
+			MyNFTList(viewModel: profileViewModel)
 		case .favorites:
 			EmptyView()
-			//            FavoriteNFTsList()
-			//                .environmentObject(profileViewModel)
 		case .profileEdit:
 			ProfileEditView(
 				initialData: ProfileEditData(
@@ -59,7 +61,6 @@ final class ViewFactory {
 			)
 		}
 	}
-	
 	// сюда вроде бы кроме корзины никто ничего не добавляет,
 	// но мне эта заготовка нужна в корне проекта
 	// в теории можно добавлять свои экраны, которые
@@ -73,7 +74,6 @@ final class ViewFactory {
 			EmptyView()
 		}
 	}
-	
 	@ViewBuilder
 	func makeTabView(for tab: Tab) -> some View {
 		switch tab {
@@ -82,10 +82,7 @@ final class ViewFactory {
 		case .cart:
 			EmptyView()
 		case .profile:
-			EmptyView()
-//			ProfileView(coordinator: profileCoordinator)
-//				.environmentObject(profileViewModel)
-			
+			profileView
 		case .statistic:
 			EmptyView()
 		}

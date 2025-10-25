@@ -10,7 +10,7 @@ import SwiftUI
 
 struct MyNFTList: View {
 	@Environment(\.dismiss) private var dismiss
-	@EnvironmentObject var viewModel: ProfileViewModel
+	@State var viewModel: ProfileViewModel
 	var body: some View {
 		VStack {
 			if viewModel.isLoadingMyNFTs {

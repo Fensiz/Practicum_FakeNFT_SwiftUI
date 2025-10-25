@@ -28,7 +28,7 @@ final class ProfileViewModel: ObservableObject {
 	func showSortContextMenu() {
 		wantToSortMyNft = true
 	}
-	func clearError() { // TODO: возможно стоит избавиться и перенести на экраны списка
+	func clearError() {
 		errorMessage = nil
 	}
 	func loadProfile() async {
@@ -70,11 +70,9 @@ final class ProfileViewModel: ObservableObject {
 			errorMessage = "Не удалось получить данные"
 			return
 		}
-		
 		isLoadingMyNFTs = true
 		errorMessage = nil
 		defer { isLoadingMyNFTs = false }
-		
 		do {
 			self.myNfts = try await loadNfts(for: user.nfts)
 			errorMessage = nil
@@ -82,17 +80,14 @@ final class ProfileViewModel: ObservableObject {
 			errorMessage = "Не удалось получить данные"
 		}
 	}
-	
 	func loadLikedNFTs() async {
 		guard let user = user, let likes = user.likes, !likes.isEmpty else {
 			errorMessage = "Нет лайкнутых NFT"
 			return
 		}
-		
 		isLoadingLikedNFTs = true
 		errorMessage = nil
 		defer { isLoadingLikedNFTs = false }
-		
 		do {
 			self.likedNfts = try await loadNfts(for: likes)
 			errorMessage = nil
@@ -127,19 +122,16 @@ final class ProfileViewModel: ObservableObject {
 		editingUser = user
 		errorMessage = nil
 	}
-	
 	func isLiked(nftId: String) -> Bool {
 		user?.likes?.contains(nftId) == true
 	}
 	func toggleLike(nftId: String) async {
 		guard var likes = user?.likes else { return }
-		
 		if likes.contains(nftId) {
 			likes.removeAll { $0 == nftId }
 		} else {
 			likes.append(nftId)
 		}
-		
 		do {
 			let updatedUser = try await profileService.updateLikes(to: likes)
 			self.user = updatedUser
@@ -160,7 +152,6 @@ final class ProfileViewModel: ObservableObject {
 		}
 		self.myNfts = nfts
 	}
-	
 	enum SortCriteria {
 		case price, rating, name
 	}

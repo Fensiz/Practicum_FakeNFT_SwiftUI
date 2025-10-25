@@ -25,12 +25,10 @@ protocol ProfileCoordinator: AnyObject {
 
 final class ProfileCoordinatorImpl: ProfileCoordinator {
 	private let rootCoordinator: any RootCoordinator
-	private let profileViewModel: ProfileViewModel
     private var _shouldShowSaveButton = false
     var shouldShowSaveButton: Bool { _shouldShowSaveButton }
-	init(rootCoordinator: any RootCoordinator, profileViewModel: ProfileViewModel) {
+	init(rootCoordinator: any RootCoordinator) {
 		self.rootCoordinator = rootCoordinator
-		self.profileViewModel = profileViewModel
 	}
     func showSaveButton() { _shouldShowSaveButton = true }
     func hideSaveButton() { _shouldShowSaveButton = false }
