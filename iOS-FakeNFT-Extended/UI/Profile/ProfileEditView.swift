@@ -7,62 +7,101 @@
 
 import SwiftUI
 
-struct ProfileEditView: View {
-    @EnvironmentObject var viewModel: ProfileViewModel
-    @State var coordinator: any ProfileCoordinator
-    @Environment(\.dismiss) private var dismiss
+// MARK: - Интерфейс для редактирования
+struct ProfileEditData {
+	var name: String
+	var description: String
+	var website: String
+	var avatarURL: URL?
+}
 
+// MARK: - Клоужеры
+typealias ProfileSaveAction = (ProfileEditData) async -> Void
+typealias ProfileCancelAction = () -> Void
+
+struct ProfileEditView: View {
+	private let initialData: ProfileEditData
+	private let onSave: ProfileSaveAction
+	private let onCancel: ProfileCancelAction
+	private let coordinator: any ProfileCoordinator
+	
+	// Локальное состояние
+	@State private var data: ProfileEditData
+	@State private var showAvatarMenu = false
+	@State private var showAvatarUrlAlert = false
+	@State private var avatarUrlInput = ""
+	@State private var showExitAlert = false
+	@State private var isSaving = false
+	
+	init(
+		initialData: ProfileEditData,
+		onSave: @escaping ProfileSaveAction,
+		onCancel: @escaping ProfileCancelAction,
+		coordinator: any ProfileCoordinator
+	) {
+		self.initialData = initialData
+		self._data = State(initialValue: initialData)
+		self.onSave = onSave
+		self.onCancel = onCancel
+		self.coordinator = coordinator
+	}
+	
+	private var hasChanges: Bool {
+		data.name != initialData.name ||
+		data.description != initialData.description ||
+		data.website != initialData.website ||
+		data.avatarURL?.absoluteString != initialData.avatarURL?.absoluteString
+	}
+	
     var body: some View {
         VStack(spacing: 24) {
-            HStack {
-                Button(action: { exitEditing() }) {
-                    Image(.chevronLeft)
-                        .foregroundColor(.ypBlack)
-                }
-                Spacer()
-            }
+			HStack {
+				Button(action: { exitEditing() }) {
+					Image(.chevronLeft)
+						.foregroundColor(.ypBlack)
+				}
+				Spacer()
+			}
             ProfileImage(
-                imageUrl: viewModel.editingUser?.avatar,
+                imageUrl: data.avatarURL,
                 canEdit: true
             ) {
-                viewModel.showContextMenu()
+				showAvatarMenu = true
             }
-            .actionSheet(isPresented: $viewModel.needToShowContextMenu) {
+			.actionSheet(isPresented: $showAvatarMenu) {
                 ActionSheet(
                     title: Text(NSLocalizedString("Фото профиля", comment: "")),
                     buttons: [
                         .default(Text(NSLocalizedString("Изменить фото", comment: ""))) {
-                            viewModel.showSiteEditAlert()
+							avatarUrlInput = data.avatarURL?.absoluteString ?? ""
+							showAvatarUrlAlert = true
                         },
                         .destructive(Text(NSLocalizedString("Удалить фото", comment: ""))) {
-                            viewModel.deleteAvatar()
+							data.avatarURL = nil
                         },
                         .cancel(Text(NSLocalizedString("Отмена", comment: "")))
                     ]
                 )
             }
-            .alert(NSLocalizedString("Ссылка на фото", comment: ""), isPresented: $viewModel.needToshowSiteEditAlert) {
+            .alert(NSLocalizedString("Ссылка на фото", comment: ""), isPresented: $showAvatarUrlAlert) {
                 TextField(
                     NSLocalizedString("Ссылка на фото", comment: ""),
-                    text: viewModel.avatarBinding
+                    text: $avatarUrlInput
                 )
                 .keyboardType(.URL)
                 Button(NSLocalizedString("Отмена", comment: "")) {
-                    viewModel.hideSiteEditAlert()
-                    viewModel.setAvatarToDefault()
+					avatarUrlInput = ""
                 }
                 Button(NSLocalizedString("Сохранить", comment: "")) {
-                    viewModel.applyAvatarUrl()
-                    viewModel.hideSiteEditAlert()
+					data.avatarURL = URL(string: avatarUrlInput)
+					avatarUrlInput = ""
                 }
             }
-            .alert(NSLocalizedString("Уверены,\nчто хотите выйти?", comment: ""), isPresented: $viewModel.wantExitHasChanges) {
-                Button(NSLocalizedString("Остаться", comment: "")) {
-                    viewModel.cancelExit()
-                }
+            .alert(NSLocalizedString("Уверены,\nчто хотите выйти?", comment: ""), isPresented: $showExitAlert) {
+                Button(NSLocalizedString("Остаться", comment: "")) {}
                 Button(NSLocalizedString("Выйти", comment: "")) {
-                    viewModel.setUserToDefault()
-                    coordinator.goBack()
+					onCancel()
+					coordinator.goBack()
                 }
             }
             VStack(alignment: .leading, spacing: 8) {
@@ -70,17 +109,17 @@ struct ProfileEditView: View {
                     .font(Font(UIFont.headline3))
                 TextField(
                     NSLocalizedString("Имя", comment: ""),
-                    text: viewModel.nameBinding
+                    text: $data.name
                 )
                 .applyTextInputStyle()
             }
             VStack(alignment: .leading, spacing: 8) {
                 Text(NSLocalizedString("Описание", comment: ""))
                     .font(Font(UIFont.headline3))
-                TextEditor(text: viewModel.descriptionBinding)
+                TextEditor(text: $data.description)
                     .applyTextInputStyle()
                     .scrollContentBackground(.hidden)
-                    .frame(minHeight: 40, maxHeight: 155)
+                    .frame(minHeight: 55, maxHeight: 155)
                     .fixedSize(horizontal: false, vertical: true)
             }
             VStack(alignment: .leading, spacing: 8) {
@@ -88,7 +127,7 @@ struct ProfileEditView: View {
                     .font(Font(UIFont.headline3))
                 TextField(
                     NSLocalizedString("Сайт", comment: ""),
-                    text: viewModel.websiteBinding
+                    text: $data.website
                 )
                 .applyTextInputStyle()
             }
@@ -97,10 +136,12 @@ struct ProfileEditView: View {
         .frame(maxWidth: .infinity)
         .overlay(alignment: .bottom) {
             SaveButtonView(
-                isVisible: viewModel.shouldShowSaveButton,
+                isVisible: hasChanges,
                 onSave: {
                     Task {
-                        await viewModel.saveProfile()
+						isSaving = true
+						await onSave(data)
+						isSaving = false
                     }
                 }
             )
@@ -114,7 +155,7 @@ struct ProfileEditView: View {
                     .scaleEffect(1.3)
                     .colorScheme(.light)
             }
-            .opacity(viewModel.isSaveInProgress ? 1 : 0)
+            .opacity(isSaving ? 1 : 0)
         }
         .padding(.horizontal)
         .background(Color.ypWhite)
@@ -127,18 +168,34 @@ struct ProfileEditView: View {
                     }
                 }
         )
-        .onAppear {
-            Task {
-                await viewModel.loadProfile()
-            }
-        }
     }
-    
-    private func exitEditing() {
-        if viewModel.checkExit() {
-            viewModel.wantExitHasChanges = true
-        } else {
-            coordinator.goBack()
-        }
-    }
+	private func exitEditing() {
+		if hasChanges {
+			showExitAlert = true
+		} else {
+			onCancel()
+			coordinator.goBack()
+		}
+	}
 }
+
+// MARK: - Preview
+//#Preview {
+//	ProfileEditView(
+//		initialData: ProfileEditData(
+//			name: "Герман",
+//			description: "iOS-разработчик, люблю SwiftUI",
+//			website: "https://github.com",
+//			avatarURL: URL(string: "https://i.pravatar.cc/300")
+//		),
+//		onSave: { data in
+//			print("Сохраняем:", data)
+//		},
+//		onCancel: {
+//			print("Отмена")
+//		},
+//		coordinator: ProfileCoordinatorImpl(
+//			rootCoordinator: RootCoordinatorImpl(), profileViewModel: <#ProfileViewModel#>
+//		)
+//	)
+//}

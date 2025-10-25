@@ -24,12 +24,12 @@ struct User: Codable, Identifiable, Sendable, Equatable {
     var likesArray: [String] { // TODO: Может убрать?
         likes ?? []
     }
-    static func == (lhs: User, rhs: User) -> Bool {
-        lhs.name == rhs.name &&
-        lhs.description == rhs.description &&
-        lhs.website == rhs.website &&
-        lhs.avatar == rhs.avatar
-    }
+//    static func == (lhs: User, rhs: User) -> Bool {
+//        lhs.name == rhs.name &&
+//        lhs.description == rhs.description &&
+//        lhs.website == rhs.website &&
+//        lhs.avatar == rhs.avatar
+//    }
 
     init(
         id: String,

@@ -41,8 +41,8 @@ struct ProfileView: View {
         .toolbarPreference(
             imageName: .squareAndPencil,
             action: {
-                guard let user = viewModel.user else { return }
-                coordinator.openProfileEdit()
+                guard let _ = viewModel.user else { return }
+				coordinator.openProfileEdit()
             }
         )
         .frame(maxWidth: .infinity, maxHeight: .infinity)

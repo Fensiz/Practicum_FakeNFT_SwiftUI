@@ -18,58 +18,54 @@ final class ProfileViewModel: ObservableObject {
     private(set) var myNfts: [NftEntity]? = []
     private(set) var likedNfts: [NftEntity]? = []
     private(set) var errorMessage: String?
-    var wantExitHasChanges: Bool = false
+//    var wantExitHasChanges: Bool = false
     var wantToSortMyNft: Bool = false
-    var needToShowContextMenu: Bool = false
-    var needToshowSiteEditAlert: Bool = false
-    var shouldShowSaveButton: Bool = false
+//    var needToShowContextMenu: Bool = false
+//    var needToshowSiteEditAlert: Bool = false
+//    var shouldShowSaveButton: Bool = false
     var temporaryAvatarUrl: String = ""
     init(profileService: any ProfileService, nftsService: any NftService) {
         self.profileService = profileService
         self.nftService = nftsService
     }
-    func hideSortContetMenu() {
-        wantToSortMyNft = false
-    }
-    func showSortContetMenu() {
+	func showSortContextMenu() {
         wantToSortMyNft = true
     }
-    func showContextMenu() {
-        needToShowContextMenu = true
-    }
-    func hideContextMenu() {
-        needToShowContextMenu = false
-    }
-    func showSiteEditAlert() {
-        temporaryAvatarUrl = editingUser?.avatar?.absoluteString ?? ""
-        needToshowSiteEditAlert = true
-    }
-    func hideSiteEditAlert() {
-        needToshowSiteEditAlert = false
-        temporaryAvatarUrl = ""
-    }
-    func clearError() {
+//    func showContextMenu() {
+//        needToShowContextMenu = true
+//    }
+//    func hideContextMenu() {
+//        needToShowContextMenu = false
+//    }
+//    func showSiteEditAlert() {
+//        temporaryAvatarUrl = editingUser?.avatar?.absoluteString ?? ""
+//        needToshowSiteEditAlert = true
+//    }
+//    func hideSiteEditAlert() {
+//        needToshowSiteEditAlert = false
+//        temporaryAvatarUrl = ""
+//    }
+	func clearError() { // TODO: возможно стоит избавиться и перенести на экраны списка
         errorMessage = nil
     }
-    func setAvatarToDefault() {
-        editingUser?.avatar = user?.avatar
-        temporaryAvatarUrl = ""
-        updateSaveButton()
-    }
-    func applyAvatarUrl() {
-        if let url = URL(string: temporaryAvatarUrl), url.scheme != nil {
-            editingUser?.avatar = url
-        } else {
-            editingUser?.avatar = nil
-        }
-        temporaryAvatarUrl = ""
-        updateSaveButton()
-    }
+//    func setAvatarToDefault() {
+//        editingUser?.avatar = user?.avatar
+//        temporaryAvatarUrl = ""
+//    }
+//    func applyAvatarUrl() {
+//        if let url = URL(string: temporaryAvatarUrl), url.scheme != nil {
+//            editingUser?.avatar = url
+//        } else {
+//            editingUser?.avatar = nil
+//        }
+//        temporaryAvatarUrl = ""
+//
+//    }
     func loadProfile() async {
         do {
             self.user = try await profileService.loadProfile()
             self.editingUser = user
-            shouldShowSaveButton = false
+//            shouldShowSaveButton = false
         } catch {
             print("Failed to load profile: \(error)")
         }
@@ -123,15 +119,13 @@ final class ProfileViewModel: ObservableObject {
             errorMessage = "Не удалось получить данные о лайках"
         }
     }
-    func setUserToDefault() {
-        editingUser = user
-        shouldShowSaveButton = false
-    }
-    func hasChanges() -> Bool {
-        guard let user = user, let editingUser = editingUser else { return false }
-        return user != editingUser
-    }
+
+//    func hasChanges() -> Bool {
+//        guard let user = user, let editingUser = editingUser else { return false }
+//        return user != editingUser
+//    }
     func saveProfile() async {
+		print("Сохраняю профиль, я во VM")
         // guard let editingUser = editingUser else { return }
         // isSaveInProgress = true
         // defer { isSaveInProgress = false }
@@ -143,52 +137,27 @@ final class ProfileViewModel: ObservableObject {
         //     print("Failed to save profile: \(error)")
         // }
     }
-    func deleteAvatar() {
-        editingUser?.avatar = nil
-        updateSaveButton()
-    }
-    func checkExit() -> Bool {
-        return hasChanges()
-    }
-    func cancelExit() {
-        wantExitHasChanges = false
-    }
-    private func updateSaveButton() {
-        shouldShowSaveButton = hasChanges()
-    }
-    var nameBinding: Binding<String> {
-        Binding(
-            get: { self.editingUser?.name ?? "" },
-            set: { newValue in
-                self.editingUser?.name = newValue
-                self.updateSaveButton()
-            }
-        )
-    }
-    var descriptionBinding: Binding<String> {
-        Binding(
-            get: { self.editingUser?.description ?? "" },
-            set: { newValue in
-                self.editingUser?.description = newValue.isEmpty ? nil : newValue
-                self.updateSaveButton()
-            }
-        )
-    }
-    var websiteBinding: Binding<String> {
-        Binding(
-            get: { self.editingUser?.website?.absoluteString ?? "" },
-            set: { newValue in
-                self.editingUser?.website = URL(string: newValue)
-                self.updateSaveButton()
-            }
-        )
-    }
-    var avatarBinding: Binding<String> {
-        Binding(
-            get: { self.temporaryAvatarUrl },
-            set: { newValue in
-                self.temporaryAvatarUrl = newValue
-            }
-        )
-    }
+	func updateProfile(with data: ProfileEditData) async {
+		guard var editingUser = editingUser else { return }
+		editingUser.name = data.name
+		editingUser.description = data.description.isEmpty ? nil : data.description
+		editingUser.website = URL(string: data.website)
+		editingUser.avatar = data.avatarURL
+		
+		self.editingUser = editingUser
+//		shouldShowSaveButton = hasChanges()
+		
+		await saveProfile()
+	}
+	func setUserToDefault() {
+		editingUser = user
+//		shouldShowSaveButton = false
+	}
+	func cancelEditing() {
+		setUserToDefault()
+	}
+
+
+
+
 }

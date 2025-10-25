@@ -29,7 +29,7 @@ struct MyNFTList: View {
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 // TODO: Добавить сортировку
-                Button(action: { viewModel.showSortContetMenu() } ) {
+                Button(action: { viewModel.showSortContextMenu() } ) {
                     Image(.sort)
                 }
                 .foregroundColor(.ypBlack)

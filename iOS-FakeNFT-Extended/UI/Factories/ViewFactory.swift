@@ -9,73 +9,88 @@ import SwiftUI
 
 @MainActor
 final class ViewFactory {
-    private let rootCoordinator: any RootCoordinator
-    
-    init(rootCoordinator: any RootCoordinator) {
-        self.rootCoordinator = rootCoordinator
-    }
-    
-    // сюда добавляются все экраны, которые перекрывают tabView,
-    // и относятся к navigationStack
-    @ViewBuilder
-    func makeScreenView(for screen: Screen) -> some View {
-        let networkClient = DefaultNetworkClient()
-        let profileService = ProfileServiceImpl(networkClient: networkClient)
-        let nftStorage = NftStorageImpl()
-        let nftService = NftServiceImpl(networkClient: networkClient, storage: nftStorage)
-        let viewModel = ProfileViewModel(profileService: profileService, nftsService: nftService)
-        let rootCoordinator = RootCoordinatorImpl()
-        let profileCoordinator = ProfileCoordinatorImpl(rootCoordinator: rootCoordinator)
-        switch screen {
-            case .dummy:
-                EmptyView()
-            case .payment:
-                EmptyView()
-            case .web:
-                EmptyView()
-            case .successPayment:
-                EmptyView()
-            case .myNfts:
-                MyNFTList()
-                    .environmentObject(viewModel)
-            case .favorites:
-                FavoriteNFTsList()
-                    .environmentObject(viewModel)
-            case .profileEdit:
-                ProfileEditView(coordinator: profileCoordinator)
-                    .environmentObject(viewModel)
-        }
-    }
-    // сюда вроде бы кроме корзины никто ничего не добавляет,
-    // но мне эта заготовка нужна в корне проекта
-    // в теории можно добавлять свои экраны, которые
-    // накладываются сверху, а не через navigationStack
-    @ViewBuilder
-    func makeCoverView(for coverType: Cover) -> some View {
-        switch coverType {
-            case .dummy:
-                EmptyView()
-            case .deleteConfirmation:
-                EmptyView()
-        }
-    }
-    @ViewBuilder
-    func makeTabView(for tab: Tab) -> some View {
-        switch tab {
-            case .catalog:
-                TestCatalogView()
-            case .cart:
-                EmptyView()
-            case .profile:
-                let networkClient = DefaultNetworkClient()
-                let profileService = ProfileServiceImpl(networkClient: networkClient) //MockProfileServiceImpl()
-                let nftService = NftServiceImpl(networkClient: networkClient, storage: NftStorageImpl())
-                let profileViewModel = ProfileViewModel(profileService: profileService, nftsService: nftService)
-                let profileCoordinator = ProfileCoordinatorImpl(rootCoordinator: rootCoordinator)
-                ProfileView(coordinator: profileCoordinator)
-                    .environmentObject(profileViewModel)
-            case .statistic:
-                EmptyView()
-        }
-    }
+	private let rootCoordinator: any RootCoordinator
+	private let profileViewModel: ProfileViewModel
+	
+	init(rootCoordinator: any RootCoordinator, profileViewModel: ProfileViewModel) {
+		self.rootCoordinator = rootCoordinator
+		self.profileViewModel = profileViewModel
+	}
+	
+	// сюда добавляются все экраны, которые перекрывают tabView,
+	// и относятся к navigationStack
+	@ViewBuilder
+	func makeScreenView(for screen: Screen) -> some View {
+		switch screen {
+		case .dummy:
+			EmptyView()
+		case .payment:
+			EmptyView()
+		case .web:
+			EmptyView()
+		case .successPayment:
+			EmptyView()
+		case .myNfts:
+			EmptyView()
+			//            MyNFTList()
+			//                .environmentObject(profileViewModel)
+		case .favorites:
+			EmptyView()
+			//            FavoriteNFTsList()
+			//                .environmentObject(profileViewModel)
+		case .profileEdit:
+			let profileCoordinator = ProfileCoordinatorImpl(
+				rootCoordinator: rootCoordinator,
+				profileViewModel: profileViewModel
+			)
+			ProfileEditView(
+				initialData: ProfileEditData(
+					name: self.profileViewModel.editingUser?.name ?? "",
+					description: self.profileViewModel.editingUser?.description ?? "",
+					website: self.profileViewModel.editingUser?.website?.absoluteString ?? "",
+					avatarURL: self.profileViewModel.editingUser?.avatar
+				),
+				onSave: { editedData in
+					await self.profileViewModel.updateProfile(with: editedData)
+				},
+				onCancel: {
+					self.profileViewModel.cancelEditing()
+				},
+				coordinator: profileCoordinator
+			)
+		}
+	}
+	
+	// сюда вроде бы кроме корзины никто ничего не добавляет,
+	// но мне эта заготовка нужна в корне проекта
+	// в теории можно добавлять свои экраны, которые
+	// накладываются сверху, а не через navigationStack
+	@ViewBuilder
+	func makeCoverView(for coverType: Cover) -> some View {
+		switch coverType {
+		case .dummy:
+			EmptyView()
+		case .deleteConfirmation:
+			EmptyView()
+		}
+	}
+	
+	@ViewBuilder
+	func makeTabView(for tab: Tab) -> some View {
+		switch tab {
+		case .catalog:
+			TestCatalogView()
+		case .cart:
+			EmptyView()
+		case .profile:
+			let profileCoordinator = ProfileCoordinatorImpl(
+				rootCoordinator: rootCoordinator,
+				profileViewModel: profileViewModel
+			)
+			ProfileView(coordinator: profileCoordinator)
+				.environmentObject(profileViewModel)
+		case .statistic:
+			EmptyView()
+		}
+	}
 }
