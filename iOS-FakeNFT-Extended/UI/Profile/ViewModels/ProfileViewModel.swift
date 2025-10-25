@@ -82,12 +82,22 @@ final class ProfileViewModel: ObservableObject {
 		}
 	}
 	func loadLikedNFTs() async {
-		guard let user = user, let likes = user.likes, !likes.isEmpty else {
-			errorMessage = "Нет лайкнутых NFT"
+		guard let user = user else {
+			self.likedNfts = []
 			return
 		}
+		
+		let likes = user.likes ?? []
+		
+		if likes.isEmpty {
+			self.likedNfts = []
+			self.isLoadingLikedNFTs = false
+			return
+		}
+		
 		isLoadingLikedNFTs = true
 		defer { isLoadingLikedNFTs = false }
+		
 		do {
 			self.likedNfts = try await loadNfts(for: likes)
 			errorMessage = nil
@@ -139,6 +149,7 @@ final class ProfileViewModel: ObservableObject {
 			let updatedUser = try await profileService.updateLikes(to: likes)
 			self.user = updatedUser
 			await loadMyNFTs()
+			await loadLikedNFTs()
 		} catch {
 			await MainActor.run {
 				errorMessage = "Не удалось обновить лайк"

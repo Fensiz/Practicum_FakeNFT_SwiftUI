@@ -10,6 +10,7 @@ import Kingfisher
 
 struct FavoriteNFTCell: View {
     let nft: NftEntity
+	let isToggling: Bool
     let onLikeTap: () -> Void
     var body: some View {
         HStack(spacing: 0) {
@@ -23,10 +24,12 @@ struct FavoriteNFTCell: View {
                 .cornerRadius(12)
                 .aspectRatio(contentMode: .fit)
                 .overlay(alignment: .topTrailing) {
-                    Image(.active)
-                        .foregroundColor(.ypURed)
-                        .onTapGesture(perform: onLikeTap)
-                        .offset(x: 5, y: -5)
+					Button(action: onLikeTap) {
+						Image(.active)
+							.foregroundColor(.ypURed)
+					}
+					.offset(x: 5, y: -5)
+					.disabled(isToggling)
                 }
             VStack(alignment: .leading, spacing: 5) {
                 Text(nft.name)
@@ -41,23 +44,25 @@ struct FavoriteNFTCell: View {
             }
             .padding(.leading, 20)
         }
+		.opacity(isToggling ? 0.6 : 1.0)
+		.animation(.easeInOut(duration: 0.2), value: isToggling)
     }
 }
 
-#Preview {
-    LightDarkPreviewWrapper {
-        FavoriteNFTCell(
-            nft: NftEntity(
-                id: "1",
-                name: "April",
-                images: [URL(string: "https://i.yapx.ru/a4wfK.png")!],
-                rating: 4,
-                descriptionText: "Description",
-                price: 1.78,
-                authorURL: URL(string: "https://example.com")!
-            ),
-            onLikeTap: {}
-        )
-        .padding(.horizontal)
-    }
-}
+//#Preview {
+//    LightDarkPreviewWrapper {
+//        FavoriteNFTCell(
+//            nft: NftEntity(
+//                id: "1",
+//                name: "April",
+//                images: [URL(string: "https://i.yapx.ru/a4wfK.png")!],
+//                rating: 4,
+//                descriptionText: "Description",
+//                price: 1.78,
+//                authorURL: URL(string: "https://example.com")!
+//            ),
+//            onLikeTap: {}
+//        )
+//        .padding(.horizontal)
+//    }
+//}

@@ -77,7 +77,6 @@ struct MyNFTList: View {
 									let id = nft.id
 									guard togglingLikeId != id else { return }
 									guard !viewModel.isTogglingLike else { return }
-									
 									togglingLikeId = id
 									Task {
 										await viewModel.toggleLike(nftId: id)

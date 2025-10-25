@@ -45,7 +45,8 @@ final class ViewFactory {
 			MyNFTList()
 				.environmentObject(profileViewModel)
 		case .favorites:
-			EmptyView()
+			FavoriteNFTsList()
+				.environmentObject(profileViewModel)
 		case .profileEdit:
 			ProfileEditView(
 				initialData: ProfileEditData(
