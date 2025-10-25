@@ -10,19 +10,19 @@ import SwiftUI
 struct SuccessPaymentScreen: View {
 	let action: () -> Void
 	var body: some View {
-		VStack(spacing: 20) {
+		VStack(spacing: DesignSystem.Spacing.large) {
 			Spacer()
 			Image(.success)
 			Text("Успех! Оплата прошла,\nпоздравляем с покупкой")
-				.font(.system(size: 22, weight: .bold))
-				.foregroundStyle(.ypBlack)
+				.font(DesignSystem.Font.headline3)
+				.foregroundStyle(DesignSystem.Color.textPrimary)
 				.multilineTextAlignment(.center)
 			Spacer()
 			Button("Вернуться в корзину", action: action)
 				.buttonStyle(PrimaryButtonStyle())
-				.padding(16)
+				.padding(DesignSystem.Padding.medium)
 		}
-		.background(.ypWhite)
+		.background(DesignSystem.Color.background)
 		.navigationBarBackButtonHidden(true)
 	}
 }

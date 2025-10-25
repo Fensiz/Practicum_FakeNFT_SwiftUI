@@ -6,40 +6,37 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct PaymentMethodCell: View {
 	let method: PaymentMethod
 	let isSelected: Bool
 
 	var body: some View {
-		HStack(spacing: 4) {
-			AsyncImage(url: method.image) { image in
-				image
-					.resizable()
-					.aspectRatio(contentMode: .fit)
-			} placeholder: {
-				ProgressView()
-			}
-			.background(.black)
-			.clipShape(RoundedRectangle(cornerRadius: 6))
-			.frame(width: 36, height: 36)
+		HStack(spacing: DesignSystem.Spacing.xsmall) {
+			KFImage(method.image)
+				.resizable()
+				.scaledToFit()
+				.background(.black)
+				.clipShape(RoundedRectangle(cornerRadius: DesignSystem.Radius.xsmall))
+				.frame(width: DesignSystem.Sizes.imageXSmall, height: DesignSystem.Sizes.imageXSmall)
 			VStack(alignment: .leading) {
 				Text(method.title)
-					.foregroundStyle(.ypBlack)
+					.foregroundStyle(DesignSystem.Color.textPrimary)
 				Text(method.name)
-					.foregroundStyle(.ypUGreen)
+					.foregroundStyle(DesignSystem.Color.accent)
 			}
-			.font(.system(size: 13, weight: .regular))
+			.font(DesignSystem.Font.caption2)
 		}
 		.frame(maxWidth: .infinity, alignment: .leading)
-		.padding(.horizontal, 12)
-		.padding(.vertical, 5)
-		.background(.ypLightGrey)
-		.clipShape(RoundedRectangle(cornerRadius: 12))
+		.padding(.horizontal, DesignSystem.Padding.small)
+		.padding(.vertical, DesignSystem.Padding.xsmall)
+		.background(DesignSystem.Color.backgroundSecondary)
+		.clipShape(RoundedRectangle(cornerRadius: DesignSystem.Radius.small))
 		.overlay {
 			if isSelected {
-				RoundedRectangle(cornerRadius: 12)
-					.stroke(.ypBlack, lineWidth: 1)
+				RoundedRectangle(cornerRadius: DesignSystem.Radius.small)
+					.stroke(DesignSystem.Color.primary, lineWidth: DesignSystem.BorderWidth.small)
 			}
 		}
 	}

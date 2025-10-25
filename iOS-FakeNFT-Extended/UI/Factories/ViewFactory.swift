@@ -42,7 +42,7 @@ final class ViewFactory {
 				EmptyView()
 			case let .payment(coordinartor, action):
 				let viewModel = PaymentViewModel(paymentService: paymentService, onSuccess: action)
-				PaymentView(coordinator: coordinartor, viewModel: viewModel)
+				PaymentView(viewModel: viewModel, coordinator: coordinartor)
 			case .web(let url):
 				WebView(url: url, isAppearenceEnabled: true)
 			case .successPayment(let action):

@@ -7,7 +7,8 @@
 
 import SwiftUI
 
-actor MockCartServiceImpl: CartService {
+actor MockCartService: CartService {
+	static let shared = MockCartService()
 	func fetchOrderItems() async throws -> [CartItem] {
 		print("fetch")
 		return items

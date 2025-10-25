@@ -29,12 +29,15 @@ final class PaymentViewModel {
 	func load() {
 		guard paymentMethods.isEmpty else { return }
 		isLoading = true
+		print(isLoading)
 		Task {
+			try? await Task.sleep(for: .seconds(3))
+
 			do {
 				paymentMethods = try await paymentService.fetchPaymentMethods()
 				isLoading = false
 			} catch {
-				print("Ошибка загрузки методов оплаты: \(error)")
+				print("Ошибка загрузки методов оплаты: \(error.localizedDescription)")
 				isLoading = false
 				lastAction = load
 				isAlertPresented = true
@@ -59,7 +62,7 @@ final class PaymentViewModel {
 				paymentSucceeded = false
 				onSuccess()
 			} catch {
-				print(error.localizedDescription)
+				print("Ошибка оплаты:", error.localizedDescription)
 				lastAction = { [weak self, onSuccess] in
 					self?.pay(onSuccess: onSuccess)
 				}
