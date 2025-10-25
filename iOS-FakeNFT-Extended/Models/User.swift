@@ -6,14 +6,15 @@
 //
 import SwiftUI
 
-struct User: Codable, Identifiable, Sendable {
+struct User: Codable, Identifiable, Sendable, Equatable {
     let name: String
     let avatar: URL?
     let description: String?
     let website: URL?
     let nfts: [String]
-    let rating: String
+    let rating: String?
     let id: String
+    var likes: [String]?
 
     var ratingValue: Int {
         nfts.count
