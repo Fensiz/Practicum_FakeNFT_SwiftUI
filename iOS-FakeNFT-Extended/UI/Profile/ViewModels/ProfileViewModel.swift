@@ -89,6 +89,7 @@ final class ProfileViewModel: ObservableObject {
 	func saveProfile() async {
 		guard let editingUser = editingUser else { return }
 		isSaveInProgress = true
+		errorMessage = nil
 		defer { isSaveInProgress = false }
 		do {
 			let updatedUser = try await profileService.saveProfile(editingUser)
@@ -111,5 +112,6 @@ final class ProfileViewModel: ObservableObject {
 	}
 	func cancelEditing() {
 		editingUser = user
+		errorMessage = nil
 	}
 }

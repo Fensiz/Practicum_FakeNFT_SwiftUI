@@ -49,7 +49,8 @@ final class ViewFactory {
 				onSave: { editedData in await self.profileViewModel.updateProfile(with: editedData) },
 				onCancel: { self.profileViewModel.cancelEditing() },
 				onDismiss: { self.rootCoordinator.goBack() },
-				isSaving: self.profileViewModel.isSaveInProgress
+				isSaving: self.profileViewModel.isSaveInProgress,
+				errorMessage: self.profileViewModel.errorMessage
 			)
 		}
 	}

@@ -8,11 +8,17 @@
 import SwiftUI
 
 // MARK: - Интерфейс для редактирования
-struct ProfileEditData {
+struct ProfileEditData: Equatable {
 	var name: String
 	var description: String
 	var website: String
 	var avatarURL: URL?
+	static func == (lhs: ProfileEditData, rhs: ProfileEditData) -> Bool {
+		lhs.name == rhs.name &&
+		lhs.description == rhs.description &&
+		lhs.website == rhs.website &&
+		lhs.avatarURL?.absoluteString == rhs.avatarURL?.absoluteString
+	}
 }
 
 // MARK: - Клоужеры
@@ -27,6 +33,7 @@ struct ProfileEditView: View {
 	private let onCancel: ProfileCancelAction
 	private let onDismiss: ProfileDismissAction
 	private let isSaving: Bool
+	private let errorMessage: String?
 	
 	// MARK: - Локальная обработка
 	@State private var data: ProfileEditData
@@ -34,12 +41,14 @@ struct ProfileEditView: View {
 	@State private var showAvatarUrlAlert = false
 	@State private var avatarUrlInput = ""
 	@State private var showExitAlert = false
+	@State private var showErrorAlert = false
 	init(
 		initialData: ProfileEditData,
 		onSave: @escaping ProfileSaveAction,
 		onCancel: @escaping ProfileCancelAction,
 		onDismiss: @escaping ProfileDismissAction,
-		isSaving: Bool = false
+		isSaving: Bool = false,
+		errorMessage: String? = nil
 	) {
 		self.initialData = initialData
 		self._data = State(initialValue: initialData)
@@ -47,6 +56,7 @@ struct ProfileEditView: View {
 		self.onCancel = onCancel
 		self.onDismiss = onDismiss
 		self.isSaving = isSaving
+		self.errorMessage = errorMessage
 	}
 	private var hasChanges: Bool {
 		data.name != initialData.name ||
@@ -164,7 +174,17 @@ struct ProfileEditView: View {
 			Button(NSLocalizedString("Остаться", comment: "")) {}
 			Button(NSLocalizedString("Выйти", comment: "")) {
 				onCancel()
-				onDismiss()  // ← вместо coordinator.goBack()
+				onDismiss()
+			}
+		}
+		.alert("Ошибка", isPresented: $showErrorAlert) {
+			Button("OK") { }
+		} message: {
+			Text(errorMessage ?? "Неизвестная ошибка")
+		}
+		.onChange(of: errorMessage) { _, newValue in
+			if newValue != nil {
+				showErrorAlert = true
 			}
 		}
     }
@@ -177,4 +197,25 @@ struct ProfileEditView: View {
 			onDismiss()
 		}
 	}
+}
+
+#Preview("Редактирование") {
+	ProfileEditView(
+		initialData: ProfileEditData(
+			name: "Герман",
+			description: "iOS-разработчик, люблю SwiftUI",
+			website: "https://github.com",
+			avatarURL: URL(string: "https://i.pravatar.cc/300")
+		),
+		onSave: { data in
+			print("Сохранено: \(data.name)")
+		},
+		onCancel: {
+			print("Отмена")
+		},
+		onDismiss: {
+			print("Закрыто")
+		},
+		isSaving: false
+	)
 }

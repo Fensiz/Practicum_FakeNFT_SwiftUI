@@ -217,6 +217,9 @@
         }
       }
     },
+    "OK" : {
+
+    },
     "tabCart" : {
       "extractionState" : "manual",
       "localizations" : {
