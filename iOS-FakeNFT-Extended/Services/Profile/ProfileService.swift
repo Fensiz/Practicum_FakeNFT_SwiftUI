@@ -27,17 +27,17 @@ final class ProfileServiceImpl: ProfileService {
         let request = ProfileRequest(httpMethod: .get)
         return try await networkClient.send(request: request)
     }
-    func saveProfile(_ user: User) async throws -> User {
-        let dto = ProfileUpdateDTO(
-            name: user.name,
-            avatar: user.avatar?.absoluteString,
-            description: user.description,
-            website: user.website?.absoluteString,
-            likes: nil
-        )
-        let request = ProfileRequest(httpMethod: .put, dto: dto)
-        return try await networkClient.send(request: request)
-    }
+	func saveProfile(_ user: User) async throws -> User {
+		let dto = ProfileUpdateDTO(
+			name: user.name,
+			avatar: user.avatar?.absoluteString,
+			description: user.description,
+			website: user.website?.absoluteString,
+			likes: nil
+		)
+		let request = ProfileRequest(httpMethod: .put, dto: dto)
+		return try await networkClient.send(request: request)
+	}
     func hasChanges(original: User, current: User) -> Bool {
         original != current
     }

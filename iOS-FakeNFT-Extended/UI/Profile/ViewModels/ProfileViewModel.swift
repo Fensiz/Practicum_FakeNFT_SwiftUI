@@ -87,19 +87,20 @@ final class ProfileViewModel: ObservableObject {
             errorMessage = "Не удалось получить данные о лайках"
         }
     }
-    func saveProfile() async {
-		// TODO: допилить
-        // guard let editingUser = editingUser else { return }
-        // isSaveInProgress = true
-        // defer { isSaveInProgress = false }
-        // do {
-        //     try await profileService.updateProfile(editingUser)
-        //     self.user = editingUser
-        //     shouldShowSaveButton = false
-        // } catch {
-        //     print("Failed to save profile: \(error)")
-        // }
-    }
+	func saveProfile() async {
+		guard let editingUser = editingUser else { return }
+		isSaveInProgress = true
+		defer { isSaveInProgress = false }
+		do {
+			let updatedUser = try await profileService.saveProfile(editingUser)
+			self.user = updatedUser
+			self.editingUser = updatedUser
+			print("Профиль успешно сохранён")
+		} catch {
+			print("Ошибка сохранения профиля: \(error)")
+			errorMessage = "Не удалось сохранить профиль"
+		}
+	}
 	func updateProfile(with data: ProfileEditData) async {
 		guard var editingUser = editingUser else { return }
 		editingUser.name = data.name
@@ -109,10 +110,7 @@ final class ProfileViewModel: ObservableObject {
 		self.editingUser = editingUser
 		await saveProfile()
 	}
-	func setUserToDefault() {
-		editingUser = user
-	}
 	func cancelEditing() {
-		setUserToDefault()
+		editingUser = user
 	}
 }

@@ -54,7 +54,8 @@ final class ViewFactory {
 				},
 				onDismiss: {
 					self.rootCoordinator.goBack()
-				}
+				},
+				isSaving: self.profileViewModel.isSaveInProgress
 			)
 		}
 	}

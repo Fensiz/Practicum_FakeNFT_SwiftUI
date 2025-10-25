@@ -26,6 +26,7 @@ struct ProfileEditView: View {
 	private let onSave: ProfileSaveAction
 	private let onCancel: ProfileCancelAction
 	private let onDismiss: ProfileDismissAction
+	private let isSaving: Bool
 	
 	// MARK: - Локальная обработка
 	@State private var data: ProfileEditData
@@ -33,18 +34,19 @@ struct ProfileEditView: View {
 	@State private var showAvatarUrlAlert = false
 	@State private var avatarUrlInput = ""
 	@State private var showExitAlert = false
-	@State private var isSaving = false
 	init(
 		initialData: ProfileEditData,
 		onSave: @escaping ProfileSaveAction,
 		onCancel: @escaping ProfileCancelAction,
-		onDismiss: @escaping ProfileDismissAction
+		onDismiss: @escaping ProfileDismissAction,
+		isSaving: Bool = false
 	) {
 		self.initialData = initialData
 		self._data = State(initialValue: initialData)
 		self.onSave = onSave
 		self.onCancel = onCancel
 		self.onDismiss = onDismiss
+		self.isSaving = isSaving
 	}
 	private var hasChanges: Bool {
 		data.name != initialData.name ||
@@ -131,9 +133,7 @@ struct ProfileEditView: View {
                 isVisible: hasChanges,
                 onSave: {
                     Task {
-						isSaving = true
 						await onSave(data)
-						isSaving = false
                     }
                 }
             )
@@ -147,7 +147,7 @@ struct ProfileEditView: View {
                     .scaleEffect(1.3)
                     .colorScheme(.light)
             }
-            .opacity(isSaving ? 1 : 0)
+			.opacity(isSaving ? 1 : 0)
         }
         .padding(.horizontal)
         .background(Color.ypWhite)
