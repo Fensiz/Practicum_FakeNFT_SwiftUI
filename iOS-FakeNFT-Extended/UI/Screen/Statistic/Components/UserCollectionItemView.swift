@@ -9,7 +9,7 @@ import SwiftUI
 
 struct UserCollectionView: View {
 
-    let nftsData: NFTItemViewModel
+    let nftsData: NFTItem
 
     private let columns = Array(repeating: GridItem(.flexible(), spacing: 0), count: 3)
 
@@ -49,7 +49,7 @@ struct UserCollectionView: View {
 
 #Preview {
     NavigationStack {
-        UserCollectionView(nftsData: NFTItemViewModel(
+        UserCollectionView(nftsData: NFTItem(
             name: "Demo",
             nfts: [
                 "https://code.s3.yandex.net/Mobile/iOS/NFT/Beige/Ellsa/1.png",

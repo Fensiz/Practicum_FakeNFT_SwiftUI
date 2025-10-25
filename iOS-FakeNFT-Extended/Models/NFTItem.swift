@@ -8,7 +8,7 @@
 import Foundation
 
 ///  Данные будут подключены к /api/v1/collections/{collection_id} и /api/v1/collections
-struct NFTItemViewModel: Identifiable, Hashable, Sendable {
+struct NFTItem: Identifiable, Hashable, Sendable {
     let createdAt: String?
     let name: String
     let cover: String?
