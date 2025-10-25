@@ -9,7 +9,7 @@ import Foundation
 
 enum Screen: Hashable {
 	case dummy
-	case payment(coordinator: any CartCoordinator, action: () -> Void)
+	case payment(coordinator: any CartCoordinator, action: () async throws -> Void)
 	case successPayment(action: () -> Void)
 	case web(url: URL)
 

@@ -1,7 +1,7 @@
 import Foundation
 
 protocol NftService: Actor {
-	func loadNft(id: String) async throws -> Nft
+	func loadNft(id: String) async throws -> NFT
 }
 
 final actor NftServiceImpl: NftService {
@@ -14,13 +14,13 @@ final actor NftServiceImpl: NftService {
 		self.networkClient = networkClient
 	}
 
-	func loadNft(id: String) async throws -> Nft {
+	func loadNft(id: String) async throws -> NFT {
 		if let nft = try await storage.getNft(with: id) {
 			return nft
 		}
 
 		let request = NFTRequest(id: id)
-		let nft: Nft = try await networkClient.send(request: request)
+		let nft: NFT = try await networkClient.send(request: request)
 		try await storage.saveNft(nft)
 		return nft
 	}

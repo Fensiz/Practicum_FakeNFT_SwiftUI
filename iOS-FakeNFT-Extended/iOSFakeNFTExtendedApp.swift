@@ -1,4 +1,5 @@
 import SwiftUI
+import SwiftData
 
 @main
 struct FakeNFTExtendedApp: App {
@@ -19,8 +20,12 @@ struct FakeNFTExtendedApp: App {
 
 	var body: some Scene {
 		WindowGroup {
-			ContentView()
-				.environment(ServicesAssembly(networkClient: DefaultNetworkClient(), nftStorage: NftStorageImpl()))
+			if UIApplication.isRunningTests {
+				EmptyView()
+			} else {
+				ContentView()
+					.environment(ServicesAssembly(networkClient: DefaultNetworkClient(), nftStorage: NftStorageImpl()))
+			}
 		}
 	}
 }

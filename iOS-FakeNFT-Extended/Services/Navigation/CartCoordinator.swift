@@ -10,7 +10,7 @@ import SwiftUI
 @MainActor
 protocol CartCoordinator: AnyObject {
 	func goBack()
-	func openPayScreen(onSuccess: @escaping () -> Void)
+	func openPayScreen(onSuccess: @escaping () async throws -> Void)
 	func openSuccessPaymentScreen()
 	func openUserAgreementScreen()
 	func showDeleteConfirmation(
