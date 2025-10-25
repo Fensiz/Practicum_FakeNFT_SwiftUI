@@ -52,17 +52,16 @@ final class DefaultNetworkClient: NetworkClient {
 		guard let endpoint = request.endpoint else {
 			throw NetworkClientError.incorrectRequest("Empty endpoint")
 		}
-
+		
 		var urlRequest = URLRequest(url: endpoint)
 		urlRequest.httpMethod = request.httpMethod.rawValue
-		urlRequest.setValue("application/json", forHTTPHeaderField: "Accept")
-
+		urlRequest.setValue(request.contentType, forHTTPHeaderField: "Content-Type")
+		urlRequest.addValue(RequestConstants.token, forHTTPHeaderField: "X-Practicum-Mobile-Token")
+		
 		if let dto = request.dto {
-			urlRequest.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
 			urlRequest.httpBody = dto
 		}
-		urlRequest.addValue(RequestConstants.token, forHTTPHeaderField: "X-Practicum-Mobile-Token")
-
+		
 		return urlRequest
 	}
 
