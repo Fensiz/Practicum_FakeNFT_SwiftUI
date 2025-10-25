@@ -57,6 +57,20 @@ enum ImageNFT {
         .compactMap(URL.init(string:))
 }
 
+enum MockWebsiteURL {
+    static let url = URL(string: "https://www.apple.com")!
+}
+
+enum WebsiteUser {
+    static let web1 = "https://practicum.yandex.ru/marketplace-manager/"
+    static let web2 = "https://practicum.yandex.ru/android-developer/"
+    static let web3 = "https://practicum.yandex.ru/promo/courses/qa-automation-engineer-python"
+    static let web4 = "https://practicum.yandex.ru/promo/courses/email-marketing"
+    static let web5 = "https://practicum.yandex.ru/graphic-designer/"
+    static let web6 = "https://example.com"
+    static let web7 = "https://ya.ru"
+}
+
 struct MockData {
     static let users: [User] = [
         User(id: "7", name: "Alex", avatar: URL(string: Avatar.user1), nfts: MockNFTIDs.make(72), rating: "5"),
@@ -67,6 +81,6 @@ struct MockData {
         User(id: "6", name: "Lea", avatar: URL(string: Avatar.user6), nfts: MockNFTIDs.make(23), rating: "2"),
         User(id: "1", name: "Eric", avatar: URL(string: Avatar.user7), nfts: MockNFTIDs.make(11), rating: "1"),
         User(id: "1", name: "Joaquin Phoenix", avatar: URL(string: Avatar.user8), nfts: MockNFTIDs.make(112),
-             rating: "1", description: Bio.statisticCard)
+             rating: "1", description: Bio.statisticCard, website: URL(string: WebsiteUser.web7))
     ]
 }

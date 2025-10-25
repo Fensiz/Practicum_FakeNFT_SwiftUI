@@ -23,7 +23,11 @@ struct UserCard: View {
     }
 
     let user: User
-    let action: () -> Void
+    @Environment(RootCoordinatorImpl.self) private var coordinator
+
+    private var websiteURL: URL {
+        user.website ?? MockWebsiteURL.url
+    }
 
     var body: some View {
         VStack(spacing: Constants.containerSpacing) {
@@ -47,7 +51,7 @@ struct UserCard: View {
                 font: Font(UIFont.caption1),
                 textColor: .ypBlack,
                 color: Color(.systemBackground),
-                action: action)
+                action: openWebsite)
         }
         .padding(.trailing, Constants.bioTrailing)
     }
@@ -59,22 +63,46 @@ struct UserCard: View {
             .listStyle(.plain)
             .frame(maxWidth: .infinity)
     }
+
+    private func openWebsite() {
+        coordinator.open(screen: .web(url: websiteURL))
+    }
 }
 
 #Preview("Light") {
-    NavigationStack {
-        UserCard(user: MockData.users[7], action: { })
+    @Previewable @State var coordinator = RootCoordinatorImpl()
+    return NavigationStack (path: $coordinator.navigationPath) {
+        UserCard(user: MockData.users[7])
             .tint(.ypBlack)
             .scrollContentBackground(.hidden)
             .preferredColorScheme(.light)
+            .environment(coordinator)
+            .navigationDestination(for: Screen.self) { screen in
+                switch screen {
+                    case .web(let url):
+                        WebView(url: url, isAppearenceEnabled: false)
+                    default:
+                        EmptyView()
+                }
+            }
     }
 }
 
 #Preview("Dark") {
-    NavigationStack {
-        UserCard(user: MockData.users[7], action: { })
+    @Previewable @State var coordinator = RootCoordinatorImpl()
+    return NavigationStack (path: $coordinator.navigationPath) {
+        UserCard(user: MockData.users[7])
             .tint(.ypBlack)
             .scrollContentBackground(.hidden)
             .preferredColorScheme(.dark)
+            .environment(coordinator)
+            .navigationDestination(for: Screen.self) { screen in
+                switch screen {
+                    case .web(let url):
+                        WebView(url: url, isAppearenceEnabled: false)
+                    default:
+                        EmptyView()
+                }
+            }
     }
 }
