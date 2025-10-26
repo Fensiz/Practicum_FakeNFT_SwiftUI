@@ -8,11 +8,15 @@
 import Foundation
 import Observation
 
+@MainActor
 @Observable
 final class StatisticViewModel {
 
     var users: [User] = []
     private(set) var sortOption: StatisticList.SortOption = .byRating
+    private let usersService: any UsersService
+    private(set) var isLoading = false
+    private(set) var errorMessage: String?
 
     var sortedUsers: [User] {
         switch sortOption {
@@ -21,12 +25,26 @@ final class StatisticViewModel {
         }
     }
 
-    init() {
-        makeLoad()
+    init(usersService: any UsersService) {
+        self.usersService = usersService
     }
 
-    private func makeLoad() {
-        users = MockData.users
+    func makeLoad() async {
+        guard !isLoading else { return }
+        isLoading = true
+        errorMessage = nil
+        defer { isLoading = false }
+
+        do {
+            try Task.checkCancellation()
+            users = try await usersService.loadUsers()
+        } catch is CancellationError {
+            // тихо выходим
+        } catch let error as NetworkClientError {
+//            errorMessage = getErrorMessage(for: error)
+        } catch {
+            errorMessage = "Неизвестная ошибка: \(error.localizedDescription)"
+        }
     }
 
     func makeSetSort(_ option: StatisticList.SortOption) {

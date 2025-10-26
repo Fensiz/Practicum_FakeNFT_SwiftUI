@@ -16,7 +16,9 @@ struct StatisticView: View {
     }
 
     @State private var showSortDialog = false
-    @State private var viewModel = StatisticViewModel()
+    @State private var viewModel = StatisticViewModel(
+        usersService: UsersServiceImpl(networkClient: DefaultNetworkClient())
+    )
     @State private var isNavigating = false
 
     @Environment(StatisticCoordinator.self) private var coordinator
@@ -47,6 +49,11 @@ struct StatisticView: View {
                     default:
                         EmptyView()
                 }
+            }
+        }
+        .task {
+            if viewModel.users.isEmpty {
+                await viewModel.makeLoad()
             }
         }
         .onAppear { viewModel.makeSetSort(selectedSort) }

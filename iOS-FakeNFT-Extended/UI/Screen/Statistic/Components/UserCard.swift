@@ -64,7 +64,7 @@ struct UserCard: View {
     }
 
     private var contentButton: some View {
-        NFTCollectionRow(user: MockData.users[7]) .listRowSeparator(.hidden)
+        NFTCollectionRow(user: user) .listRowSeparator(.hidden)
             .frame(maxWidth: .infinity)
     }
 
