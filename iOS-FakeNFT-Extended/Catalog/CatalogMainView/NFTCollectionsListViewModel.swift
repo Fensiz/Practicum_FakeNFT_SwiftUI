@@ -12,47 +12,20 @@ import SwiftUI
 @MainActor
 final class NFTCollectionsListViewModel {
 
+	private(set) var collections: [NFTCollectionModel] = []
+	private(set) var state: State = .empty
+
 	private let collectionsProvider: any NFTCollectionsProviderProtocol
-	private let coordinator: any CatalogCoordinatorProtocol
 
-    private(set) var collections: [NFTCollectionModel] = []
-	private(set) var hasError = false
-	private(set) var state: State = .empty {
-		didSet {
-			hasError = false
-			UIBlockingProgressHUD.dismiss()
-			switch state {
-			case .empty:
-				break
-			case .loading:
-				if oldValue == .empty {
-					UIBlockingProgressHUD.show()
-				}
-			case .error:
-				hasError = true
-			case .loaded:
-				break
-			}
+	func fetchCollections(isInitialFetch: Bool = false) {
+		let guardCondition: Bool
+		if isInitialFetch {
+			guardCondition = (state == .empty)
+		} else {
+			guardCondition = (state != .loading)
 		}
-	}
-
-    func fetchNewCollections() {
 		Task {
-			guard state != .loading else { return }
-			do {
-				state = .loading
-				let newCollections = try await collectionsProvider.fetch(number: 10)
-				collections.append(contentsOf: newCollections)
-				state = .loaded
-			} catch {
-				state = .error
-			}
-		}
-    }
-
-	func fetchInitialCollections() {
-		Task {
-			guard state == .empty else { return }
+			guard guardCondition else { return }
 			do {
 				state = .loading
 				let newCollections = try await collectionsProvider.fetch(number: 10)
@@ -73,17 +46,8 @@ final class NFTCollectionsListViewModel {
         }
     }
 
-	func collectionTapped(_ collection: NFTCollectionModel) {
-		coordinator.showDetails(for: collection, coordinator: coordinator)
-	}
-
-	init(
-		collectionsProvider: any NFTCollectionsProviderProtocol,
-		coordinator: any CatalogCoordinatorProtocol
-	) {
+	init(collectionsProvider: any NFTCollectionsProviderProtocol) {
         self.collectionsProvider = collectionsProvider
-		self.coordinator = coordinator
-
     }
 
 }

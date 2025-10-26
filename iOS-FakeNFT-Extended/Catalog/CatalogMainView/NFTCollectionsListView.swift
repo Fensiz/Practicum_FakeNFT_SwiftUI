@@ -13,6 +13,8 @@ struct NFTCollectionsListView: View {
     @State private var viewModel: NFTCollectionsListViewModel
     @State private var isSelectingSortingType = false
 
+	private let coordinator: any CatalogCoordinatorProtocol
+
     var body: some View {
         scrollView
             .confirmationDialog(
@@ -31,21 +33,28 @@ struct NFTCollectionsListView: View {
                 isSelectingSortingType = true
             }
             .onAppear {
-				viewModel.fetchInitialCollections()
+				viewModel.fetchCollections(isInitialFetch: true)
             }
+			.onChange(of: viewModel.state) { oldValue, newValue in
+				if newValue == .loading && oldValue == .empty {
+					UIBlockingProgressHUD.show()
+				} else {
+					UIBlockingProgressHUD.dismiss()
+				}
+			}
     }
 
     var scrollView: some View {
         ScrollView {
             LazyVStack(spacing: 8) {
-                ForEach(viewModel.collections) { collection in
-                    button(for: collection)
-                        .onAppear {
-                            if collection == viewModel.collections.last {
-								viewModel.fetchNewCollections()
-                            }
-                        }
-                }
+				ForEach(viewModel.collections) { collection in
+					button(for: collection)
+						.onAppear {
+							if collection == viewModel.collections.last {
+								viewModel.fetchCollections()
+							}
+						}
+				}
             }
             .padding(.horizontal, 16)
             .padding(.vertical, 20)
@@ -55,15 +64,19 @@ struct NFTCollectionsListView: View {
 
     private func button(for collection: NFTCollectionModel) -> some View {
         Button {
-			viewModel.collectionTapped(collection)
+			coordinator.showDetails(for: collection)
         } label: {
             NFTCollectionCellView(collection: collection)
         }
         .buttonStyle(.plain)
     }
 
-    init(viewModel: NFTCollectionsListViewModel) {
+	init(
+		viewModel: NFTCollectionsListViewModel,
+		coordinator: any CatalogCoordinatorProtocol
+	) {
         self.viewModel = viewModel
+		self.coordinator = coordinator
     }
 
 }
@@ -72,13 +85,11 @@ struct NFTCollectionsListView: View {
 	let rootCoordinator = RootCoordinatorImpl()
 	let catalogCoordinator = CatalogCoordinator(rootCoordinator: rootCoordinator)
 	let collectionsProvider = NFTCollectionsMockProvider(throwsError: false)
-	let viewModel = NFTCollectionsListViewModel(
-		collectionsProvider: collectionsProvider,
-		coordinator: catalogCoordinator
-	)
+	let viewModel = NFTCollectionsListViewModel(collectionsProvider: collectionsProvider)
     NavigationStack {
         NFTCollectionsListView(
-            viewModel: viewModel
+            viewModel: viewModel,
+			coordinator: catalogCoordinator
         )
     }
 
