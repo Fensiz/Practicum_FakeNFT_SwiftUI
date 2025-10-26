@@ -6,6 +6,21 @@ enum NetworkClientError: Error {
 	case urlSessionError
 	case parsingError
 	case incorrectRequest(String)
+
+    var errorMessage: String {
+        switch self {
+            case .httpStatusCode(let code):
+                return "Ошибка сервера: \(code)"
+            case .urlRequestError(let underlying):
+                return "Ошибка соединения: \(underlying.localizedDescription)"
+            case .urlSessionError:
+                return "Отсутствует интернет-соединение"
+            case .parsingError:
+                return "Неверный формат данных"
+            case .incorrectRequest(let message):
+                return "Некорректный запрос: \(message)"
+        }
+    }
 }
 
 protocol NetworkClient: Sendable {
