@@ -12,41 +12,18 @@ struct NFTCollectionCellView: View {
 
     private let model: NFTCollectionModel
 
-    var body: some View {
-        VStack(alignment: .center, spacing: 4) {
-            image
-                .frame(height: 140)
-                .clipShape(RoundedRectangle(cornerRadius: 12))
-            title
-        }
-        .padding(.bottom, 13)
-    }
-
-    private var image: some View {
-		AsyncImage(url: model.imageURL) { phase in
-			let errorImage = Image(systemName: "exclamationmark.triangle.fill")
-				.resizable()
-				.scaledToFit()
-				.foregroundStyle(.ypBlack)
-			switch phase {
-			case .empty:
-				HStack(spacing: .zero) {
-					Spacer()
-					ProgressView()
-						.tint(.ypBlack)
-					Spacer()
-				}
-			case .success(let image):
-				image
-					.resizable()
-					.scaledToFill()
-			case .failure:
-				errorImage
-			@unknown default:
-				errorImage
-			}
+	var body: some View {
+		VStack(alignment: .center, spacing: 4) {
+			BasicImage(
+				imageURL: model.imageURL,
+				contentMode: .fill
+			)
+			.frame(height: 140)
+			.clipShape(RoundedRectangle(cornerRadius: 12))
+			title
 		}
-    }
+		.padding(.bottom, 13)
+	}
 
     private var title: some View {
         HStack(spacing: 4) {

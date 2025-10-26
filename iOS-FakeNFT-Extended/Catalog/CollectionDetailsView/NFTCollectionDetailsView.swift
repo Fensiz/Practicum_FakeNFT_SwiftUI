@@ -67,29 +67,7 @@ struct NFTCollectionDetailsView: View {
 	}
 
 	var collectionImage: some View {
-		AsyncImage(url: collection.imageURL) { phase in
-			let errorImage = Image(systemName: "exclamationmark.triangle.fill")
-				.resizable()
-				.scaledToFit()
-				.foregroundStyle(.ypBlack)
-			switch phase {
-			case .empty:
-				VStack(spacing: .zero) {
-					Spacer()
-					ProgressView()
-						.tint(.ypBlack)
-					Spacer()
-				}
-			case .success(let image):
-				image
-					.resizable()
-					.scaledToFill()
-			case .failure:
-				errorImage
-			@unknown default:
-				errorImage
-			}
-		}
+		BasicImage(imageURL: collection.imageURL, contentMode: .fill)
 		.frame(height: 310)
 		.clipShape(
 			UnevenRoundedRectangle(

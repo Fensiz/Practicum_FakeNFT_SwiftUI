@@ -11,8 +11,6 @@ import Kingfisher
 
 struct NFTCardView: View {
 
-	@State private var shouldUseErrorImage = false
-
 	private let name: String
 	private let imageURL: URL?
 	private let rating: Int
@@ -55,21 +53,14 @@ struct NFTCardView: View {
 
 	var body: some View {
 		VStack(spacing: 8) {
-			nftImage
+			image
 			nftDetails
 		}
 		.frame(width: imageSize)
 	}
 
-	@ViewBuilder
-	private var nftImage: some View {
-		Group {
-			if shouldUseErrorImage {
-				errorImage
-			} else {
-				kfImage
-			}
-		}
+	private var image: some View {
+		BasicImage(imageURL: imageURL, contentMode: .fill)
 		.frame(width: imageSize, height: imageSize)
 		.clipShape(RoundedRectangle(cornerRadius: 12))
 		.overlay(alignment: .topTrailing) {
@@ -78,35 +69,6 @@ struct NFTCardView: View {
 					.foregroundStyle(isFavorite ? .ypURed : .ypUWhite)
 			}
 		}
-	}
-
-	private var kfImage: some View {
-		KFImage(imageURL)
-			.resizable()
-			.placeholder { progress in
-				placeholder(progressFraction: progress.fractionCompleted)
-			}
-			.onFailure { _ in
-				// onFailureImage not working
-				shouldUseErrorImage = true
-			}
-			.scaledToFill()
-	}
-
-	private func placeholder(progressFraction: Double) -> some View {
-		VStack(spacing: .zero) {
-			Spacer()
-			ProgressView(value: progressFraction)
-				.tint(.ypBlack)
-			Spacer()
-		}
-	}
-
-	private var errorImage: some View {
-		Image(systemName: "exclamationmark.triangle.fill")
-			.resizable()
-			.scaledToFit()
-			.foregroundStyle(.ypBlack)
 	}
 
 	private var nftDetails: some View {
