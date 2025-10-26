@@ -22,6 +22,6 @@ struct SaveButtonView: View {
                 .background(Color.ypBlack.clipShape(RoundedRectangle(cornerRadius: 16)))
         }
         .padding()
-        .opacity(isVisible ? 1 : 0)  /// Показываю/скрываю через координатор
+        .opacity(isVisible ? 1 : 0)
     }
 }

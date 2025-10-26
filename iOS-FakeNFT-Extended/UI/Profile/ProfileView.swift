@@ -12,7 +12,7 @@ struct ProfileView: View {
 	let coordinator: any ProfileCoordinator
 	var body: some View {
 		VStack(alignment: .leading) {
-			if let user = viewModel.user { // TODO: заменить на стейты
+			if let user = viewModel.user {
 				ProfileInfo(user: user)
 				if let website = user.website {
 					Button {
@@ -38,7 +38,7 @@ struct ProfileView: View {
 				}
 				Spacer()
 			} else {
-				ProgressView() // TODO: Заменить на LoadingView()
+				ProgressView()
 			}
 		}
 		.padding(.horizontal)
