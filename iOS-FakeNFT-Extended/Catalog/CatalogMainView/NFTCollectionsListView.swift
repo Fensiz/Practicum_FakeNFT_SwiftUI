@@ -22,7 +22,7 @@ struct NFTCollectionsListView: View {
                 "sorting",
                 isPresented: $isSelectingSortingType
             ) {
-                ForEach(CatalogSorting.allCases) { sorting in
+                ForEach(CollectionsSortingType.allCases) { sorting in
                     Button(sorting.description) {
                         viewModel.sort(by: sorting)
                     }
@@ -52,9 +52,10 @@ struct NFTCollectionsListView: View {
 				}
 			}
 			.onChange(of: viewModel.state) { oldValue, newValue in
-				if newValue == .loading && oldValue == .empty {
+				if oldValue != .loaded && newValue == .loading {
 					UIBlockingProgressHUD.show()
-				} else {
+				}
+				if oldValue == .loading && newValue == .loaded {
 					UIBlockingProgressHUD.dismiss()
 				}
 			}

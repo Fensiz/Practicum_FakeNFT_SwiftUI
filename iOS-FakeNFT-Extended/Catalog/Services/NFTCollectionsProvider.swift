@@ -9,7 +9,7 @@
 import Foundation
 
 protocol NFTCollectionsProviderProtocol: Sendable {
-    func fetch(number: Int) async throws -> [NFTCollectionModel]
+	func fetch(number: Int, sorting: CollectionsSortingType) async throws -> [NFTCollectionModel]
 }
 
 actor NFTCollectionsMockProvider: NFTCollectionsProviderProtocol {
@@ -47,22 +47,24 @@ actor NFTCollectionsMockProvider: NFTCollectionsProviderProtocol {
 		self.throwsError = throwsError
 	}
 
-	func fetch(number: Int) async throws -> [NFTCollectionModel] {
+	func fetch(number: Int, sorting: CollectionsSortingType) async throws -> [NFTCollectionModel] {
         try? await Task.sleep(for: .seconds(3))
 		if throwsError {
 			throw NetworkClientError.urlSessionError
 		} else {
-			return (0..<number).map { _ in
-				let baseCollection = nftCollections.randomElement()!
-				return NFTCollectionModel(
-					id: UUID(),
-					title: baseCollection.title,
-					imageURL: baseCollection.imageURL,
-					nftIDs: baseCollection.nftIDs,
-					description: baseCollection.description,
-					authorID: baseCollection.authorID
-				)
-			}
+			return (0..<number)
+				.map { _ in
+					let baseCollection = nftCollections.randomElement()!
+					return NFTCollectionModel(
+						id: UUID(),
+						title: baseCollection.title,
+						imageURL: baseCollection.imageURL,
+						nftIDs: baseCollection.nftIDs,
+						description: baseCollection.description,
+						authorID: baseCollection.authorID
+					)
+				}
+				.sorted(by: sorting.sortingRule)
 		}
     }
 

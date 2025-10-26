@@ -17,6 +17,16 @@ final class NFTCollectionsListViewModel {
 
 	private let collectionsProvider: any NFTCollectionsProviderProtocol
 
+	private var sortingArg: CollectionsSortingType {
+		get {
+			let savedValue = UserDefaults.standard.integer(forKey: "CollectionsSortingKey")
+			return .init(rawValue: savedValue) ?? .bySize
+		}
+		set {
+			UserDefaults.standard.set(newValue.rawValue, forKey: "CollectionsSortingKey")
+		}
+	}
+
 	func fetchCollections(isInitialFetch: Bool = false) {
 		let guardCondition: Bool
 		if isInitialFetch {
@@ -28,7 +38,7 @@ final class NFTCollectionsListViewModel {
 			guard guardCondition else { return }
 			do {
 				state = .loading
-				let newCollections = try await collectionsProvider.fetch(number: 10)
+				let newCollections = try await collectionsProvider.fetch(number: 10, sorting: sortingArg)
 				collections.append(contentsOf: newCollections)
 				state = .loaded
 			} catch {
@@ -37,13 +47,20 @@ final class NFTCollectionsListViewModel {
 		}
 	}
 
-    func sort(by sortingArg: CatalogSorting) {
-        switch sortingArg {
-        case .byTitle:
-            collections.sort(by: { $0.title < $1.title })
-        case .bySize:
-            collections.sort(by: { $0.nftIDs.count < $1.nftIDs.count })
-        }
+    func sort(by sortingArg: CollectionsSortingType) {
+		guard sortingArg != self.sortingArg else { return }
+		state = .empty
+		Task {
+			guard state != .loading else { return }
+			do {
+				state = .loading
+				collections = try await collectionsProvider.fetch(number: collections.count, sorting: sortingArg)
+				state = .loaded
+			} catch {
+				state = .error
+			}
+			self.sortingArg = sortingArg
+		}
     }
 
 	init(collectionsProvider: any NFTCollectionsProviderProtocol) {
@@ -61,11 +78,11 @@ extension NFTCollectionsListViewModel {
     }
 }
 
-enum CatalogSorting: Int, CaseIterable, Identifiable {
+enum CollectionsSortingType: Int, CaseIterable, Identifiable {
 
     var id: Self { self }
 
-    case byTitle
+	case byTitle
     case bySize
 
     var description: String {
@@ -76,5 +93,14 @@ enum CatalogSorting: Int, CaseIterable, Identifiable {
             NSLocalizedString("Catalog.Sorting.BySize", comment: "")
         }
     }
+
+	var sortingRule: (NFTCollectionModel, NFTCollectionModel) -> Bool {
+		switch self {
+		case .byTitle:
+			{ $0.title < $1.title }
+		case .bySize:
+			{ $0.nftIDs.count < $1.nftIDs.count }
+		}
+	}
 
 }
