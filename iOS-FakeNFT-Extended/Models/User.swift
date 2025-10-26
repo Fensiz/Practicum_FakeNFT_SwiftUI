@@ -13,7 +13,7 @@ struct User: Codable, Identifiable, Sendable, Equatable, Hashable {
     var website: URL?
     var nfts: [String]
     var rating: String?
-    var id: String
+    let id: String
     var likes: [String]?
 
     var ratingValue: Int {
