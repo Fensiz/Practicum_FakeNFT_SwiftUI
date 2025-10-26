@@ -16,7 +16,7 @@ import SwiftData
 
 	private init(inMemory: Bool = false) {
 		let schema = Schema([
-			NftEntity.self
+			NFTEntity.self
 		])
 		let config = ModelConfiguration(
 			schema: schema,

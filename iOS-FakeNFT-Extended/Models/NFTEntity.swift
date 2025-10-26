@@ -10,7 +10,7 @@ import SwiftData
 import Foundation
 
 @Model
-final class NftEntity {
+final class NFTEntity {
 	@Attribute(.unique) var id: String
 	var name: String
 	var images: [String]
