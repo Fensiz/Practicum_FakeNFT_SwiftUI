@@ -1,0 +1,46 @@
+{
+  "configurations" : [
+    {
+      "id" : "76EABD5B-F959-4859-B5A6-E0B8385631BC",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "codeCoverage" : {
+      "targets" : [
+        {
+          "containerPath" : "container:iOS-FakeNFT-Extended.xcodeproj",
+          "identifier" : "85D5DB68A39EC196209ECC75",
+          "name" : "iOS-FakeNFT-Extended"
+        }
+      ]
+    },
+    "performanceAntipatternCheckerEnabled" : true,
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:iOS-FakeNFT-Extended.xcodeproj",
+      "identifier" : "85D5DB68A39EC196209ECC75",
+      "name" : "iOS-FakeNFT-Extended"
+    }
+  },
+  "testTargets" : [
+    {
+      "parallelizable" : false,
+      "target" : {
+        "containerPath" : "container:iOS-FakeNFT-Extended.xcodeproj",
+        "identifier" : "4FA699ECE1DEBCA9663B364B",
+        "name" : "iOS-FakeNFT-ExtendedTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:iOS-FakeNFT-Extended.xcodeproj",
+        "identifier" : "37CFAE3AF20D167AC91F051D",
+        "name" : "iOS-FakeNFT-ExtendedUITests"
+      }
+    }
+  ],
+  "version" : 1
+}

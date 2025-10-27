@@ -9,62 +9,31 @@ import SwiftUI
 
 struct PaymentView: View {
 	@State var viewModel: PaymentViewModel
-	private let coordinator: any CartCoordinator
+	let coordinator: any CartCoordinator
 	private let columns = [
-		GridItem(.flexible(), spacing: 7), GridItem(.flexible(), spacing: 7)
+		GridItem(.flexible(), spacing: DesignSystem.Spacing.small2),
+		GridItem(.flexible(), spacing: DesignSystem.Spacing.small2)
 	]
-
-	init(coordinator: any CartCoordinator, viewModel: PaymentViewModel) {
-		self.coordinator = coordinator
-		self.viewModel = viewModel
-	}
 
 	var body: some View {
 		ZStack {
-			Color.ypWhite.ignoresSafeArea()
+			DesignSystem.Color.background.ignoresSafeArea()
 			if !viewModel.isLoading {
 				VStack {
-					LazyVGrid(columns: columns, spacing: 7) {
-						ForEach(viewModel.paymentMethods) { method in
-							PaymentMethodCell(
-								method: method,
-								isSelected: viewModel.selectedMethod == method
-							)
-							.onTapGesture {
-								viewModel.select(method)
-							}
-						}
-					}
-					.padding(16)
+					PaymentMethodsGrid(
+						methods: viewModel.paymentMethods,
+						selectedMethod: viewModel.selectedMethod,
+						onSelect: viewModel.select
+					)
 					Spacer()
-					VStack(alignment: .leading, spacing: 16) {
-						VStack(alignment: .leading, spacing: 0) {
-							Text("Совершая покупку, вы соглашаетесь с условиями")
-							Button(
-								"Пользовательского соглашения",
-								action: coordinator.openUserAgreementScreen
-							)
-							.padding(.vertical, 4)
-						}
-						.font(.system(size: 13, weight: .regular))
-						Button("Оплатить") {
+					PaymentFooterView(
+						isButtonDisabled: viewModel.isButtonDisabled,
+						onPay: {
 							viewModel.pay {
 								coordinator.openSuccessPaymentScreen()
 							}
-						}
-						.buttonStyle(PrimaryButtonStyle())
-						.disabled(viewModel.isButtonDisabled)
-					}
-					.padding(16)
-					.background(
-						Color.ypLightGrey
-							.clipShape(
-								.rect(
-									topLeadingRadius: 16,
-									topTrailingRadius: 16
-								)
-							)
-							.ignoresSafeArea(edges: .bottom)
+						},
+						onUserAgreement: coordinator.openUserAgreementScreen
 					)
 				}
 			}
@@ -73,34 +42,73 @@ struct PaymentView: View {
 		.navigationBarTitleDisplayMode(.inline)
 		.navigationBarBackButtonHidden(true)
 		.toolbar {
-			ToolbarItem(placement: .navigationBarLeading) {
-				Button {
-					coordinator.goBack()
-				} label: {
-					Image(.chevronLeft)
-						.foregroundStyle(.ypBlack)
-				}
-			}
-		}
-		.onChange(of: viewModel.isLoading) { _, newValue in
-			if newValue {
-				UIBlockingProgressHUD.show()
-			} else {
-				UIBlockingProgressHUD.dismiss()
-			}
+			BackToolbar(action: coordinator.goBack)
 		}
 		.alert(
 			"Не удалось произвести оплату",
 			isPresented: $viewModel.isAlertPresented,
 			actions: {
 				Button("Отмена", role: .cancel, action: {})
-				Button("Повторить") {
-					viewModel.repeatAction()
-				}
+				Button("Повторить", action: viewModel.repeatAction)
 			})
-		.task {
-			viewModel.load()
+		.task(viewModel.load)
+		.loading(viewModel.isLoading)
+	}
+}
+
+private struct PaymentMethodsGrid: View {
+	let methods: [PaymentMethod]
+	let selectedMethod: PaymentMethod?
+	let onSelect: (PaymentMethod) -> Void
+
+	private let columns = [
+		GridItem(.flexible(), spacing: DesignSystem.Spacing.small2),
+		GridItem(.flexible(), spacing: DesignSystem.Spacing.small2)
+	]
+
+	var body: some View {
+		LazyVGrid(columns: columns, spacing: DesignSystem.Spacing.small2) {
+			ForEach(methods) { method in
+				PaymentMethodCell(
+					method: method,
+					isSelected: selectedMethod == method
+				)
+				.onTapGesture { onSelect(method) }
+			}
 		}
+		.padding(DesignSystem.Padding.medium)
+	}
+}
+
+private struct PaymentFooterView: View {
+	let isButtonDisabled: Bool
+	let onPay: () -> Void
+	let onUserAgreement: () -> Void
+
+	var body: some View {
+		VStack(alignment: .leading, spacing: DesignSystem.Spacing.medium2) {
+			VStack(alignment: .leading, spacing: .zero) {
+				Text("Совершая покупку, вы соглашаетесь с условиями")
+				Button("Пользовательского соглашения", action: onUserAgreement)
+					.padding(.vertical, DesignSystem.Padding.xsmall2)
+			}
+			.font(DesignSystem.Font.caption2)
+
+			Button("Оплатить", action: onPay)
+				.buttonStyle(PrimaryButtonStyle())
+				.disabled(isButtonDisabled)
+		}
+		.padding(DesignSystem.Padding.medium)
+		.background(
+			DesignSystem.Color.backgroundSecondary
+				.clipShape(
+					.rect(
+						topLeadingRadius: DesignSystem.Radius.medium,
+						topTrailingRadius: DesignSystem.Radius.medium
+					)
+				)
+				.ignoresSafeArea(edges: .bottom)
+		)
 	}
 }
 
@@ -111,6 +119,6 @@ struct PaymentView: View {
 	let rootCoordinator: any RootCoordinator = RootCoordinatorImpl()
 	let coordinator = CartCoordinatorImpl(rootCoordinator: rootCoordinator)
 	NavigationStack {
-		PaymentView(coordinator: coordinator, viewModel: viewModel)
+		PaymentView(viewModel: viewModel, coordinator: coordinator)
 	}
 }

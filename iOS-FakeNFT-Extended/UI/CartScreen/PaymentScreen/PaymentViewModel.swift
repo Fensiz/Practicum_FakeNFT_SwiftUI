@@ -7,10 +7,7 @@
 
 import SwiftUI
 
-@MainActor
-@Observable
-final class PaymentViewModel {
-	let onSuccess: () async throws -> Void
+@MainActor @Observable final class PaymentViewModel {
 	var isLoading = false
 	var isAlertPresented = false
 	var paymentMethods: [PaymentMethod] = []
@@ -18,8 +15,10 @@ final class PaymentViewModel {
 	var isButtonDisabled: Bool {
 		selectedMethod == nil || isLoading
 	}
+	private let onSuccess: () async throws -> Void
 	private let paymentService: any PaymentService
-	private var lastAction: (() -> Void)?
+	private var paymentSucceeded = false
+	@ObservationIgnored private var lastAction: (() -> Void)?
 
 	init(paymentService: any PaymentService, onSuccess: @escaping () async throws -> Void) {
 		self.paymentService = paymentService
@@ -34,15 +33,13 @@ final class PaymentViewModel {
 				paymentMethods = try await paymentService.fetchPaymentMethods()
 				isLoading = false
 			} catch {
-				print("Ошибка загрузки методов оплаты: \(error)")
+				print("Ошибка загрузки методов оплаты: \(error.localizedDescription)")
 				isLoading = false
 				lastAction = load
 				isAlertPresented = true
 			}
 		}
 	}
-
-	private var paymentSucceeded = false
 
 	func pay(onSuccess: @escaping () -> Void) {
 		isLoading = true
@@ -59,7 +56,7 @@ final class PaymentViewModel {
 				paymentSucceeded = false
 				onSuccess()
 			} catch {
-				print(error.localizedDescription)
+				print("Ошибка оплаты:", error.localizedDescription)
 				lastAction = { [weak self, onSuccess] in
 					self?.pay(onSuccess: onSuccess)
 				}

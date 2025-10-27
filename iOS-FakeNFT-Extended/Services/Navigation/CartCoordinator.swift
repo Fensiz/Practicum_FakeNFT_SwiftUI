@@ -7,8 +7,7 @@
 
 import SwiftUI
 
-@MainActor
-protocol CartCoordinator: AnyObject {
+@MainActor protocol CartCoordinator: AnyObject {
 	func goBack()
 	func openPayScreen(onSuccess: @escaping () async throws -> Void)
 	func openSuccessPaymentScreen()
@@ -20,8 +19,7 @@ protocol CartCoordinator: AnyObject {
 	)
 }
 
-@Observable
-class CartCoordinatorImpl: CartCoordinator {
+@Observable final class CartCoordinatorImpl: CartCoordinator {
 	let rootCoordinator: any RootCoordinator
 
 	init(rootCoordinator: any RootCoordinator) {

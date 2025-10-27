@@ -43,6 +43,6 @@ actor CartServiceImpl: CartService {
 			nfts: itemIds
 		)
 
-		_ = try await networkService.send(request: request)
+		let _: Order = try await networkService.send(request: request)
 	}
 }

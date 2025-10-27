@@ -19,43 +19,43 @@ struct DeleteConfirmationView: View {
 				.ignoresSafeArea()
 				.background(.ultraThinMaterial)
 				.edgesIgnoringSafeArea(.all)
-			VStack(spacing: 20) {
-				VStack(spacing: 12) {
+			VStack(spacing: DesignSystem.Spacing.large) {
+				VStack(spacing: DesignSystem.Spacing.medium) {
 					KFImage(item.image)
 						.resizable()
 						.scaledToFit()
-						.frame(width: 108, height: 108)
-						.clipShape(RoundedRectangle(cornerRadius: 12))
+						.frame(width: DesignSystem.Sizes.imageMedium, height: DesignSystem.Sizes.imageMedium)
+						.clipShape(RoundedRectangle(cornerRadius: DesignSystem.Radius.small))
 					Text("Вы уверены, что хотите\nудалить объект из корзины?")
 						.multilineTextAlignment(.center)
-						.font(.system(size: 13, weight: .regular))
+						.font(DesignSystem.Font.caption2)
 				}
-				HStack(spacing: 8) {
-					Button {
-						deleteAction()
-					} label: {
-						Text("Удалить")
-							.font(.system(size: 17))
-							.frame(maxWidth: .infinity, maxHeight: .infinity)
-							.background(.ypBlack)
-							.clipShape(RoundedRectangle(cornerRadius: 12))
+				HStack(spacing: DesignSystem.Spacing.small) {
+					Group {
+						Button("Удалить", action: deleteAction)
+							.buttonStyle(
+								PrimaryButtonStyle(
+									cornerRadius: DesignSystem.Radius.small,
+									foregroundColor: DesignSystem.Color.accentDestructive,
+									font: DesignSystem.Font.bodyRegular
+								)
+							)
+						Button("Вернуться", action: cancelAction)
+							.buttonStyle(
+								PrimaryButtonStyle(
+									cornerRadius: DesignSystem.Radius.small,
+									font: DesignSystem.Font.bodyRegular
+								)
+							)
 					}
-					.frame(width: 127, height: 44)
-					.foregroundStyle(.ypURed)
-
-					Button {
-						cancelAction()
-					} label: {
-						Text("Вернуться")
-							.font(.system(size: 17))
-							.frame(maxWidth: .infinity, maxHeight: .infinity)
-							.background(.ypBlack)
-							.clipShape(RoundedRectangle(cornerRadius: 12))
-					}
-					.frame(width: 127, height: 44)
-					.foregroundStyle(.ypWhite)
+					.frame(width: DesignSystem.Sizes.buttonSmallWidth)
 				}
+				.frame(height: DesignSystem.Sizes.buttonSmallHeight)
 			}
 		}
 	}
+}
+
+#Preview {
+	DeleteConfirmationView(item: .mock1, deleteAction: {}, cancelAction: {})
 }

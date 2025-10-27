@@ -20,8 +20,7 @@ protocol RootCoordinator: CoverShowerCoordinator {
 	func goBack()
 }
 
-@Observable
-class RootCoordinatorImpl: RootCoordinator {
+@Observable final class RootCoordinatorImpl: RootCoordinator {
 	var navigationPath: [Screen] = []
 	var activeCover: Cover?
 

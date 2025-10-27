@@ -7,38 +7,41 @@
 
 import SwiftUI
 import Kingfisher
+
 struct CartCell: View {
-	let removeAction: () -> Void
 	let cartItem: CartItem
+	let removeAction: () -> Void
+
 	var body: some View {
-		HStack(spacing: 20) {
+		HStack(spacing: DesignSystem.Spacing.large) {
 			KFImage(cartItem.image)
 				.resizable()
 				.scaledToFit()
-				.frame(width: 108, height: 108)
-				.clipShape(RoundedRectangle(cornerRadius: 12))
-			VStack(alignment: .leading, spacing: 12) {
-				VStack(alignment: .leading, spacing: 4) {
+				.frame(
+					width: DesignSystem.Sizes.imageMedium,
+					height: DesignSystem.Sizes.imageMedium
+				)
+				.clipShape(RoundedRectangle(cornerRadius: DesignSystem.Radius.small))
+			VStack(alignment: .leading, spacing: DesignSystem.Spacing.medium) {
+				VStack(alignment: .leading, spacing: DesignSystem.Spacing.xsmall) {
 					Text(cartItem.name)
-						.font(.system(size: 17, weight: .bold))
+						.font(DesignSystem.Font.bodyBold)
 						.lineLimit(1)
 					RatingView(cartItem.rating)
 				}
-				.frame(height: 38)
-				VStack(alignment: .leading, spacing: 2) {
+				.frame(height: DesignSystem.Sizes.elementSmallHeight)
+				VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxsmall) {
 					Text("Цена")
-						.font(.system(size: 13, weight: .regular))
+						.font(DesignSystem.Font.caption2)
 					Text(cartItem.priceText)
-						.font(.system(size: 17, weight: .bold))
+						.font(DesignSystem.Font.bodyBold)
 						.lineLimit(1)
 				}
 			}
 			.frame(maxWidth: .infinity, alignment: .leading)
-			Button {
-				removeAction()
-			} label: {
+			Button(action: removeAction) {
 				Image(.cartCross)
-					.foregroundStyle(.ypBlack)
+					.foregroundStyle(DesignSystem.Color.textPrimary)
 			}
 			.buttonStyle(.plain)
 		}
@@ -47,17 +50,7 @@ struct CartCell: View {
 
 #Preview {
 	LightDarkPreviewWrapper {
-		CartCell(
-			removeAction: { print("remove")
-			},
-			cartItem: .init(
-				id: "qwkpwoqkp",
-				image: URL(string: "https://code.s3.yandex.net/Mobile/iOS/NFT/Pink/Calder/1.png")!,
-				name: "aijoijdioajoid",
-				rating: 2,
-				price: 22.2
-			)
-		)
-		.border(.ypBlack)
+		CartCell(cartItem: .mock1, removeAction: {})
+			.border(.ypBlack)
 	}
 }

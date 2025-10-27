@@ -1,7 +1,6 @@
 import UIKit
 
-@MainActor
-public final class NftDetailAssembly {
+@MainActor final class NftDetailAssembly {
 
 	private let servicesAssembler: ServicesAssembly
 

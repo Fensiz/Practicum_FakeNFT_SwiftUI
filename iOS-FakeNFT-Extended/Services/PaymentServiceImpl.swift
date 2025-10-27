@@ -6,7 +6,10 @@
 //  Copyright © 2025 com.example. All rights reserved.
 //
 
-actor PaymentServiceImpl: PaymentService {
+final actor PaymentServiceImpl: PaymentService {
+	enum PaymentError: Error {
+		case paymentFailed
+	}
 
 	private let networkService: any NetworkClient
 
@@ -22,6 +25,9 @@ actor PaymentServiceImpl: PaymentService {
 
 	func performPayment(with paymentMethod: PaymentMethod) async throws {
 		let request = PaymentRequest(currencyId: paymentMethod.id)
-		_ = try await networkService.send(request: request)
+		let result: PaymentResponse = try await networkService.send(request: request)
+		guard result.success else {
+			throw PaymentError.paymentFailed
+		}
 	}
 }

@@ -6,45 +6,38 @@
 //
 
 import SwiftUI
+
 struct CartView: View {
 	@State var viewModel: CartViewModel
-	@State var coordinator: any CartCoordinator
-
-	init(viewModel: CartViewModel, coordinator: any CartCoordinator) {
-		self.viewModel = viewModel
-		self.coordinator = coordinator
-		print("INIT")
-	}
+	let coordinator: any CartCoordinator
 
 	var body: some View {
-		Group {
+		VStack {
 			if viewModel.items.isEmpty && !viewModel.isLoading {
 				Text("Корзина пуста")
-					.font(.system(size: 17, weight: .bold))
-					.foregroundStyle(.ypBlack)
+					.font(DesignSystem.Font.bodyBold)
+					.foregroundStyle(DesignSystem.Color.textPrimary)
 					.frame(maxWidth: .infinity, maxHeight: .infinity)
 			} else {
-				VStack(spacing: 0) {
+				VStack(spacing: .zero) {
 					List {
 						ForEach(Array(viewModel.items.enumerated()), id: \.1.id) { index, item in
-							CartCell(removeAction: {
+							CartCell(cartItem: item) {
 								coordinator.showDeleteConfirmation(for: item) {
 									viewModel.remove(item)
-								} cancelAction: {
-
-								}
-							}, cartItem: item)
+								} cancelAction: {}
+							}
 							.listRowSeparator(.hidden)
 							.listRowInsets(
 								EdgeInsets(
-									top: 16,
-									leading: 16,
-									bottom: 16,
-									trailing: 16
+									top: DesignSystem.Padding.medium,
+									leading: DesignSystem.Padding.medium,
+									bottom: DesignSystem.Padding.medium,
+									trailing: DesignSystem.Padding.medium
 								)
 							)
 							.listRowBackground(Color.clear)
-							.padding(.top, viewModel.isFirstItem(at: index) ? 20 : 0)
+							.padding(.top, index == .zero ? DesignSystem.Padding.large : .zero)
 						}
 					}
 					.listStyle(.plain)
@@ -60,7 +53,7 @@ struct CartView: View {
 				}
 			}
 		}
-		.background(.ypWhite, ignoresSafeAreaEdges: .all)
+		.background(DesignSystem.Color.background, ignoresSafeAreaEdges: .all)
 		.confirmationDialog(
 			"Сортировка",
 			isPresented: $viewModel.isSortMenuShowing,
@@ -77,24 +70,19 @@ struct CartView: View {
 			}
 			Button("Отмена", role: .cancel) {}
 		}
-		.onChange(of: viewModel.isLoading) { _, newValue in
-			if newValue {
-				UIBlockingProgressHUD.show()
-			} else {
-				UIBlockingProgressHUD.dismiss()
-			}
-		}
-		.onAppear {
-			viewModel.fetchItems()
-		}
+		.onAppear(perform: viewModel.onAppear)
+		.onDisappear(perform: viewModel.onDisappear)
+		.loading(viewModel.isLoading)
 	}
 }
 
 #Preview {
 	NavigationStack {
 		TabView {
-			let viewModel = CartViewModel(cartService: MockCartServiceImpl())
-			CartView(viewModel: viewModel, coordinator: CartCoordinatorImpl(rootCoordinator: RootCoordinatorImpl()))
+			let coordinator = MockCartCoordinator.shared
+			let service = MockCartService.shared
+			let viewModel = CartViewModel(cartService: service)
+			CartView(viewModel: viewModel, coordinator: coordinator)
 				.tabItem {
 					Label("Корзина", image: .cartCross)
 				}

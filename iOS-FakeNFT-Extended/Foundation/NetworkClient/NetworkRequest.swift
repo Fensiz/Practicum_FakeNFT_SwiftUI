@@ -1,20 +1,20 @@
 import Foundation
 
 enum HttpMethod: String {
-    case get = "GET"
-    case post = "POST"
-    case put = "PUT"
-    case delete = "DELETE"
+	case get = "GET"
+	case post = "POST"
+	case put = "PUT"
+	case delete = "DELETE"
 }
 
-protocol NetworkRequest {
-    var endpoint: URL? { get }
-    var httpMethod: HttpMethod { get }
-    var dto: Data? { get }
+protocol NetworkRequest: Sendable {
+	var endpoint: URL? { get }
+	var httpMethod: HttpMethod { get }
+	var dto: Data? { get }
 }
 
 // default values
 extension NetworkRequest {
-    var httpMethod: HttpMethod { .get }
-    var dto: Data? { nil }
+	var httpMethod: HttpMethod { .get }
+	var dto: Data? { nil }
 }

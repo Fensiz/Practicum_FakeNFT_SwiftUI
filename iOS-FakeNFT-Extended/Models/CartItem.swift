@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CartItem: Identifiable, Equatable, Hashable, Decodable {
 	let id: String
-	let image: URL
+	let image: URL?
 	let name: String
 	let rating: Int
 	let price: Double
@@ -19,7 +19,37 @@ struct CartItem: Identifiable, Equatable, Hashable, Decodable {
 			.replacingOccurrences(of: ".", with: ",")
 	}
 
+	init(
+		id: String,
+		image: URL? = URL(string: ""),
+		name: String,
+		rating: Int = 0,
+		price: Double = 0
+	) {
+		self.id = id
+		self.image = image
+		self.name = name
+		self.rating = rating
+		self.price = price
+	}
+
 	func hash(into hasher: inout Hasher) {
 		hasher.combine(id)
 	}
+
+	static let mock1 = CartItem(
+		id: "1",
+		image: URL(string: "https://code.s3.yandex.net/Mobile/iOS/NFT/Pink/Calder/1.png")!,
+		name: "aijoijdioajoid",
+		rating: 2,
+		price: 22.2
+	)
+
+	static let mock2 = CartItem(
+		id: "2",
+		image: URL(string: "https://code.s3.yandex.net/Mobile/iOS/NFT/Pink/Calder/1.png")!,
+		name: "aijoijdioajoid",
+		rating: 2,
+		price: 22.2
+	)
 }
