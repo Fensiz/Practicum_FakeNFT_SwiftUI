@@ -17,7 +17,7 @@ final class NFTCollectionsListViewModel {
 
 	private let collectionsProvider: any NFTCollectionsProviderProtocol
 
-	private var sortingArg: CollectionsSortingType {
+	private var sortingType: CollectionsSortingType {
 		get {
 			let savedValue = UserDefaults.standard.integer(forKey: "CollectionsSortingKey")
 			return .init(rawValue: savedValue) ?? .bySize
@@ -27,7 +27,7 @@ final class NFTCollectionsListViewModel {
 		}
 	}
 
-	func fetchCollections(isInitialFetch: Bool = false) {
+	func fetchCollections(isInitialFetch: Bool) {
 		let guardCondition: Bool
 		if isInitialFetch {
 			guardCondition = (state == .empty)
@@ -38,7 +38,7 @@ final class NFTCollectionsListViewModel {
 			guard guardCondition else { return }
 			do {
 				state = .loading
-				let newCollections = try await collectionsProvider.fetch(number: 10, sorting: sortingArg)
+				let newCollections = try await collectionsProvider.fetch(number: 10, sorting: sortingType)
 				collections.append(contentsOf: newCollections)
 				state = .loaded
 			} catch {
@@ -47,19 +47,19 @@ final class NFTCollectionsListViewModel {
 		}
 	}
 
-    func sort(by sortingArg: CollectionsSortingType) {
-		guard sortingArg != self.sortingArg else { return }
+    func sort(by sortingType: CollectionsSortingType) {
+		guard sortingType != self.sortingType else { return }
 		state = .empty
 		Task {
 			guard state != .loading else { return }
 			do {
 				state = .loading
-				collections = try await collectionsProvider.fetch(number: collections.count, sorting: sortingArg)
+				collections = try await collectionsProvider.fetch(number: collections.count, sorting: sortingType)
 				state = .loaded
 			} catch {
 				state = .error
 			}
-			self.sortingArg = sortingArg
+			self.sortingType = sortingType
 		}
     }
 

@@ -45,7 +45,7 @@ struct NFTCollectionsListView: View {
 						.font(.system(size: 17, weight: .regular))
 				}
 				Button {
-					viewModel.fetchCollections()
+					viewModel.fetchCollections(isInitialFetch: false)
 				} label: {
 					Text(NSLocalizedString("Error.Repeat", comment: ""))
 						.font(.system(size: 17, weight: .bold))
@@ -68,7 +68,7 @@ struct NFTCollectionsListView: View {
 					button(for: collection)
 						.onAppear {
 							if collection == viewModel.collections.last {
-								viewModel.fetchCollections()
+								viewModel.fetchCollections(isInitialFetch: false)
 							}
 						}
 				}
