@@ -38,7 +38,7 @@ import SwiftUI
 
 	func openUserAgreementScreen() {
 		guard let url = URL(string: "https://yandex.ru/legal/practicum_termsofuse") else { return }
-		rootCoordinator.open(screen: .web(url: url))
+		rootCoordinator.open(screen: .web(url: url, isAppearenceEnabled: true))
 	}
 
 	func showDeleteConfirmation(

@@ -58,8 +58,8 @@ final class ViewFactory {
 			case let .payment(coordinartor, action):
 				let viewModel = PaymentViewModel(paymentService: paymentService, onSuccess: action)
 				PaymentView(viewModel: viewModel, coordinator: coordinartor)
-			case .web(let url):
-				WebView(url: url, isAppearenceEnabled: true)
+			case let .web(url, isAppearenceEnabled):
+				WebView(url: url, isAppearenceEnabled: isAppearenceEnabled)
 			case .successPayment(let action):
 				SuccessPaymentScreen(action: action)
 			case .myNfts:

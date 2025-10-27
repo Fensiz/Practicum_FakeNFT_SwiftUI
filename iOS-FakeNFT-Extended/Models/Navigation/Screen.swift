@@ -11,7 +11,7 @@ enum Screen: Hashable {
 	case dummy
 	case payment(coordinator: any CartCoordinator, action: () async throws -> Void)
 	case successPayment(action: () -> Void)
-	case web(url: URL)
+	case web(url: URL, isAppearenceEnabled: Bool = false)
 	case myNfts
 	case favorites
 	case profileEdit
