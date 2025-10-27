@@ -15,9 +15,17 @@ final class ViewFactory {
 	private let cartViewModel: CartViewModel
 	private let cartCoordinator: CartCoordinatorImpl
 
+    private let profileService: any ProfileService
+    private let profileViewModel: ProfileViewModel
+    private let profileCoordinator: ProfileCoordinatorImpl
+
 	// MARK: - Views
 
 	private lazy var cartView: some View = CartView(viewModel: cartViewModel, coordinator: cartCoordinator)
+	private lazy var profileView: some View = ProfileView(
+		viewModel: profileViewModel,
+		coordinator: profileCoordinator
+	)
 
 	init(rootCoordinator: any RootCoordinator) {
 		let networkService = DefaultNetworkClient()
@@ -31,6 +39,10 @@ final class ViewFactory {
 		self.cartCoordinator = CartCoordinatorImpl(rootCoordinator: rootCoordinator)
 
 		self.paymentService = PaymentServiceImpl(networkService: networkService)
+
+		self.profileService = ProfileServiceImpl(networkClient: networkClient)
+        self.profileViewModel = ProfileViewModel(profileService: profileService, nftsService: nftService)
+        self.profileCoordinator = ProfileCoordinatorImpl(rootCoordinator: rootCoordinator)
 	}
 
 	// сюда добавляются все экраны, которые перекрывают tabView,
@@ -47,6 +59,27 @@ final class ViewFactory {
 				WebView(url: url, isAppearenceEnabled: true)
 			case .successPayment(let action):
 				SuccessPaymentScreen(action: action)
+            case .myNfts:
+                MyNFTList()
+                    .environmentObject(profileViewModel)
+            case .favorites:
+                FavoriteNFTsList()
+                    .environmentObject(profileViewModel)
+            case .profileEdit:
+                ProfileEditView(
+                    initialData: ProfileEditData(
+                        name: profileViewModel.editingUser?.name ?? "",
+                        description: profileViewModel.editingUser?.description ?? "",
+                        website: profileViewModel.editingUser?.website?.absoluteString ?? "",
+                        avatarURL: profileViewModel.editingUser?.avatar
+                    ),
+                    onSave: { editedData in await self.profileViewModel.updateProfile(with: editedData) },
+                    onCancel: { self.profileViewModel.cancelEditing() },
+                    onDismiss: { self.rootCoordinator.goBack() },
+                    isSaving: self.profileViewModel.isSaveInProgress,
+                    errorMessage: self.profileViewModel.errorMessage
+                )
+            }
 		}
 	}
 
@@ -78,7 +111,7 @@ final class ViewFactory {
 			case .cart:
 				cartView
 			case .profile:
-				EmptyView()
+				profileView
 			case .statistic:
 				EmptyView()
 		}

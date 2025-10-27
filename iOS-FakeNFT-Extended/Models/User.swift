@@ -4,6 +4,7 @@
 //
 //  Created by Алина on 11.10.2025.
 //
+
 import SwiftUI
 
 struct User: Codable, Identifiable, Sendable, Equatable, Hashable {
@@ -25,7 +26,7 @@ struct User: Codable, Identifiable, Sendable, Equatable, Hashable {
         name: String,
         avatar: URL?,
         nfts: [String],
-        rating: String,
+        rating: String? = nil,
         description: String? = nil,
         website: URL? = nil,
         likes: [String]? = nil

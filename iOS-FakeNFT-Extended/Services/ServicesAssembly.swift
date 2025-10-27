@@ -19,4 +19,7 @@ import Foundation
 			storage: nftStorage
 		)
 	}
+    var profileService: any ProfileService {
+        ProfileServiceImpl(networkClient: networkClient)
+    }
 }

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ProfileImage: View {
-    @Environment(\.colorScheme) private var coloScheme
+    @Environment(\.colorScheme) private var colorScheme
     var imageUrl: URL?
     var canEdit: Bool
     let onTap: () -> Void
@@ -30,7 +30,7 @@ struct ProfileImage: View {
                         .scaledToFill()
                 } placeholder: {
                     Circle()
-                        .foregroundColor(coloScheme == .dark ? .ypUBlack : .ypUWhite)
+                        .foregroundColor(colorScheme == .dark ? .ypUBlack : .ypUWhite)
                         .overlay {
                             ProgressView()
                         }
@@ -64,7 +64,7 @@ struct ProfileImage: View {
 #Preview {
     LightDarkPreviewWrapper {
         ProfileImage(
-            imageUrl: URL(string: "https://i.ibb.co/fVLFtWrM/c1f8f42c5f5bd684e27d93131dc6ffd4696cdfd3.jpg") ?? nil,
+            imageUrl: URL(string: "https://tinyurl.com/mrxzhdb7") ?? nil,
             canEdit: true
         ) {
             print("test")
