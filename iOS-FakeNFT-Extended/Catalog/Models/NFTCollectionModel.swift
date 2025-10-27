@@ -9,10 +9,10 @@
 import Foundation
 
 struct NFTCollectionModel: Identifiable, Equatable {
-    let imageURL: URL?
-    let title: String
-    let nftIDs: [Int]
+	let id: UUID
+	let title: String
+    let imageURL: URL
+	let nftIDs: [NFTModel.ID]
     let description: String
-    let authorID: Int
-    let id: Int
+	let authorID: NFTUserModel.ID
 }

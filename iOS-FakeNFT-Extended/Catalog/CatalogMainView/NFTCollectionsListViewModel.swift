@@ -12,33 +12,58 @@ import SwiftUI
 @MainActor
 final class NFTCollectionsListViewModel {
 
-    private(set) var state: State = .empty
-    private(set) var collections: [NFTCollectionModel] = []
+	private(set) var collections: [NFTCollectionModel] = []
+	private(set) var state: State = .empty
 
-    private let collectionsProvider: any NFTCollectionsProviderProtocol
+	private let collectionsProvider: any NFTCollectionsProviderProtocol
 
-    func fetchNewCollections(number: Int) async {
-        guard state != .loading else { return }
-        do {
-            state = .loading
-            let newCollections = try await collectionsProvider.fetch(number: number)
-            state = .loaded
-            collections.append(contentsOf: newCollections)
-        } catch {
-            state = .error
-        }
+	private var sortingType: CollectionsSortingType {
+		get {
+			let savedValue = UserDefaults.standard.integer(forKey: "CollectionsSortingKey")
+			return .init(rawValue: savedValue) ?? .bySize
+		}
+		set {
+			UserDefaults.standard.set(newValue.rawValue, forKey: "CollectionsSortingKey")
+		}
+	}
+
+	func fetchCollections(isInitialFetch: Bool) {
+		let guardCondition: Bool
+		if isInitialFetch {
+			guardCondition = (state == .empty)
+		} else {
+			guardCondition = (state != .loading)
+		}
+		Task {
+			guard guardCondition else { return }
+			do {
+				state = .loading
+				let newCollections = try await collectionsProvider.fetch(number: 10, sorting: sortingType)
+				collections.append(contentsOf: newCollections)
+				state = .loaded
+			} catch {
+				state = .error
+			}
+		}
+	}
+
+    func sort(by sortingType: CollectionsSortingType) {
+		guard sortingType != self.sortingType else { return }
+		state = .empty
+		Task {
+			guard state != .loading else { return }
+			do {
+				state = .loading
+				collections = try await collectionsProvider.fetch(number: collections.count, sorting: sortingType)
+				state = .loaded
+			} catch {
+				state = .error
+			}
+			self.sortingType = sortingType
+		}
     }
 
-    func sort(by sortingArg: CatalogSorting) {
-        switch sortingArg {
-        case .byTitle:
-            collections.sort(by: { $0.title < $1.title })
-        case .bySize:
-            collections.sort(by: { $0.nftIDs.count < $1.nftIDs.count })
-        }
-    }
-
-    init(collectionsProvider: any NFTCollectionsProviderProtocol) {
+	init(collectionsProvider: any NFTCollectionsProviderProtocol) {
         self.collectionsProvider = collectionsProvider
     }
 
@@ -53,11 +78,11 @@ extension NFTCollectionsListViewModel {
     }
 }
 
-enum CatalogSorting: CaseIterable, Identifiable {
+enum CollectionsSortingType: Int, CaseIterable, Identifiable {
 
     var id: Self { self }
 
-    case byTitle
+	case byTitle
     case bySize
 
     var description: String {
@@ -68,5 +93,14 @@ enum CatalogSorting: CaseIterable, Identifiable {
             NSLocalizedString("Catalog.Sorting.BySize", comment: "")
         }
     }
+
+	var sortingRule: (NFTCollectionModel, NFTCollectionModel) -> Bool {
+		switch self {
+		case .byTitle:
+			{ $0.title < $1.title }
+		case .bySize:
+			{ $0.nftIDs.count < $1.nftIDs.count }
+		}
+	}
 
 }

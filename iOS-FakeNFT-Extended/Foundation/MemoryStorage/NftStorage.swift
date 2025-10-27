@@ -3,18 +3,18 @@ import SwiftData
 
 @MainActor
 protocol NftStorage: Sendable {
-	func saveNft(_ nft: Nft) async throws
-	func getNft(with id: String) async throws -> Nft?
+	func saveNft(_ nft: NFT) async throws
+	func getNft(with id: String) async throws -> NFT?
 }
 
 class NftStorageImpl: NftStorage {
-	private var storage: [String: Nft] = [:]
+	private var storage: [String: NFT] = [:]
 
-	func saveNft(_ nft: Nft) async {
+	func saveNft(_ nft: NFT) async {
 		storage[nft.id] = nft
 	}
 
-	func getNft(with id: String) async -> Nft? {
+	func getNft(with id: String) async -> NFT? {
 		storage[id]
 	}
 }
@@ -26,8 +26,8 @@ final class NftStorageSwiftDataImpl: NftStorage {
 		self.context = context
 	}
 
-	func saveNft(_ nft: Nft) throws {
-		let entity = NftEntity(
+	func saveNft(_ nft: NFT) throws {
+		let entity = NFTEntity(
 			id: nft.id,
 			name: nft.name,
 			images: nft.images,
@@ -40,11 +40,11 @@ final class NftStorageSwiftDataImpl: NftStorage {
 		try context.save()
 	}
 
-	func getNft(with id: String) throws -> Nft? {
-		let fetchDescriptor = FetchDescriptor<NftEntity>(predicate: #Predicate { $0.id == id })
+	func getNft(with id: String) throws -> NFT? {
+		let fetchDescriptor = FetchDescriptor<NFTEntity>(predicate: #Predicate { $0.id == id })
 		guard let entity = try context.fetch(fetchDescriptor).first else { return nil }
 
-		return Nft(
+		return NFT(
 			id: entity.id,
 			name: entity.name,
 			images: entity.imageURLs,
@@ -55,11 +55,11 @@ final class NftStorageSwiftDataImpl: NftStorage {
 		)
 	}
 
-	func getAll() throws -> [Nft] {
-		let fetchDescriptor = FetchDescriptor<NftEntity>()
+	func getAll() throws -> [NFT] {
+		let fetchDescriptor = FetchDescriptor<NFTEntity>()
 		let entities = try context.fetch(fetchDescriptor)
 		return entities.map {
-			Nft(
+			NFT(
 				id: $0.id,
 				name: $0.name,
 				images: $0.imageURLs,
@@ -72,7 +72,7 @@ final class NftStorageSwiftDataImpl: NftStorage {
 	}
 
 	func clear() throws {
-		let fetchDescriptor = FetchDescriptor<NftEntity>()
+		let fetchDescriptor = FetchDescriptor<NFTEntity>()
 		let entities = try context.fetch(fetchDescriptor)
 		for entity in entities {
 			context.delete(entity)

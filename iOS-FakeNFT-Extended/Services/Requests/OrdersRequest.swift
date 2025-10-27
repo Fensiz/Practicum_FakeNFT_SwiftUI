@@ -21,7 +21,7 @@ struct OrdersRequest: NetworkRequest, Sendable {
 	) {
 		self.httpMethod = httpMethod
 		if let nfts {
-			let params =  [
+			let params = nfts.isEmpty ? [:] : [
 				"nfts": nfts.joined(separator: ",")
 			]
 			self.dto = params.percentEncoded()

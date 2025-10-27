@@ -12,36 +12,25 @@ struct NFTCollectionCellView: View {
 
     private let model: NFTCollectionModel
 
-    var body: some View {
-        VStack(alignment: .leading, spacing: 4) {
-            image
-                .frame(height: 140)
-                .clipShape(RoundedRectangle(cornerRadius: 12))
-            title
-        }
-        .padding(.bottom, 13)
-    }
-
-    private var image: some View {
-        AsyncImage(url: model.imageURL) { image in
-            image
-                .resizable()
-                .scaledToFill()
-                .clipped()
-        } placeholder: {
-            Color.ypUGrey
-                .overlay {
-                    ProgressView()
-                        .tint(.ypUWhite)
-                }
-        }
-    }
+	var body: some View {
+		VStack(alignment: .center, spacing: 4) {
+			BasicImage(
+				imageURL: model.imageURL,
+				contentMode: .fill
+			)
+			.frame(height: 140)
+			.clipShape(RoundedRectangle(cornerRadius: 12))
+			title
+		}
+		.padding(.bottom, 13)
+	}
 
     private var title: some View {
         HStack(spacing: 4) {
             Group {
                 Text("\(model.title.capitalized)")
                 Text("(\(model.nftIDs.count))")
+				Spacer()
             }
             .font(.system(size: 17, weight: .bold))
             .foregroundStyle(.ypBlack)
@@ -55,15 +44,15 @@ struct NFTCollectionCellView: View {
 }
 
 #Preview {
-    NFTCollectionCellView(
-        collection: .init(
-            imageURL: URL(string: "https://code.s3.yandex.net/Mobile/iOS/NFT/Обложки_коллекций/Beige.png"),
-            title: "Beige",
-            nftIDs: [1, 2, 3, 4],
-            description: "A series of ...",
-            authorID: 49,
-            id: 1
-        )
-    )
-    .frame(width: 300, height: 500)
+	NFTCollectionCellView(
+		collection: .init(
+			id: UUID(),
+			title: "unum reque",
+			imageURL: URL(string: "https://code.s3.yandex.net/Mobile/iOS/NFT/Обложки_коллекций/White.png")!,
+			nftIDs: [],
+			description: "dictas ...",
+			authorID: UUID()
+		)
+	)
+	.frame(width: 300, height: 500)
 }

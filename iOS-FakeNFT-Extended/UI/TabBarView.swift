@@ -4,6 +4,7 @@ struct TabBarView: View {
 	@State var rootCoordinator: any RootCoordinator
 	@State private var toolbarButtons: [Int: ToolbarButtonDescriptor?] = [:]
 	@State private var selectedTab = 0
+	@State private var isLoading = false
 	private let viewFactory: ViewFactory
 	private let tabs: [Tab]
 
@@ -51,6 +52,9 @@ struct TabBarView: View {
 					toolbarButtons = item
 				}
 			}
+			.onPreferenceChange(LoadingPreferenceKey.self) { value in
+				isLoading = value
+			}
 			if let cover = rootCoordinator.activeCover {
 				viewFactory.makeCoverView(for: cover)
 					.transition(.opacity)
@@ -58,5 +62,6 @@ struct TabBarView: View {
 			}
 		}
 		.animation(.easeInOut, value: rootCoordinator.activeCover)
+		.onChange(of: isLoading, UIProgressHUD.handleLoading)
 	}
 }

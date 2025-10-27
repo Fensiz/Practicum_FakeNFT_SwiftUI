@@ -9,10 +9,21 @@ import SwiftUI
 
 @MainActor
 final class ViewFactory {
+
 	private let rootCoordinator: any RootCoordinator
+	private let catalogCoordinator: any CatalogCoordinatorProtocol
+	private let nftCollectionsProvider: any NFTCollectionsProviderProtocol
+	private let nftCollectionDetailsService: any NFTCollectionDetailsServiceProtocol
+
+	private lazy var catalogMainViewModel: NFTCollectionsListViewModel = {
+		NFTCollectionsListViewModel(collectionsProvider: nftCollectionsProvider)
+	}()
 
 	init(rootCoordinator: any RootCoordinator) {
 		self.rootCoordinator = rootCoordinator
+		self.catalogCoordinator = CatalogCoordinator(rootCoordinator: rootCoordinator)
+		self.nftCollectionsProvider = NFTCollectionsMockProvider(throwsError: false)
+		self.nftCollectionDetailsService = NFTCollectionDetailsMockService(throwsError: false)
 	}
 
 	// сюда добавляются все экраны, которые перекрывают tabView,
@@ -20,14 +31,23 @@ final class ViewFactory {
 	@ViewBuilder
 	func makeScreenView(for screen: Screen) -> some View {
 		switch screen {
-			case .dummy:
-				EmptyView()
-			case .payment:
-				EmptyView()
-			case .web:
-				EmptyView()
-			case .successPayment:
-				EmptyView()
+		case .dummy:
+			EmptyView()
+		case .payment:
+			EmptyView()
+		case .web(let url):
+			WebView(url: url)
+		case .successPayment:
+			EmptyView()
+		case .collectionDetails(collection: let collection):
+			let viewModel = NFTCollectionDetailsViewModel(
+				collection: collection,
+				collectionDetailsService: NFTCollectionDetailsMockService(throwsError: false)
+			)
+			NFTCollectionDetailsView(
+				viewModel: viewModel,
+				coordinator: catalogCoordinator
+			)
 		}
 	}
 
@@ -48,14 +68,17 @@ final class ViewFactory {
 	@ViewBuilder
 	func makeTabView(for tab: Tab) -> some View {
 		switch tab {
-			case .catalog:
-				NFTCollectionsListView(viewModel: NFTCollectionsListViewModel(collectionsProvider: NFTCollectionsMockProvider()))
-			case .cart:
-				EmptyView()
-			case .profile:
-				EmptyView()
-			case .statistic:
-				EmptyView()
+		case .catalog:
+			NFTCollectionsListView(
+				viewModel: catalogMainViewModel,
+				coordinator: catalogCoordinator
+			)
+		case .cart:
+			EmptyView()
+		case .profile:
+			EmptyView()
+		case .statistic:
+			EmptyView()
 		}
 	}
 }

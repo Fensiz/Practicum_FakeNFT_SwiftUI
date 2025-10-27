@@ -12,6 +12,9 @@ struct NFTCollectionsListView: View {
 
     @State private var viewModel: NFTCollectionsListViewModel
     @State private var isSelectingSortingType = false
+	@State private var isShowingErrorAlert = false
+
+	private let coordinator: any CatalogCoordinatorProtocol
 
     var body: some View {
         scrollView
@@ -19,7 +22,7 @@ struct NFTCollectionsListView: View {
                 "sorting",
                 isPresented: $isSelectingSortingType
             ) {
-                ForEach(CatalogSorting.allCases) { sorting in
+                ForEach(CollectionsSortingType.allCases) { sorting in
                     Button(sorting.description) {
                         viewModel.sort(by: sorting)
                     }
@@ -31,25 +34,44 @@ struct NFTCollectionsListView: View {
                 isSelectingSortingType = true
             }
             .onAppear {
-                Task {
-                    await viewModel.fetchNewCollections(number: 10)
-                }
+				viewModel.fetchCollections(isInitialFetch: true)
             }
+			.alert(
+				NSLocalizedString("Catalog.Error", comment: ""),
+				isPresented: $isShowingErrorAlert
+			) {
+				Button { } label: {
+					Text(NSLocalizedString("Error.Cancel", comment: ""))
+						.font(.system(size: 17, weight: .regular))
+				}
+				Button {
+					viewModel.fetchCollections(isInitialFetch: false)
+				} label: {
+					Text(NSLocalizedString("Error.Repeat", comment: ""))
+						.font(.system(size: 17, weight: .bold))
+				}
+			}
+			.onChange(of: viewModel.state) { oldValue, newValue in
+				if oldValue != .loaded && newValue == .loading {
+					UIBlockingProgressHUD.show()
+				}
+				if oldValue == .loading && newValue == .loaded {
+					UIBlockingProgressHUD.dismiss()
+				}
+			}
     }
 
-    var scrollView: some View {
+	private var scrollView: some View {
         ScrollView {
             LazyVStack(spacing: 8) {
-                ForEach(viewModel.collections) { collection in
-                    button(for: collection)
-                        .onAppear {
-                            if collection == viewModel.collections.last {
-                                Task {
-                                    await viewModel.fetchNewCollections(number: 10)
-                                }
-                            }
-                        }
-                }
+				ForEach(viewModel.collections) { collection in
+					button(for: collection)
+						.onAppear {
+							if collection == viewModel.collections.last {
+								viewModel.fetchCollections(isInitialFetch: false)
+							}
+						}
+				}
             }
             .padding(.horizontal, 16)
             .padding(.vertical, 20)
@@ -59,26 +81,32 @@ struct NFTCollectionsListView: View {
 
     private func button(for collection: NFTCollectionModel) -> some View {
         Button {
-            print("\(collection) tapped")
+			coordinator.showDetails(for: collection)
         } label: {
             NFTCollectionCellView(collection: collection)
         }
         .buttonStyle(.plain)
     }
 
-    init(viewModel: NFTCollectionsListViewModel) {
+	init(
+		viewModel: NFTCollectionsListViewModel,
+		coordinator: any CatalogCoordinatorProtocol
+	) {
         self.viewModel = viewModel
+		self.coordinator = coordinator
     }
 
 }
 
 #Preview {
-
+	let rootCoordinator = RootCoordinatorImpl()
+	let catalogCoordinator = CatalogCoordinator(rootCoordinator: rootCoordinator)
+	let collectionsProvider = NFTCollectionsMockProvider(throwsError: false)
+	let viewModel = NFTCollectionsListViewModel(collectionsProvider: collectionsProvider)
     NavigationStack {
         NFTCollectionsListView(
-            viewModel: NFTCollectionsListViewModel(
-                collectionsProvider: NFTCollectionsMockProvider()
-            )
+            viewModel: viewModel,
+			coordinator: catalogCoordinator
         )
     }
 

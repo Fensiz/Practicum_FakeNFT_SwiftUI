@@ -10,21 +10,43 @@ import UIKit
 import ProgressHUD
 
 @MainActor
-final class UIBlockingProgressHUD {
-	private init() {}
+enum UIBlockingProgressHUD {
 	private static var window: UIWindow? {
 		(UIApplication.shared.connectedScenes
 			.first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene)?
 			.windows.first
 	}
 
+	private static var savedWindow: UIWindow?
+
 	static func show() {
-//		window?.isUserInteractionEnabled = false
+		savedWindow = window
+		savedWindow?.isUserInteractionEnabled = false
 		ProgressHUD.animate()
 	}
 
 	static func dismiss() {
-//		window?.isUserInteractionEnabled = true
+		savedWindow?.isUserInteractionEnabled = true
+		savedWindow = nil
 		ProgressHUD.dismiss()
+	}
+}
+
+@MainActor
+enum UIProgressHUD {
+	static func show() {
+		ProgressHUD.animate()
+	}
+
+	static func dismiss() {
+		ProgressHUD.dismiss()
+	}
+
+	static func handleLoading(_ oldValue: Bool, _ newValue: Bool) {
+		if newValue {
+			ProgressHUD.animate()
+		} else {
+			ProgressHUD.dismiss()
+		}
 	}
 }

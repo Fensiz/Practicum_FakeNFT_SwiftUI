@@ -21,7 +21,7 @@ protocol RootCoordinator: CoverShowerCoordinator {
 }
 
 @Observable
-class RootCoordinatorImpl: RootCoordinator {
+final class RootCoordinatorImpl: RootCoordinator {
 	var navigationPath: [Screen] = []
 	var activeCover: Cover?
 
