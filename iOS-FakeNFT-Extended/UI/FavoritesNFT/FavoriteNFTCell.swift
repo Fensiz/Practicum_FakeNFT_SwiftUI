@@ -9,42 +9,42 @@ import SwiftUI
 import Kingfisher
 
 struct FavoriteNFTCell: View {
-    let nft: NFTEntity
+	let nft: NFTEntity
 	let isToggling: Bool
-    let onLikeTap: () -> Void
-    var body: some View {
-        HStack(spacing: 0) {
-            KFImage(nft.imageURLs.first)
-                .placeholder {
-                    Color.gray.opacity(0.3)
-                }
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(width: 80, height: 80)
-                .cornerRadius(12)
-                .aspectRatio(contentMode: .fit)
-                .overlay(alignment: .topTrailing) {
+	let onLikeTap: () -> Void
+	var body: some View {
+		HStack(spacing: 0) {
+			KFImage(nft.imageURLs.first)
+				.placeholder {
+					Color.gray.opacity(0.3)
+				}
+				.resizable()
+				.aspectRatio(contentMode: .fit)
+				.frame(width: 80, height: 80)
+				.cornerRadius(12)
+				.aspectRatio(contentMode: .fit)
+				.overlay(alignment: .topTrailing) {
 					Button(action: onLikeTap) {
 						Image(.active)
 							.foregroundColor(.ypURed)
 					}
 					.offset(x: 5, y: -5)
 					.disabled(isToggling)
-                }
-            VStack(alignment: .leading, spacing: 5) {
-                Text(nft.name)
-                    .foregroundColor(.ypBlack)
-                    .font(Font(UIFont.bodyBold))
-                RatingView(nft.rating)
-                HStack(spacing: 4) {
-                    Text("\(String(format: "%.2f", nft.price)) ETH")
-                        .foregroundColor(.ypBlack)
-                        .font(Font(UIFont.caption1))
-                }
-            }
-            .padding(.leading, 20)
-        }
+				}
+			VStack(alignment: .leading, spacing: 5) {
+				Text(nft.name)
+					.foregroundColor(.ypBlack)
+					.font(Font(UIFont.bodyBold))
+				RatingView(nft.rating)
+				HStack(spacing: 4) {
+					Text("\(String(format: "%.2f", nft.price)) ETH")
+						.foregroundColor(.ypBlack)
+						.font(Font(UIFont.caption1))
+				}
+			}
+			.padding(.leading, 20)
+		}
 		.opacity(isToggling ? 0.6 : 1.0)
 		.animation(.easeInOut(duration: 0.2), value: isToggling)
-    }
+	}
 }

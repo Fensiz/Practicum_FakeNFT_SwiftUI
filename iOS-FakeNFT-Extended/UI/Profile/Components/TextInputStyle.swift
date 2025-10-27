@@ -9,11 +9,11 @@ import SwiftUI
 
 /// Стили для текстовых полей в редкатировании профиля
 struct TextInputStyle: ViewModifier {
-    func body(content: Content) -> some View {
-        content
-            .font(Font(UIFont.bodyRegular))
-            .padding(.vertical, 11)
-            .padding(.horizontal)
-            .background(Color.ypLightGrey.cornerRadius(12))
-    }
+	func body(content: Content) -> some View {
+		content
+			.font(Font(UIFont.bodyRegular))
+			.padding(.vertical, 11)
+			.padding(.horizontal)
+			.background(Color.ypLightGrey.cornerRadius(12))
+	}
 }
