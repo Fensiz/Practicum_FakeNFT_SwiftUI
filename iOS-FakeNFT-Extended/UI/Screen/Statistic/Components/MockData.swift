@@ -27,20 +27,89 @@ enum Bio {
 
 enum MockNFTIDs {
     static let sample: [String] = [
-        "https://d5dn3j2ouj72b0ejucbl.apigw.yandexcloud.net/api/v1/e8c1f0b6-5caf-4f65-8e5b-12f4bcb29efb",
-        "https://d5dn3j2ouj72b0ejucbl.apigw.yandexcloud.net/api/v1/b3907b86-37c4-4e15-95bc-7f8147a9a660",
-        "https://d5dn3j2ouj72b0ejucbl.apigw.yandexcloud.net/api/v1/d6a02bd1-1255-46cd-815b-656174c1d9c0",
-        "https://d5dn3j2ouj72b0ejucbl.apigw.yandexcloud.net/api/v1/f380f245-0264-4b42-8e7e-c4486e237504",
-        "https://d5dn3j2ouj72b0ejucbl.apigw.yandexcloud.net/api/v1/de7c0518-6379-443b-a4be-81f5a7655f48",
-        "https://d5dn3j2ouj72b0ejucbl.apigw.yandexcloud.net/api/v1/c14cf3bc-7470-4eec-8a42-5eaa65f4053c",
-        "https://d5dn3j2ouj72b0ejucbl.apigw.yandexcloud.net/api/v1/b2f44171-7dcd-46d7-a6d3-e2109aacf520",
-        "https://d5dn3j2ouj72b0ejucbl.apigw.yandexcloud.net/api/v1/e33e18d5-4fc2-466d-b651-028f78d771b8",
-        "https://d5dn3j2ouj72b0ejucbl.apigw.yandexcloud.net/api/v1/db196ee3-07ef-44e7-8ff5-16548fc6f434",
-        "https://d5dn3j2ouj72b0ejucbl.apigw.yandexcloud.net/api/v1/82570704-14ac-4679-9436-050f4a32a8a0"
+        "e8c1f0b6-5caf-4f65-8e5b-12f4bcb29efb",
+        "b3907b86-37c4-4e15-95bc-7f8147a9a660",
+        "d6a02bd1-1255-46cd-815b-656174c1d9c0",
+        "f380f245-0264-4b42-8e7e-c4486e237504",
+        "de7c0518-6379-443b-a4be-81f5a7655f48",
+        "c14cf3bc-7470-4eec-8a42-5eaa65f4053c",
+        "b2f44171-7dcd-46d7-a6d3-e2109aacf520",
+        "e33e18d5-4fc2-466d-b651-028f78d771b8",
+        "db196ee3-07ef-44e7-8ff5-16548fc6f434",
+        "82570704-14ac-4679-9436-050f4a32a8a0"
     ]
 
     static func make(_ itemsCount: Int) -> [String] {
         (0..<itemsCount).map { sample[$0 % sample.count] }
+    }
+}
+
+actor MockNFTItemCollectionService: NFTItemCollectionService {
+    func loadNft(id: String) async throws -> NFTItem {
+        try await Task.sleep(nanoseconds: 150_000_000) // имитация сети
+        let url = URL(string: "https://picsum.photos/seed/\(id.prefix(6))/300")!
+        return NFTItem(
+            id: id,
+            name: "NFT \(id.prefix(4))",
+            images: [url],
+            rating: Int.random(in: 1...5),
+            price: Double.random(in: 0.1...3.0)
+        )
+    }
+}
+
+enum MockNFT {
+    static let sampleNFTs: [NFTItem] = [
+        NFTItem(
+            id: "1",
+            name: "Myrna Cervantes",
+            images: [
+                URL(string: "https://code.s3.yandex.net/Mobile/iOS/NFT/Beige/Ellsa/1.png")!,
+                URL(string: "https://code.s3.yandex.net/Mobile/iOS/NFT/Beige/Ellsa/2.png")!,
+                URL(string: "https://code.s3.yandex.net/Mobile/iOS/NFT/Beige/Ellsa/3.png")!
+            ],
+            rating: 5,
+            price: 39.37
+        ),
+        NFTItem(
+            id: "2",
+            name: "Cool Art NFT",
+            images: [URL(string: "https://code.s3.yandex.net/Mobile/iOS/NFT/Beige/Lucky/1.png")!],
+            rating: 4,
+            price: 25.99
+        ),
+        NFTItem(
+            id: "3",
+            name: "Rare Collectible",
+            images: [URL(string: "https://code.s3.yandex.net/Mobile/iOS/NFT/Beige/Ellsa/2.png")!],
+            rating: 5,
+            price: 99.99
+        ),
+        NFTItem(
+            id: "4",
+            name: "Digital Masterpiece",
+            images: [URL(string: "https://code.s3.yandex.net/Mobile/iOS/NFT/Beige/Ellsa/3.png")!],
+            rating: 3,
+            price: 15.50
+        ),
+        NFTItem(
+            id: "5",
+            name: "Abstract Vision",
+            images: [URL(string: "https://code.s3.yandex.net/Mobile/iOS/NFT/Beige/Ellsa/4.png")!],
+            rating: 4,
+            price: 45.00
+        ),
+        NFTItem(
+            id: "6",
+            name: "Future Art",
+            images: [URL(string: "https://code.s3.yandex.net/Mobile/iOS/NFT/Beige/Ellsa/5.png")!],
+            rating: 5,
+            price: 75.25
+        )
+    ]
+
+    static func make(_ count: Int) -> [NFTItem] {
+        Array(sampleNFTs.prefix(count))
     }
 }
 
@@ -83,4 +152,6 @@ struct MockData {
         User(id: "8", name: "Joaquin Phoenix", avatar: URL(string: Avatar.user8), nfts: MockNFTIDs.make(112),
              rating: "1", description: Bio.statisticCard, website: URL(string: WebsiteUser.web7))
     ]
+
+    static let nftCollections: [NFTItem] = MockNFT.sampleNFTs
 }
