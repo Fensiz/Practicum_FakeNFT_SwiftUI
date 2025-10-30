@@ -111,7 +111,7 @@ struct ProfileEditView: View {
 					Button("Отмена", role: .cancel) {}
 				}
 			FormField(title: "Имя", value: $viewModel.profile.name)
-			FormField(title: "Описание", value: $viewModel.profile.description)
+			FormField(title: "Описание", value: $viewModel.profile.description, fieldType: .textEditor)
 			FormField(title: "Сайт", value: $viewModel.profile.websiteString)
 			Spacer()
 			Button("Сохранить", action: viewModel.saveAndExit)
