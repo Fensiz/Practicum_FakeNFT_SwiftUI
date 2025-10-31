@@ -9,10 +9,10 @@
 import Foundation
 
 protocol NFTCollectionDetailsServiceProtocol: Sendable {
-	func fetchNFTs() async throws -> [NFTModel]
-	func fetchAuthor() async throws -> NFTUserModel
-	func updateCartStatus(for nft: NFTModel) async throws
-	func updateFavoriteStatus(for nft: NFTModel) async throws
+	func fetchNFTs(collectionID: NFTCollectionModel.ID) async throws -> [NFTModel]
+	func fetchAuthor(collectionID: NFTCollectionModel.ID) async throws -> NFTUserModel
+	func updateCartStatus(nftID: NFTModel.ID) async throws
+	func updateFavoriteStatus(nftID: NFTModel.ID) async throws
 }
 
 actor NFTCollectionDetailsMockService: NFTCollectionDetailsServiceProtocol {
@@ -143,7 +143,7 @@ actor NFTCollectionDetailsMockService: NFTCollectionDetailsServiceProtocol {
 		self.throwsError = throwsError
 	}
 
-	func fetchNFTs() async throws -> [NFTModel] {
+	func fetchNFTs(collectionID: NFTCollectionModel.ID) async throws -> [NFTModel] {
 		try? await Task.sleep(for: .seconds(3))
 		if throwsError {
 			throw NetworkClientError.urlSessionError
@@ -152,7 +152,7 @@ actor NFTCollectionDetailsMockService: NFTCollectionDetailsServiceProtocol {
 		}
 	}
 
-	func fetchAuthor() async throws -> NFTUserModel {
+	func fetchAuthor(collectionID: NFTCollectionModel.ID) async throws -> NFTUserModel {
 		try? await Task.sleep(for: .seconds(2))
 		if throwsError {
 			throw NetworkClientError.urlSessionError
@@ -161,14 +161,14 @@ actor NFTCollectionDetailsMockService: NFTCollectionDetailsServiceProtocol {
 		}
 	}
 
-	func updateCartStatus(for nft: NFTModel) async throws {
+	func updateCartStatus(nftID: NFTModel.ID) async throws {
 		try? await Task.sleep(for: .seconds(1))
 		if throwsError {
 			throw NetworkClientError.urlSessionError
 		}
 	}
 
-	func updateFavoriteStatus(for nft: NFTModel) async throws {
+	func updateFavoriteStatus(nftID: NFTModel.ID) async throws {
 		try? await Task.sleep(for: .seconds(1))
 		if throwsError {
 			throw NetworkClientError.urlSessionError

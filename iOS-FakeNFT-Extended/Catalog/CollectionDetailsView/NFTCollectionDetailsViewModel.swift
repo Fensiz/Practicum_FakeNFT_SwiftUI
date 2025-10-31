@@ -33,8 +33,8 @@ final class NFTCollectionDetailsViewModel {
 			do {
 				guard state != .loading else { return }
 				state = .loading
-				async let author = try collectionDetailsService.fetchAuthor()
-				async let nfts = try collectionDetailsService.fetchNFTs()
+				async let author = try collectionDetailsService.fetchAuthor(collectionID: collection.id)
+				async let nfts = try collectionDetailsService.fetchNFTs(collectionID: collection.id)
 				self.author = try await author
 				self.nfts = try await nfts
 				state = .loaded
@@ -53,7 +53,7 @@ final class NFTCollectionDetailsViewModel {
 					return
 				}
 				state = .loading
-				try await collectionDetailsService.updateFavoriteStatus(for: nft)
+				try await collectionDetailsService.updateFavoriteStatus(nftID: nft.id)
 				self.nfts[index].isFavourite.toggle()
 				state = .loaded
 			}
@@ -69,7 +69,7 @@ final class NFTCollectionDetailsViewModel {
 					return
 				}
 				state = .loading
-				try await collectionDetailsService.updateFavoriteStatus(for: nft)
+				try await collectionDetailsService.updateFavoriteStatus(nftID: nft.id)
 				nfts[index].isAddedToCart.toggle()
 				state = .loaded
 			}
