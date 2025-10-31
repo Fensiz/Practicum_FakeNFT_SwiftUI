@@ -5,6 +5,7 @@ struct TabBarView: View {
 	@State private var toolbarButtons: [Int: ToolbarButtonDescriptor?] = [:]
 	@State private var selectedTab = 0
 	@State private var isLoading = false
+	@State private var currentErrors: [AppError] = []
 	private let viewFactory: ViewFactory
 	private let tabs: [Tab]
 
@@ -55,6 +56,9 @@ struct TabBarView: View {
 			.onPreferenceChange(LoadingPreferenceKey.self) { value in
 				isLoading = value
 			}
+			.onPreferenceChange(ErrorPreferenceKey.self) { errors in
+				currentErrors = errors
+			}
 			if let cover = rootCoordinator.activeCover {
 				viewFactory.makeCoverView(for: cover)
 					.transition(.opacity)
@@ -63,5 +67,25 @@ struct TabBarView: View {
 		}
 		.animation(.easeInOut, value: rootCoordinator.activeCover)
 		.onChange(of: isLoading, UIProgressHUD.handleLoading)
+		.alert(item: Binding(
+			get: { currentErrors.first },
+			set: { _ in }
+		)) { error in
+			if let action = error.action {
+				Alert(
+					title: Text(error.message),
+					primaryButton: .default(Text(action.title)) {
+						action.closure()
+						error.dismissAction.closure()
+					},
+					secondaryButton: .cancel(error.dismissAction.closure)
+				)
+			} else {
+				Alert(
+					title: Text(error.message),
+					dismissButton: .default(Text(error.dismissAction.title), action: error.dismissAction.closure)
+				)
+			}
+		}
 	}
 }

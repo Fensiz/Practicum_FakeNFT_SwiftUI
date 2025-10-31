@@ -10,10 +10,10 @@ import SwiftUI
 struct PaymentView: View {
 	@State var viewModel: PaymentViewModel
 	let coordinator: any CartCoordinator
-	private let columns = [
-		GridItem(.flexible(), spacing: DesignSystem.Spacing.small2),
-		GridItem(.flexible(), spacing: DesignSystem.Spacing.small2)
-	]
+	private let columns = Array(
+		repeating: GridItem(.flexible(), spacing: DesignSystem.Spacing.small2),
+		count: 2
+	)
 
 	var body: some View {
 		ZStack {
@@ -44,15 +44,9 @@ struct PaymentView: View {
 		.toolbar {
 			BackToolbar(action: coordinator.goBack)
 		}
-		.alert(
-			"Не удалось произвести оплату",
-			isPresented: $viewModel.isAlertPresented,
-			actions: {
-				Button("Отмена", role: .cancel, action: {})
-				Button("Повторить", action: viewModel.repeatAction)
-			})
 		.task(viewModel.load)
 		.loading(viewModel.isLoading)
+		.error(viewModel.error)
 	}
 }
 

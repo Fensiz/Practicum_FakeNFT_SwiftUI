@@ -8,17 +8,17 @@
 import SwiftUI
 
 @MainActor @Observable final class PaymentViewModel {
-	var isLoading = false
 	var isAlertPresented = false
-	var paymentMethods: [PaymentMethod] = []
-	var selectedMethod: PaymentMethod?
 	var isButtonDisabled: Bool {
 		selectedMethod == nil || isLoading
 	}
+	private(set) var paymentMethods: [PaymentMethod] = []
+	private(set) var selectedMethod: PaymentMethod?
+	private(set) var isLoading = false
+	private(set) var error: AppError?
 	private let onSuccess: () async throws -> Void
 	private let paymentService: any PaymentService
 	private var paymentSucceeded = false
-	@ObservationIgnored private var lastAction: (() -> Void)?
 
 	init(paymentService: any PaymentService, onSuccess: @escaping () async throws -> Void) {
 		self.paymentService = paymentService
@@ -35,8 +35,12 @@ import SwiftUI
 			} catch {
 				print("Ошибка загрузки методов оплаты: \(error.localizedDescription)")
 				isLoading = false
-				lastAction = load
-				isAlertPresented = true
+				self.error = AppError.of(
+					type: .paymentMethodsRecieve(
+						action: { [weak self] in self?.load() },
+						dismiss: { [weak self] in self?.removeError() }
+					)
+				)
 			}
 		}
 	}
@@ -51,26 +55,27 @@ import SwiftUI
 					paymentSucceeded = true
 				}
 				try await self.onSuccess()
-				lastAction = nil
 				isLoading = false
 				paymentSucceeded = false
 				onSuccess()
 			} catch {
 				print("Ошибка оплаты:", error.localizedDescription)
-				lastAction = { [weak self, onSuccess] in
-					self?.pay(onSuccess: onSuccess)
-				}
-				isAlertPresented = true
+				isLoading = false
+				self.error = AppError.of(
+					type: .payment(
+						action: { [weak self] in self?.pay(onSuccess: onSuccess) },
+						dismiss: { [weak self] in self?.removeError() }
+					)
+				)
 			}
 		}
 	}
 
-	func repeatAction() {
-		isAlertPresented = false
-		lastAction?()
-	}
-
 	func select(_ method: PaymentMethod) {
 		selectedMethod = method
+	}
+
+	private func removeError() {
+		error = nil
 	}
 }
