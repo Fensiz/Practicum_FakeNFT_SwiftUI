@@ -16,7 +16,7 @@ struct NFTCollectionNetworkModel: Identifiable, Decodable {
     let coverURL: String
 	let nftIDs: [NFTNetworkModel.ID]
     let description: String
-	let authorID: NFTUserNetworkModel.ID
+	let authorName: String
 
     enum CodingKeys: String, CodingKey {
         case id
@@ -25,7 +25,7 @@ struct NFTCollectionNetworkModel: Identifiable, Decodable {
         case coverURL = "cover"
         case nftIDs = "nfts"
         case description
-        case authorID = "author"
+        case authorName = "author"
     }
 	
 }

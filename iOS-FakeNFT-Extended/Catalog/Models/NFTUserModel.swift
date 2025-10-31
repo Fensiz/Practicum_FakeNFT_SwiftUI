@@ -13,6 +13,17 @@ struct NFTUserModel: Identifiable, Equatable {
 	let name: String
 	let description: String
 	let nftIDs: [NFTModel.ID]
-	let websiteURL: URL
-	let avatarURL: URL
+	let websiteURL: URL?
+	let avatarURL: URL?
+}
+
+extension NFTUserModel {
+	init(networkModel: NFTUserNetworkModel) {
+		self.id = networkModel.id
+		self.name = networkModel.name
+		self.description = networkModel.description
+		self.nftIDs = networkModel.nftIDs
+		self.websiteURL = URL(string: networkModel.websiteURL)
+		self.avatarURL = URL(string: networkModel.avatarURL)
+	}
 }

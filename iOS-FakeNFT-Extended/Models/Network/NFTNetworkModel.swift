@@ -12,21 +12,21 @@ struct NFTNetworkModel: Identifiable, Decodable {
 	let id: UUID
 	let title: String
 	let createdAt: Date
-	let authorID: NFTUserNetworkModel.ID
+	let authorWebsiteURL: String
 	let description: String
 	let price: Double
 	let rating: Int
-	let images: [String]
+	let imageURLs: [String]
 
 	enum CodingKeys: String, CodingKey {
 		case id
 		case title = "name"
 		case createdAt
-		case authorID = "author"
+		case authorWebsiteURL = "author"
 		case description
 		case price
 		case rating
-		case images
+		case imageURLs = "images"
 	}
 
 }
