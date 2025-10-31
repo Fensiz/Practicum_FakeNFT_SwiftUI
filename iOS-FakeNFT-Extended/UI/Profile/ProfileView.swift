@@ -28,7 +28,7 @@ struct ProfileView: View {
 						}
 						if let likes = user.likes, !likes.isEmpty {
 							ProfileCellButtonView(title: "Избранные NFT", count: likes.count) {
-								coordinator.openLikedNFTs()
+								coordinator.openLikedNFTs(ids: likes, unlikeAction: viewModel.toggleLike)
 							}
 						}
 					}

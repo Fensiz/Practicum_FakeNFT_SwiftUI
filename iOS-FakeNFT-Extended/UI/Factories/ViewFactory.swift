@@ -14,6 +14,7 @@ final class ViewFactory {
 	private let paymentService: any PaymentService
 	private let cartViewModel: CartViewModel
 	private let cartCoordinator: CartCoordinatorImpl
+	private let nftService: any NftService
 
 	private let profileService: any ProfileService
 	private let profileViewModel: ProfileViewModel
@@ -34,7 +35,7 @@ final class ViewFactory {
 		let networkService = DefaultNetworkClient()
 		let context = SwiftDataStack.shared.container.mainContext
 		let storageService = NftStorageSwiftDataImpl(context: context)
-		let nftService = NftServiceImpl(networkClient: networkService, storage: storageService)
+		nftService = NftServiceImpl(networkClient: networkService, storage: storageService)
 
 		self.rootCoordinator = rootCoordinator
 		self.cartService = CartServiceImpl(networkService: networkService, nftService: nftService)
@@ -64,8 +65,9 @@ final class ViewFactory {
 				SuccessPaymentScreen(action: action)
 			case .myNfts:
 				MyNFTList(viewModel: profileViewModel)
-			case .favorites:
-				FavoriteNFTsList(viewModel: profileViewModel)
+			case let .favorites(ids, unlikeAction):
+				let viewModel = FavoritesListViewModel(nftService: nftService, nftIDs: ids, unlikeAction: unlikeAction)
+				FavoritesList(viewModel: viewModel, backAction: rootCoordinator.goBack)
 			case let .profileEdit(profile, saveAction, closeAction):
 				let viewModel = ProfileEditViewModel(profile: profile, saveAction: saveAction, closeAction: closeAction)
 				ProfileEditView(viewModel: viewModel, coordinator: profileCoordinator)

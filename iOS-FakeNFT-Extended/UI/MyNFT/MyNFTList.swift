@@ -79,7 +79,7 @@ struct MyNFTList: View {
 									guard !viewModel.isTogglingLike else { return }
 									togglingLikeId = id
 									Task {
-										await viewModel.toggleLike(nftId: id)
+										await viewModel.toggleLike(id)
 										await MainActor.run {
 											togglingLikeId = nil
 										}

@@ -159,7 +159,7 @@ final class ProfileViewModel {
 		user?.likes?.contains(nftId) == true
 	}
 
-	func toggleLike(nftId: String) async {
+	func toggleLike(_ nftId: String) async {
 		guard !isTogglingLike else { return }
 		isTogglingLike = true
 		defer { isTogglingLike = false }

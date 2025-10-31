@@ -13,7 +13,7 @@ protocol ProfileCoordinator: AnyObject {
 	// MARK: - Навигация
 	func goBack()
 	func openMyNFTs()
-	func openLikedNFTs()
+	func openLikedNFTs(ids: [String], unlikeAction: @escaping (String) async -> Void)
 //	func openProfileEdit()
 	func openProfileEditScreen(
 		for profile: ShortProfileModel,
@@ -52,7 +52,7 @@ final class ProfileCoordinatorImpl: ProfileCoordinator {
 	func hideSaveButton() { _shouldShowSaveButton = false }
 //	func openProfileEdit() { rootCoordinator.open(screen: .profileEdit) }
 	func openMyNFTs() { rootCoordinator.open(screen: .myNfts) }
-	func openLikedNFTs() { rootCoordinator.open(screen: .favorites) }
+	func openLikedNFTs(ids: [String], unlikeAction: @escaping (String) async -> Void) { rootCoordinator.open(screen: .favorites(ids: ids, unlikeAction: unlikeAction)) }
 	func goBack() { rootCoordinator.goBack() }
 	func openUserAgreement() {
 		guard let url = URL(string: "https://yandex.ru/legal/practicum_termsofuse") else { return }

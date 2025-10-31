@@ -13,7 +13,7 @@ enum Screen: Hashable {
 	case successPayment(action: () -> Void)
 	case web(url: URL, isAppearenceEnabled: Bool = false)
 	case myNfts
-	case favorites
+	case favorites(ids: [String], unlikeAction: (String) async -> Void)
 	case profileEdit(_ profile: ShortProfileModel, saveAction: (ShortProfileModel) async -> Void, closeAction: () -> Void)
 
 	static func == (lhs: Screen, rhs: Screen) -> Bool {
