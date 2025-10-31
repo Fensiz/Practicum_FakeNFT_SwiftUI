@@ -138,27 +138,6 @@ struct ProfileEditView: View {
 	}
 }
 
-//#Preview("Редактирование") {
-//	ProfileEditView(
-//		initialData: ProfileEditData(
-//			name: "Герман",
-//			description: "iOS-разработчик, люблю SwiftUI",
-//			website: "https://github.com",
-//			avatarURL: URL(string: "https://i.pravatar.cc/300")
-//		),
-//		onSave: { data in
-//			print("Сохранено: \(data.name)")
-//		},
-//		onCancel: {
-//			print("Отмена")
-//		},
-//		onDismiss: {
-//			print("Закрыто")
-//		},
-//		isSaving: false
-//	)
-//}
-
 struct UrlEditAlert: View {
 	@State private var url: String
 	@Binding private var urlForUpdate: String
