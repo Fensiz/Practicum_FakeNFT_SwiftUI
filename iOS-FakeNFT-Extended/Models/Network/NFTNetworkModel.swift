@@ -1,0 +1,32 @@
+//
+//  NFTNetworkModel.swift
+//  iOS-FakeNFT-Extended
+//
+//  Created by Vladimir on 31.10.2025.
+//  Copyright © 2025 com.example. All rights reserved.
+//
+
+import Foundation
+
+struct NFTNetworkModel: Identifiable, Decodable {
+	let id: UUID
+	let title: String
+	let createdAt: Date
+	let authorID: NFTUserNetworkModel.ID
+	let description: String
+	let price: Double
+	let rating: Int
+	let images: [String]
+
+	enum CodingKeys: String, CodingKey {
+		case id
+		case title = "name"
+		case createdAt
+		case authorID = "author"
+		case description
+		case price
+		case rating
+		case images
+	}
+
+}
