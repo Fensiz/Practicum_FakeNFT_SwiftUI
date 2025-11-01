@@ -42,7 +42,7 @@ struct UserRatingCell: View {
                 )
         }
         .frame(maxWidth: .infinity, minHeight: Constants.Sizes.cellMinHeight)
-        .background(Color(.systemBackground))
+        .background(Color.clear)
     }
 
     private var placeRatingLabel: some View {
@@ -51,6 +51,8 @@ struct UserRatingCell: View {
             font: Font(UIFont.caption1),
             maxWidth: Constants.Sizes.ratingLabelWidth,
             maxHeight: Constants.Sizes.labelMaxHeight)
+        .background(Color.clear) // Добавьте фон если нужно
+        .clipShape(RoundedRectangle(cornerRadius: Constants.Layout.cornerRadius))
     }
 
     private var cardStatistics: some View {
