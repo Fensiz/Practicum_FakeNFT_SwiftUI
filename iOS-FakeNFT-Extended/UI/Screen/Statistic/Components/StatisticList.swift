@@ -48,7 +48,9 @@ struct StatisticList: View {
         sortOption: .byRating,
         onUserTap: { user in
             print("Tapped user: \(user.name)")
-        }
+        },
+        canLoadMore: false,
+        onLoadNextPage: nil
     )
 }
 #Preview("By Name") {
@@ -57,6 +59,8 @@ struct StatisticList: View {
         sortOption: .byName,
         onUserTap: { user in
             print("Tapped user: \(user.name)")
-        }
+        },
+        canLoadMore: false,
+        onLoadNextPage: nil
     )
 }
