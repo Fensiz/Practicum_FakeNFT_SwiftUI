@@ -47,8 +47,8 @@ final class UserCollectionViewModel {
         self.isLoading = false
     }
 
-    private static func fetchItems(ids: [String],
-        service: any NFTItemCollectionService
+    private static func fetchItems (ids: [String],
+                                    service: any NFTItemCollectionService
     ) async -> ([NFTItem], [String]) {
 
         var results: [Int: NFTItem] = [:]
