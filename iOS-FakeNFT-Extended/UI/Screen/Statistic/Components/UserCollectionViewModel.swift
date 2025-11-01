@@ -18,6 +18,8 @@ final class UserCollectionViewModel {
     var isLoading = false
     var errorMessage: String?
     var failedIDs: [String] = []
+    var addingInProgress: Set<String> = []
+    var cartIds: Set<String> = []
 
     init(nftIDs: [String], service: any NFTItemCollectionService) {
         var seen = Set<String>()
@@ -77,6 +79,36 @@ final class UserCollectionViewModel {
 
         let ordered = (0..<ids.count).compactMap { results[$0] }
         return (ordered, failed)
+    }
+
+    @MainActor
+    func makeToggleCart(nftId: String) async {
+        guard !addingInProgress.contains(nftId) else { return }
+        addingInProgress.insert(nftId)
+        defer { addingInProgress.remove(nftId) }
+
+        let willAdd = !cartIds.contains(nftId)
+        if willAdd {
+            cartIds.insert(nftId)
+        } else {
+            cartIds.remove(nftId)
+        }
+
+        do {
+            let client = DefaultNetworkClient()
+            let payload = cartIds.isEmpty ? [""] : Array(cartIds)
+            let request = OrdersRequest(httpMethod: .put, nfts: Array(cartIds))
+            _ = try await client.send(request: request)
+        } catch {
+            if willAdd {
+                cartIds.remove(nftId)
+            } else {
+                cartIds.insert(nftId)
+            }
+            errorMessage = willAdd
+            ? "Не удалось добавить в корзину"
+            : "Не удалось удалить из корзины"
+        }
     }
 }
 

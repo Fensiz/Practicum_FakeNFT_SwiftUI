@@ -32,8 +32,12 @@ struct UserCollectionView: View {
                         price: nft.price,
                         currency: .eth,
                         isFavorite: false,
-                        isAddedToCart: false,
-                        onCartTap: {},
+                        isAddedToCart:
+                            viewModel.cartIds.contains(nft.id)||viewModel.addingInProgress.contains(nft.id),
+                        onCartTap: {
+                            guard !viewModel.addingInProgress.contains(nft.id) else { return }
+                            Task { await viewModel.makeToggleCart(nftId: nft.id) }
+                        },
                         onFavoriteTap: {}
                     )
                     .frame(minWidth: 108, maxWidth: .infinity)
