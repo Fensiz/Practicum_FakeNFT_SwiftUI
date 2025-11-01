@@ -9,8 +9,8 @@
 import Foundation
 
 protocol NFTCollectionDetailsServiceProtocol: Sendable {
-	func fetchNFTs(collectionID: NFTCollectionModel.ID) async throws -> [NFTModel]
-	func fetchAuthor(collectionID: NFTCollectionModel.ID) async throws -> NFTUserModel
+	func fetchNFTs(collectionID: NFTCollectionCardModel.ID) async throws -> [NFTModel]
+	func fetchAuthor(collectionID: NFTCollectionCardModel.ID) async throws -> NFTUserModel
 	func updateCartStatus(nftID: NFTModel.ID) async throws
 	func updateFavoriteStatus(nftID: NFTModel.ID) async throws
 }
@@ -23,7 +23,7 @@ actor NFTCollectionDetailsService: NFTCollectionDetailsServiceProtocol {
 		self.networkClient = networkClient
 	}
 
-	func fetchNFTs(collectionID: NFTCollectionModel.ID) async throws -> [NFTModel] {
+	func fetchNFTs(collectionID: NFTCollectionCardModel.ID) async throws -> [NFTModel] {
 		let collection = try await fetchCollection(id: collectionID)
 		let nftIDs = collection.nftIDs
 		let nftNetworkModels = try await withThrowingTaskGroup(
@@ -48,7 +48,7 @@ actor NFTCollectionDetailsService: NFTCollectionDetailsServiceProtocol {
 		return nftNetworkModels.map { NFTModel(networkModel: $0) }
 	}
 
-	func fetchAuthor(collectionID: NFTCollectionModel.ID) async throws -> NFTUserModel {
+	func fetchAuthor(collectionID: NFTCollectionCardModel.ID) async throws -> NFTUserModel {
 		let collection = try await fetchCollection(id: collectionID)
 		let request = UserByIDRequest(id: UUID())
 		let authorNetworkModel: NFTUserNetworkModel = try await networkClient.send(request: request)
@@ -83,7 +83,7 @@ actor NFTCollectionDetailsService: NFTCollectionDetailsServiceProtocol {
 		_ = try await networkClient.send(request: profilePutRequest)
 	}
 
-	private func fetchCollection(id: NFTCollectionModel.ID) async throws -> NFTCollectionNetworkModel {
+	private func fetchCollection(id: NFTCollectionCardModel.ID) async throws -> NFTCollectionNetworkModel {
 		let request = CollectionByIDRequest(id: id)
 		let collection: NFTCollectionNetworkModel = try await networkClient.send(request: request)
 		return collection
@@ -219,7 +219,7 @@ actor NFTCollectionDetailsMockService: NFTCollectionDetailsServiceProtocol {
 		self.throwsError = throwsError
 	}
 
-	func fetchNFTs(collectionID: NFTCollectionModel.ID) async throws -> [NFTModel] {
+	func fetchNFTs(collectionID: NFTCollectionCardModel.ID) async throws -> [NFTModel] {
 		try? await Task.sleep(for: .seconds(3))
 		if throwsError {
 			throw NetworkClientError.urlSessionError
@@ -228,7 +228,7 @@ actor NFTCollectionDetailsMockService: NFTCollectionDetailsServiceProtocol {
 		}
 	}
 
-	func fetchAuthor(collectionID: NFTCollectionModel.ID) async throws -> NFTUserModel {
+	func fetchAuthor(collectionID: NFTCollectionCardModel.ID) async throws -> NFTUserModel {
 		try? await Task.sleep(for: .seconds(2))
 		if throwsError {
 			throw NetworkClientError.urlSessionError

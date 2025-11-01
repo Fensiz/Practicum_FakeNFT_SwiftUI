@@ -12,7 +12,7 @@ import SwiftUI
 @MainActor
 final class NFTCollectionDetailsViewModel {
 
-	let collection: NFTCollectionModel
+	let collection: NFTCollectionCardModel
 	private(set) var author: NFTUserModel?
 	private(set) var nfts: [NFTModel] = []
 	private(set) var state: State = .empty
@@ -20,7 +20,7 @@ final class NFTCollectionDetailsViewModel {
 	private let collectionDetailsService: any NFTCollectionDetailsServiceProtocol
 
 	init(
-		collection: NFTCollectionModel,
+		collection: NFTCollectionCardModel,
 		collectionDetailsService: any NFTCollectionDetailsServiceProtocol
 	) {
 		self.collection = collection

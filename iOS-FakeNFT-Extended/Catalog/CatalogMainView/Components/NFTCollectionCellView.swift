@@ -10,7 +10,7 @@ import SwiftUI
 
 struct NFTCollectionCellView: View {
 
-    private let model: NFTCollectionModel
+    private let model: NFTCollectionCardModel
 
 	var body: some View {
 		VStack(alignment: .center, spacing: 4) {
@@ -29,7 +29,7 @@ struct NFTCollectionCellView: View {
         HStack(spacing: 4) {
             Group {
                 Text("\(model.title.capitalized)")
-                Text("(\(model.nftIDs.count))")
+                Text("(\(model.nftsCount))")
 				Spacer()
             }
             .font(.system(size: 17, weight: .bold))
@@ -37,7 +37,7 @@ struct NFTCollectionCellView: View {
         }
     }
 
-    init(collection: NFTCollectionModel) {
+    init(collection: NFTCollectionCardModel) {
         self.model = collection
     }
 
@@ -49,10 +49,7 @@ struct NFTCollectionCellView: View {
 			id: UUID(),
 			title: "unum reque",
 			imageURL: URL(string: "https://code.s3.yandex.net/Mobile/iOS/NFT/Обложки_коллекций/White.png")!,
-			nftIDs: [],
-			description: "dictas ...",
-			authorName: "Some name",
-			authorWebsite: URL(string: "https://sharp_matsumoto.fakenfts.org/")
+			nftsCount: 3
 		)
 	)
 	.frame(width: 300, height: 500)

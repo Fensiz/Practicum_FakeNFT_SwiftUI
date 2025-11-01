@@ -11,7 +11,7 @@ enum Screen: Hashable {
 	case dummy
 	case payment(coordinator: any CartCoordinator, action: () async throws -> Void)
 	case successPayment(action: () -> Void)
-	case collectionDetails(collection: NFTCollectionModel)
+	case collectionDetails(collection: NFTCollectionCardModel)
 	case web(url: URL)
 
 	static func == (lhs: Screen, rhs: Screen) -> Bool {

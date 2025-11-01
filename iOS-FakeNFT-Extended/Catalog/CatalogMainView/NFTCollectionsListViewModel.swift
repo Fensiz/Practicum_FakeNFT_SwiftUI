@@ -12,7 +12,7 @@ import SwiftUI
 @MainActor
 final class NFTCollectionsListViewModel {
 
-	private(set) var collections: [NFTCollectionModel] = []
+	private(set) var collections: [NFTCollectionCardModel] = []
 	private(set) var state: State = .empty
 
 	private let collectionsProvider: any NFTCollectionsProviderProtocol
@@ -94,12 +94,12 @@ enum CollectionsSortingType: Int, CaseIterable, Identifiable {
         }
     }
 
-	var sortingRule: (NFTCollectionModel, NFTCollectionModel) -> Bool {
+	var sortingRule: (NFTCollectionCardModel, NFTCollectionCardModel) -> Bool {
 		switch self {
 		case .byTitle:
 			{ $0.title < $1.title }
 		case .bySize:
-			{ $0.nftIDs.count < $1.nftIDs.count }
+			{ $0.nftsCount < $1.nftsCount }
 		}
 	}
 

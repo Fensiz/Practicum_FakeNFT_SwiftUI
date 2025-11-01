@@ -20,7 +20,7 @@ struct NFTCollectionDetailsView: View {
 		GridItem(.adaptive(minimum: 108))
 	]
 
-	private var collection: NFTCollectionModel {
+	private var collection: NFTCollectionCardModel {
 		viewModel.collection
 	}
 
@@ -99,7 +99,7 @@ struct NFTCollectionDetailsView: View {
 			CollectionDetailsHeaderView(
 				collectionTitle: collection.title,
 				authorName: author?.name ?? "",
-				collectionDescription: collection.description,
+				collectionDescription: "some description",
 				onAuthorTap: {
 					guard let url = author?.websiteURL else { return }
 					coordinator.showWebView(for: url)
@@ -153,14 +153,11 @@ struct NFTCollectionDetailsView: View {
 
 // MARK: - Previews
 #Preview("No error") {
-	let collection = NFTCollectionModel(
+	let collection = NFTCollectionCardModel(
 		id: UUID(),
 		title: "unum reque",
 		imageURL: URL(string: "https://code.s3.yandex.net/Mobile/iOS/NFT/Обложки_коллекций/White.png")!,
-		nftIDs: Array(repeating: UUID(), count: 2),
-		description: "dictas ...",
-		authorName: "Some name",
-		authorWebsite: URL(string: "https://sharp_matsumoto.fakenfts.org/")
+		nftsCount: 3
 	)
 	let rootCoordinator = RootCoordinatorImpl()
 	let catalogCoordinator = CatalogCoordinator(rootCoordinator: rootCoordinator)
@@ -178,14 +175,11 @@ struct NFTCollectionDetailsView: View {
 }
 
 #Preview("With Error") {
-	let collection = NFTCollectionModel(
+	let collection = NFTCollectionCardModel(
 		id: UUID(),
 		title: "unum reque",
 		imageURL: URL(string: "https://code.s3.yandex.net/Mobile/iOS/NFT/Обложки_коллекций/White.png")!,
-		nftIDs: Array(repeating: UUID(), count: 2),
-		description: "dictas ...",
-		authorName: "Some name",
-		authorWebsite: URL(string: "https://sharp_matsumoto.fakenfts.org/")
+		nftsCount: 3
 	)
 	let rootCoordinator = RootCoordinatorImpl()
 	let catalogCoordinator = CatalogCoordinator(rootCoordinator: rootCoordinator)

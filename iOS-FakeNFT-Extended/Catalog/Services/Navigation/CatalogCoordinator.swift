@@ -11,7 +11,7 @@ import Foundation
 @MainActor
 protocol CatalogCoordinatorProtocol {
 	func goBack()
-	func showDetails(for collection: NFTCollectionModel)
+	func showDetails(for collection: NFTCollectionCardModel)
 	func showWebView(for url: URL)
 }
 
@@ -27,7 +27,7 @@ final class CatalogCoordinator: CatalogCoordinatorProtocol {
 		rootCoordinator.goBack()
 	}
 
-	func showDetails(for collection: NFTCollectionModel) {
+	func showDetails(for collection: NFTCollectionCardModel) {
 		rootCoordinator.open(screen: .collectionDetails(collection: collection))
 	}
 

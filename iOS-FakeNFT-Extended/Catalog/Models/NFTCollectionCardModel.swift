@@ -8,12 +8,9 @@
 
 import Foundation
 
-struct NFTCollectionModel: Identifiable, Equatable {
+struct NFTCollectionCardModel: Identifiable, Equatable {
 	let id: NFTCollectionNetworkModel.ID
 	let title: String
     let imageURL: URL?
-	let nftIDs: [NFTModel.ID]
-    let description: String
-	let authorName: String
-	let authorWebsite: URL?
+	let nftsCount: Int
 }
