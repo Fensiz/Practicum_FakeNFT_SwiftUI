@@ -74,7 +74,7 @@ struct NFTCardView: View {
 	private var nftDetails: some View {
 		VStack(alignment: .leading, spacing: 4) {
 			RatingView(rating)
-			HStack(spacing: .zero) {
+			HStack(alignment: .top, spacing: .zero) {
 				VStack(alignment: .leading, spacing: 4) {
 					Group {
 						Text(name)
