@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct NFTCollectionDetailsView: View {
 
@@ -83,14 +84,22 @@ struct NFTCollectionDetailsView: View {
 	}
 
 	private var collectionImage: some View {
-		BasicImage(imageURL: details?.imageURL, contentMode: .fill)
-		.frame(height: 310)
-		.clipShape(
-			UnevenRoundedRectangle(
-				bottomLeadingRadius: 12,
-				bottomTrailingRadius: 12
+		// somehow basic image here is not working properly
+		// BasicImage(imageURL: details?.imageURL, contentMode: .fill)
+		KFImage(details?.imageURL)
+			.resizable()
+			.placeholder {
+				ProgressView()
+					.tint(.ypBlack)
+			}
+			.scaledToFill()
+			.frame(height: 310)
+			.clipShape(
+				UnevenRoundedRectangle(
+					bottomLeadingRadius: 12,
+					bottomTrailingRadius: 12
+				)
 			)
-		)
 	}
 
 	private var collectionDetails: some View {

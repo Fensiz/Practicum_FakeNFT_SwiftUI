@@ -27,8 +27,8 @@ struct BasicImage: View {
 	private var kfImage: some View {
 		KFImage(imageURL)
 			.resizable()
-			.placeholder { progress in
-				placeholder(progressFraction: progress.fractionCompleted)
+			.placeholder {
+				placeholder
 			}
 			.onFailure { _ in
 				// onFailureImage not working
@@ -37,10 +37,10 @@ struct BasicImage: View {
 			.aspectRatio(contentMode: contentMode)
 	}
 
-	private func placeholder(progressFraction: Double) -> some View {
+	private var placeholder: some View {
 		VStack(spacing: .zero) {
 			Spacer()
-			ProgressView(value: progressFraction)
+			ProgressView()
 				.tint(.ypBlack)
 			Spacer()
 		}
