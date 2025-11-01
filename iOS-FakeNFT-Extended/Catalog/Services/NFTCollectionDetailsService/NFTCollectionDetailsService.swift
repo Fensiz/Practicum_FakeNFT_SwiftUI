@@ -10,7 +10,7 @@ import Foundation
 
 protocol NFTCollectionDetailsServiceProtocol: Sendable {
 	func fetchNFTs(collectionID: NFTCollectionCardModel.ID) async throws -> [NFTModel]
-	func fetchAuthor(collectionID: NFTCollectionCardModel.ID) async throws -> NFTUserModel
+	func fetchCollection(collectionID: NFTCollectionCardModel.ID) async throws -> NFTCollectionDetailsModel
 	func updateCartStatus(nftID: NFTModel.ID) async throws
 	func updateFavoriteStatus(nftID: NFTModel.ID) async throws
 }
@@ -24,7 +24,7 @@ actor NFTCollectionDetailsService: NFTCollectionDetailsServiceProtocol {
 	}
 
 	func fetchNFTs(collectionID: NFTCollectionCardModel.ID) async throws -> [NFTModel] {
-		let collection = try await fetchCollection(id: collectionID)
+		let collection = try await fetchNetworkCollection(id: collectionID)
 		let nftIDs = collection.nftIDs
 		let nftNetworkModels = try await withThrowingTaskGroup(
 			of: NFTNetworkModel.self,
@@ -34,10 +34,7 @@ actor NFTCollectionDetailsService: NFTCollectionDetailsServiceProtocol {
 				return []
 			}
 			for nftID in nftIDs {
-				group.addTask {
-					let request = NFTByIDRequest(id: nftID)
-					return try await self.networkClient.send(request: request)
-				}
+				group.addTask { try await self.fetchNetworkNFT(id: nftID)}
 			}
 			var result: [NFTNetworkModel] = []
 			for try await nft in group {
@@ -45,6 +42,8 @@ actor NFTCollectionDetailsService: NFTCollectionDetailsServiceProtocol {
 			}
 			return result
 		}
+		let favorites = try await fetchFavorites()
+		let cart = try await fetchCartStatus()
 		return nftNetworkModels.map {
 			NFTModel(
 				id: $0.id,
@@ -52,22 +51,35 @@ actor NFTCollectionDetailsService: NFTCollectionDetailsServiceProtocol {
 				imageURLs: $0.imageURLs.compactMap { urlString in URL(string: urlString) },
 				rating: $0.rating,
 				price: $0.price,
-				currency: .eth
+				currency: .eth,
+				isFavourite: favorites.contains($0.id),
+				isAddedToCart: cart.contains($0.id)
 			)
 		}
 	}
 
-	func fetchAuthor(collectionID: NFTCollectionCardModel.ID) async throws -> NFTUserModel {
-		let collection = try await fetchCollection(id: collectionID)
-		let request = UserByIDRequest(id: UUID())
-		let authorNetworkModel: NFTUserNetworkModel = try await networkClient.send(request: request)
-		return NFTUserModel(networkModel: authorNetworkModel)
+	func fetchCollection(collectionID: NFTCollectionCardModel.ID) async throws -> NFTCollectionDetailsModel {
+		let networkCollection: NFTCollectionNetworkModel = try await fetchNetworkCollection(id: collectionID)
+		let authorWebsite: URL?
+		if let nftID = networkCollection.nftIDs.first {
+			let networkNFT = try await fetchNetworkNFT(id: nftID)
+			authorWebsite = URL(string: networkNFT.authorWebsiteURL)
+		} else {
+			authorWebsite = nil
+		}
+		return NFTCollectionDetailsModel(
+			id: networkCollection.id,
+			title: networkCollection.title,
+			imageURL: URL(string: networkCollection.coverURL),
+			nftIDs: networkCollection.nftIDs,
+			description: networkCollection.description,
+			authorName: networkCollection.authorName,
+			authorWebsite: authorWebsite
+		)
 	}
 
 	func updateCartStatus(nftID: NFTModel.ID) async throws {
-		let orderGetRequest = OrdersRequest(httpMethod: .get, nftIDs: nil)
-		let response: NFTOrderNetworkModel = try await networkClient.send(request: orderGetRequest)
-		var nftIDs = response.nftIDs
+		var nftIDs = try await fetchCartStatus()
 		if nftIDs.contains(nftID) {
 			nftIDs.removeAll(where: { $0 == nftID })
 		} else {
@@ -78,10 +90,7 @@ actor NFTCollectionDetailsService: NFTCollectionDetailsServiceProtocol {
 	}
 
 	func updateFavoriteStatus(nftID: NFTModel.ID) async throws {
-		let profileGetRequest = ProfileRequest(httpMethod: .get)
-		print("fetching favourites")
-		let profile: NFTProfileNetworkModel = try await networkClient.send(request: profileGetRequest)
-		var likes = profile.likes
+		var likes = try await fetchFavorites()
 		if likes.contains(nftID) {
 			likes.removeAll(where: { $0 == nftID })
 		} else {
@@ -92,10 +101,27 @@ actor NFTCollectionDetailsService: NFTCollectionDetailsServiceProtocol {
 		_ = try await networkClient.send(request: profilePutRequest)
 	}
 
-	private func fetchCollection(id: NFTCollectionCardModel.ID) async throws -> NFTCollectionNetworkModel {
+	private func fetchNetworkCollection(id: NFTCollectionNetworkModel.ID) async throws -> NFTCollectionNetworkModel {
 		let request = CollectionByIDRequest(id: id)
-		let collection: NFTCollectionNetworkModel = try await networkClient.send(request: request)
-		return collection
+		return try await networkClient.send(request: request)
+	}
+
+	private func fetchNetworkNFT(id: NFTNetworkModel.ID) async throws -> NFTNetworkModel {
+		let request = NFTByIDRequest(id: id)
+		return try await self.networkClient.send(request: request)
+	}
+
+	private func fetchFavorites() async throws -> [NFTNetworkModel.ID] {
+		let profileGetRequest = ProfileRequest(httpMethod: .get)
+		print("fetching favourites")
+		let profile: NFTProfileNetworkModel = try await networkClient.send(request: profileGetRequest)
+		return profile.likes
+	}
+
+	private func fetchCartStatus() async throws -> [NFTNetworkModel.ID] {
+		let orderGetRequest = OrdersRequest(httpMethod: .get, nftIDs: nil)
+		let response: NFTOrderNetworkModel = try await networkClient.send(request: orderGetRequest)
+		return response.nftIDs
 	}
 
 }
@@ -203,13 +229,17 @@ actor NFTCollectionDetailsMockService: NFTCollectionDetailsServiceProtocol {
 		)
 	]
 
-	private let mockAuthor = NFTUserModel(
-		id: UUID(),
-		name: "Jimmie Reilly",
-		description: "daddsd",
-		nftIDs: [],
-		websiteURL: URL(string: "https://apple.com")!,
-		avatarURL: URL(string: "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/594.jpg")!
+	private let collectionDetails = NFTCollectionDetailsModel(
+		id: UUID(uuidString: "81268b05-db02-4bc9-b0b0-f7136de49706")!,
+		title: "unum reque",
+		imageURL: URL(string: "https://code.s3.yandex.net/Mobile/iOS/NFT/Обложки_коллекций/White.png"),
+		nftIDs: [
+			UUID(uuidString: "e33e18d5-4fc2-466d-b651-028f78d771b8")!,
+			UUID(uuidString: "82570704-14ac-4679-9436-050f4a32a8a0")!
+		],
+		description: "dictas singulis placerat interdum maximus referrentur partiendo explicari verear molestiae",
+		authorName: "Darren Morris",
+		authorWebsite: URL(string: "https://sharp_matsumoto.fakenfts.org/")
 	)
 
 	init(throwsError: Bool = false) {
@@ -225,12 +255,12 @@ actor NFTCollectionDetailsMockService: NFTCollectionDetailsServiceProtocol {
 		}
 	}
 
-	func fetchAuthor(collectionID: NFTCollectionCardModel.ID) async throws -> NFTUserModel {
-		try? await Task.sleep(for: .seconds(2))
+	func fetchCollection(collectionID: NFTCollectionCardModel.ID) async throws -> NFTCollectionDetailsModel {
+		try? await Task.sleep(for: .seconds(3))
 		if throwsError {
 			throw NetworkClientError.urlSessionError
 		} else {
-			return mockAuthor
+			return collectionDetails
 		}
 	}
 

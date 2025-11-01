@@ -39,9 +39,9 @@ final class ViewFactory {
 			WebView(url: url)
 		case .successPayment:
 			EmptyView()
-		case .collectionDetails(collection: let collection):
+		case .collectionDetails(collectionID: let collectionID):
 			let viewModel = NFTCollectionDetailsViewModel(
-				collection: collection,
+				collectionID: collectionID,
 				collectionDetailsService: NFTCollectionDetailsMockService(throwsError: false)
 			)
 			NFTCollectionDetailsView(

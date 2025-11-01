@@ -79,11 +79,11 @@ struct NFTCollectionsListView: View {
         .background(.ypWhite)
     }
 
-    private func button(for collection: NFTCollectionCardModel) -> some View {
+    private func button(for collectionCard: NFTCollectionCardModel) -> some View {
         Button {
-			coordinator.showDetails(for: collection)
+			coordinator.showDetails(collectionID: collectionCard.id)
         } label: {
-            NFTCollectionCellView(collection: collection)
+            NFTCollectionCellView(collection: collectionCard)
         }
         .buttonStyle(.plain)
     }

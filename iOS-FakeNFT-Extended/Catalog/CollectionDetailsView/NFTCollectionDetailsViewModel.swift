@@ -12,18 +12,18 @@ import SwiftUI
 @MainActor
 final class NFTCollectionDetailsViewModel {
 
-	let collection: NFTCollectionCardModel
-	private(set) var author: NFTUserModel?
+	let collectionID: NFTCollectionNetworkModel.ID
+	private(set) var details: NFTCollectionDetailsModel?
 	private(set) var nfts: [NFTModel] = []
 	private(set) var state: State = .empty
 
 	private let collectionDetailsService: any NFTCollectionDetailsServiceProtocol
 
 	init(
-		collection: NFTCollectionCardModel,
+		collectionID: NFTCollectionNetworkModel.ID,
 		collectionDetailsService: any NFTCollectionDetailsServiceProtocol
 	) {
-		self.collection = collection
+		self.collectionID = collectionID
 		self.collectionDetailsService = collectionDetailsService
 		updateDetails()
 	}
@@ -33,9 +33,9 @@ final class NFTCollectionDetailsViewModel {
 			do {
 				guard state != .loading else { return }
 				state = .loading
-				async let author = try collectionDetailsService.fetchAuthor(collectionID: collection.id)
-				async let nfts = try collectionDetailsService.fetchNFTs(collectionID: collection.id)
-				self.author = try await author
+				async let details = try collectionDetailsService.fetchCollection(collectionID: collectionID)
+				async let nfts = try collectionDetailsService.fetchNFTs(collectionID: collectionID)
+				self.details = try await details
 				self.nfts = try await nfts
 				state = .loaded
 			} catch {

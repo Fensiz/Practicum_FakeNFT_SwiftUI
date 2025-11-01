@@ -1,5 +1,5 @@
 //
-//  NFTCollectionDetailedModel.swift
+//  NFTCollectionDetailsModel.swift
 //  iOS-FakeNFT-Extended
 //
 //  Created by Vladimir on 01.11.2025.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct NFTCollectionDetailedModel: Identifiable, Equatable {
+struct NFTCollectionDetailsModel: Identifiable, Equatable {
 	let id: NFTCollectionNetworkModel.ID
 	let title: String
 	let imageURL: URL?

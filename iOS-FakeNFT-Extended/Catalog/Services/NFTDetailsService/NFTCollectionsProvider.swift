@@ -24,7 +24,7 @@ actor NFTCollectionsMockProvider: NFTCollectionsProviderProtocol {
 			nftsCount: 4
 		),
 		.init(
-			id: UUID(uuidString: "014a175d-c546-405c-8944-d694e4a1a47f")!,
+			id: UUID(uuidString: "49a96d73-d58f-4c01-8ce3-7d6949c980ca")!,
 			title: "Pink",
 			imageURL: URL(string: "https://code.s3.yandex.net/Mobile/iOS/NFT/Обложки_коллекций/Pink.png")!,
 			nftsCount: 2

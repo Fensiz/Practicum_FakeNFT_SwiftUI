@@ -20,16 +20,12 @@ struct NFTCollectionDetailsView: View {
 		GridItem(.adaptive(minimum: 108))
 	]
 
-	private var collection: NFTCollectionCardModel {
-		viewModel.collection
+	private var details: NFTCollectionDetailsModel? {
+		viewModel.details
 	}
 
 	private var nfts: [NFTModel] {
 		viewModel.nfts
-	}
-
-	private var author: NFTUserModel? {
-		viewModel.author
 	}
 
 	init(
@@ -84,7 +80,7 @@ struct NFTCollectionDetailsView: View {
 	}
 
 	private var collectionImage: some View {
-		BasicImage(imageURL: collection.imageURL, contentMode: .fill)
+		BasicImage(imageURL: details?.imageURL, contentMode: .fill)
 		.frame(height: 310)
 		.clipShape(
 			UnevenRoundedRectangle(
@@ -97,11 +93,11 @@ struct NFTCollectionDetailsView: View {
 	private var collectionDetails: some View {
 		HStack {
 			CollectionDetailsHeaderView(
-				collectionTitle: collection.title,
-				authorName: author?.name ?? "",
-				collectionDescription: "some description",
+				collectionTitle: details?.title ?? "",
+				authorName: details?.authorName ?? "",
+				collectionDescription: details?.description ?? "",
 				onAuthorTap: {
-					guard let url = author?.websiteURL else { return }
+					guard let url = details?.authorWebsite else { return }
 					coordinator.showWebView(for: url)
 				}
 			)
@@ -163,7 +159,7 @@ struct NFTCollectionDetailsView: View {
 	let catalogCoordinator = CatalogCoordinator(rootCoordinator: rootCoordinator)
 	let service = NFTCollectionDetailsMockService(throwsError: false)
 	let viewModel = NFTCollectionDetailsViewModel(
-		collection: collection,
+		collectionID: collection.id,
 		collectionDetailsService: service
 	)
 	NavigationStack {
@@ -185,7 +181,7 @@ struct NFTCollectionDetailsView: View {
 	let catalogCoordinator = CatalogCoordinator(rootCoordinator: rootCoordinator)
 	let service = NFTCollectionDetailsMockService(throwsError: true)
 	let viewModel = NFTCollectionDetailsViewModel(
-		collection: collection,
+		collectionID: collection.id,
 		collectionDetailsService: service
 	)
 	NavigationStack {
