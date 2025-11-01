@@ -38,7 +38,7 @@ final class NFTCollectionsListViewModel {
 			guard guardCondition else { return }
 			do {
 				state = .loading
-				let newCollections = try await collectionsProvider.fetch(number: 10, sorting: sortingType)
+				let newCollections = try await collectionsProvider.fetch(sorting: sortingType)
 				collections.append(contentsOf: newCollections)
 				state = .loaded
 			} catch {
@@ -54,7 +54,7 @@ final class NFTCollectionsListViewModel {
 			guard state != .loading else { return }
 			do {
 				state = .loading
-				collections = try await collectionsProvider.fetch(number: collections.count, sorting: sortingType)
+				collections = try await collectionsProvider.fetch(sorting: sortingType)
 				state = .loaded
 			} catch {
 				state = .error

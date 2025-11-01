@@ -9,7 +9,35 @@
 import Foundation
 
 protocol NFTCollectionsProviderProtocol: Sendable {
-	func fetch(number: Int, sorting: CollectionsSortingType) async throws -> [NFTCollectionCardModel]
+	func fetch(sorting: CollectionsSortingType) async throws -> [NFTCollectionCardModel]
+}
+
+actor NFTCollectionsProvider: NFTCollectionsProviderProtocol {
+
+	private var currentPage = 0
+	private let pageSize: Int
+
+	private let networkClient: any NetworkClient
+
+	init(pageSize: Int = 10, networkClient: any NetworkClient = DefaultNetworkClient()) {
+		self.pageSize = pageSize
+		self.networkClient = networkClient
+	}
+
+	func fetch(sorting: CollectionsSortingType) async throws -> [NFTCollectionCardModel] {
+		let request = CollectionsRequest(page: currentPage, pageSize: pageSize)
+		let networkCollections: [NFTCollectionNetworkModel] = try await networkClient.send(request: request)
+		currentPage += 1
+		return networkCollections.map {
+			NFTCollectionCardModel(
+				id: $0.id,
+				title: $0.title,
+				imageURL: URL(string: $0.coverURL),
+				nftsCount: $0.nftIDs.count
+			)
+		}
+	}
+
 }
 
 actor NFTCollectionsMockProvider: NFTCollectionsProviderProtocol {
@@ -41,12 +69,12 @@ actor NFTCollectionsMockProvider: NFTCollectionsProviderProtocol {
 		self.throwsError = throwsError
 	}
 
-	func fetch(number: Int, sorting: CollectionsSortingType) async throws -> [NFTCollectionCardModel] {
+	func fetch(sorting: CollectionsSortingType) async throws -> [NFTCollectionCardModel] {
         try? await Task.sleep(for: .seconds(3))
 		if throwsError {
 			throw NetworkClientError.urlSessionError
 		} else {
-			return (0..<number)
+			return (0..<10)
 				.map { _ in nftCollections.randomElement()! }
 				.sorted(by: sorting.sortingRule)
 		}
