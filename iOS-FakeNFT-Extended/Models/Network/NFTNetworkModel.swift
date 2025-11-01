@@ -11,7 +11,6 @@ import Foundation
 struct NFTNetworkModel: Identifiable, Decodable {
 	let id: UUID
 	let title: String
-	let createdAt: Date
 	let authorWebsiteURL: String
 	let description: String
 	let price: Double
@@ -21,7 +20,6 @@ struct NFTNetworkModel: Identifiable, Decodable {
 	enum CodingKeys: String, CodingKey {
 		case id
 		case title = "name"
-		case createdAt
 		case authorWebsiteURL = "author"
 		case description
 		case price

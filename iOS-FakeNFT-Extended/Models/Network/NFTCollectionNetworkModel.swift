@@ -12,7 +12,6 @@ struct NFTCollectionNetworkModel: Identifiable, Decodable {
 
     let id: UUID
     let title: String
-    let createdAt: Date
     let coverURL: String
 	let nftIDs: [NFTNetworkModel.ID]
     let description: String
@@ -21,7 +20,6 @@ struct NFTCollectionNetworkModel: Identifiable, Decodable {
     enum CodingKeys: String, CodingKey {
         case id
         case title = "name"
-        case createdAt
         case coverURL = "cover"
         case nftIDs = "nfts"
         case description
