@@ -119,7 +119,7 @@ struct NFTCollectionDetailsView: View {
 				VStack(spacing: .zero) {
 					NFTCardView(
 						name: nft.title,
-						imageURL: nft.imageURL,
+						imageURL: nft.primaryImageURL,
 						rating: nft.rating,
 						price: nft.price,
 						currency: nft.currency,

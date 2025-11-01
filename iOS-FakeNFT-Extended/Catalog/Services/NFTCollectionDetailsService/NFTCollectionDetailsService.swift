@@ -45,7 +45,16 @@ actor NFTCollectionDetailsService: NFTCollectionDetailsServiceProtocol {
 			}
 			return result
 		}
-		return nftNetworkModels.map { NFTModel(networkModel: $0) }
+		return nftNetworkModels.map {
+			NFTModel(
+				id: $0.id,
+				title: $0.title,
+				imageURLs: $0.imageURLs.compactMap { urlString in URL(string: urlString) },
+				rating: $0.rating,
+				price: $0.price,
+				currency: .eth
+			)
+		}
 	}
 
 	func fetchAuthor(collectionID: NFTCollectionCardModel.ID) async throws -> NFTUserModel {
@@ -98,7 +107,6 @@ actor NFTCollectionDetailsMockService: NFTCollectionDetailsServiceProtocol {
 	private let mockNFTs: [NFTModel] = [
 		.init(
 			id: UUID(),
-			authorID: UUID(),
 			title: "Myrna Cervantes",
 			imageURLs: [URL(string: "https://code.s3.yandex.net/Mobile/iOS/NFT/Beige/Ellsa/1.png")!],
 			rating: 5,
@@ -107,7 +115,6 @@ actor NFTCollectionDetailsMockService: NFTCollectionDetailsServiceProtocol {
 		),
 		.init(
 			id: UUID(),
-			authorID: UUID(),
 			title: "Melvin Yang",
 			imageURLs: [URL(string: "https://code.s3.yandex.net/Mobile/iOS/NFT/Gray/Dominique/1.png")!],
 			rating: 3,
@@ -116,7 +123,6 @@ actor NFTCollectionDetailsMockService: NFTCollectionDetailsServiceProtocol {
 		),
 		.init(
 			id: UUID(),
-			authorID: UUID(),
 			title: "Sharon Paul",
 			imageURLs: [URL(string: "https://code.s3.yandex.net/Mobile/iOS/NFT/Beige/Lucky/1.png")!],
 			rating: 3,
@@ -125,7 +131,6 @@ actor NFTCollectionDetailsMockService: NFTCollectionDetailsServiceProtocol {
 		),
 		.init(
 			id: UUID(),
-			authorID: UUID(),
 			title: "Mattie McDaniel",
 			imageURLs: [URL(string: "https://code.s3.yandex.net/Mobile/iOS/NFT/Brown/Emma/1.png")!],
 			rating: 1,
@@ -134,7 +139,6 @@ actor NFTCollectionDetailsMockService: NFTCollectionDetailsServiceProtocol {
 		),
 		.init(
 			id: UUID(),
-			authorID: UUID(),
 			title: "Myrna Cervantes",
 			imageURLs: [URL(string: "https://code.s3.yandex.net/Mobile/iOS/NFT/Beige/Ellsa/1.png")!],
 			rating: 5,
@@ -143,7 +147,6 @@ actor NFTCollectionDetailsMockService: NFTCollectionDetailsServiceProtocol {
 		),
 		.init(
 			id: UUID(),
-			authorID: UUID(),
 			title: "Melvin Yang",
 			imageURLs: [URL(string: "https://code.s3.yandex.net/Mobile/iOS/NFT/Gray/Dominique/1.png")!],
 			rating: 3,
@@ -152,7 +155,6 @@ actor NFTCollectionDetailsMockService: NFTCollectionDetailsServiceProtocol {
 		),
 		.init(
 			id: UUID(),
-			authorID: UUID(),
 			title: "Sharon Paul",
 			imageURLs: [URL(string: "https://code.s3.yandex.net/Mobile/iOS/NFT/Beige/Lucky/1.png")!],
 			rating: 3,
@@ -161,7 +163,6 @@ actor NFTCollectionDetailsMockService: NFTCollectionDetailsServiceProtocol {
 		),
 		.init(
 			id: UUID(),
-			authorID: UUID(),
 			title: "Mattie McDaniel",
 			imageURLs: [URL(string: "https://code.s3.yandex.net/Mobile/iOS/NFT/Brown/Emma/1.png")!],
 			rating: 1,
@@ -170,7 +171,6 @@ actor NFTCollectionDetailsMockService: NFTCollectionDetailsServiceProtocol {
 		),
 		.init(
 			id: UUID(),
-			authorID: UUID(),
 			title: "Myrna Cervantes",
 			imageURLs: [URL(string: "https://code.s3.yandex.net/Mobile/iOS/NFT/Beige/Ellsa/1.png")!],
 			rating: 5,
@@ -179,7 +179,6 @@ actor NFTCollectionDetailsMockService: NFTCollectionDetailsServiceProtocol {
 		),
 		.init(
 			id: UUID(),
-			authorID: UUID(),
 			title: "Melvin Yang",
 			imageURLs: [URL(string: "https://code.s3.yandex.net/Mobile/iOS/NFT/Gray/Dominique/1.png")!],
 			rating: 3,
@@ -188,7 +187,6 @@ actor NFTCollectionDetailsMockService: NFTCollectionDetailsServiceProtocol {
 		),
 		.init(
 			id: UUID(),
-			authorID: UUID(),
 			title: "Sharon Paul",
 			imageURLs: [URL(string: "https://code.s3.yandex.net/Mobile/iOS/NFT/Beige/Lucky/1.png")!],
 			rating: 3,
@@ -197,7 +195,6 @@ actor NFTCollectionDetailsMockService: NFTCollectionDetailsServiceProtocol {
 		),
 		.init(
 			id: UUID(),
-			authorID: UUID(),
 			title: "Mattie McDaniel",
 			imageURLs: [URL(string: "https://code.s3.yandex.net/Mobile/iOS/NFT/Brown/Emma/1.png")!],
 			rating: 1,
