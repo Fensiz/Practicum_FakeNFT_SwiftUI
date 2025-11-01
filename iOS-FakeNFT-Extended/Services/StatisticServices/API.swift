@@ -36,4 +36,20 @@ enum API {
         /// - Returns: По до конкретной коллекции с NFT
         static func byId(_ id: String) -> String { "\(base)/collections/\(id)" }
     }
+
+    /// Заказы/корзина
+    enum Orders {
+        /// Путь до конкретного заказа (по умолчанию — 1)
+        static func byId(_ orderId: Int = 1) -> String { "\(base)/orders/\(orderId)" }
+        /// Установка валюты перед оплатой
+        static func payment(orderId: Int = 1, currencyId: Int) -> String {
+            "\(base)/orders/\(orderId)/payment/\(currencyId)"
+        }
+    }
+
+    enum Profile {
+        /// Путь до профиля (по умолчанию — 1)
+        static func byId(_ id: Int) -> String { "\(base)/profile/\(id)" }
+        static func byId(_ id: String) -> String { "\(base)/profile/\(id)" }
+    }
 }
