@@ -64,8 +64,10 @@ struct UserCard: View {
     }
 
     private var contentButton: some View {
-        NFTCollectionRow(user: user) .listRowSeparator(.hidden)
-            .frame(maxWidth: .infinity)
+        NFTCollectionRow(user: user) {
+            coordinator.open(screen: .userCollection(nftIDs: user.nfts))
+        }
+        .frame(maxWidth: .infinity)
     }
 
     private func openWebsite() {
