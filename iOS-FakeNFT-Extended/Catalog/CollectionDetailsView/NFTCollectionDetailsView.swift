@@ -118,7 +118,7 @@ struct NFTCollectionDetailsView: View {
 			ForEach(viewModel.nfts) { nft in
 				VStack(spacing: .zero) {
 					NFTCardView(
-						name: nft.name,
+						name: nft.title,
 						imageURL: nft.imageURL,
 						rating: nft.rating,
 						price: nft.price,
@@ -159,7 +159,8 @@ struct NFTCollectionDetailsView: View {
 		imageURL: URL(string: "https://code.s3.yandex.net/Mobile/iOS/NFT/Обложки_коллекций/White.png")!,
 		nftIDs: Array(repeating: UUID(), count: 2),
 		description: "dictas ...",
-		authorID: UUID()
+		authorName: "Some name",
+		authorWebsite: URL(string: "https://sharp_matsumoto.fakenfts.org/")
 	)
 	let rootCoordinator = RootCoordinatorImpl()
 	let catalogCoordinator = CatalogCoordinator(rootCoordinator: rootCoordinator)
@@ -183,7 +184,8 @@ struct NFTCollectionDetailsView: View {
 		imageURL: URL(string: "https://code.s3.yandex.net/Mobile/iOS/NFT/Обложки_коллекций/White.png")!,
 		nftIDs: Array(repeating: UUID(), count: 2),
 		description: "dictas ...",
-		authorID: UUID()
+		authorName: "Some name",
+		authorWebsite: URL(string: "https://sharp_matsumoto.fakenfts.org/")
 	)
 	let rootCoordinator = RootCoordinatorImpl()
 	let catalogCoordinator = CatalogCoordinator(rootCoordinator: rootCoordinator)

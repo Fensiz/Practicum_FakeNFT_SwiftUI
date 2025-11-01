@@ -51,7 +51,8 @@ struct NFTCollectionCellView: View {
 			imageURL: URL(string: "https://code.s3.yandex.net/Mobile/iOS/NFT/Обложки_коллекций/White.png")!,
 			nftIDs: [],
 			description: "dictas ...",
-			authorID: UUID()
+			authorName: "Some name",
+			authorWebsite: URL(string: "https://sharp_matsumoto.fakenfts.org/")
 		)
 	)
 	.frame(width: 300, height: 500)
