@@ -29,4 +29,17 @@ struct OrdersRequest: NetworkRequest, Sendable {
 			self.dto = nil
 		}
 	}
+
+	init(httpMethod: HttpMethod = .get, nftIDs: [NFTNetworkModel.ID]? = nil) {
+		self.httpMethod = httpMethod
+		if let nftIDs {
+			let nfts = nftIDs.map { $0.uuidString.lowercased() }
+			let params = nfts.isEmpty ? [:] : [
+				"nfts": nfts.joined(separator: ",")
+			]
+			self.dto = params.percentEncoded()
+		} else {
+			self.dto = nil
+		}
+	}
 }
