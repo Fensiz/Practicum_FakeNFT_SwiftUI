@@ -23,7 +23,8 @@ final class ViewFactory {
 		self.rootCoordinator = rootCoordinator
 		self.catalogCoordinator = CatalogCoordinator(rootCoordinator: rootCoordinator)
 		self.nftCollectionsProvider = NFTCollectionsMockProvider(throwsError: false)
-		self.nftCollectionDetailsService = NFTCollectionDetailsMockService(throwsError: false)
+//		self.nftCollectionDetailsService = NFTCollectionDetailsMockService(throwsError: false)
+		self.nftCollectionDetailsService = NFTCollectionDetailsService()
 	}
 
 	// сюда добавляются все экраны, которые перекрывают tabView,
@@ -42,7 +43,7 @@ final class ViewFactory {
 		case .collectionDetails(collectionID: let collectionID):
 			let viewModel = NFTCollectionDetailsViewModel(
 				collectionID: collectionID,
-				collectionDetailsService: NFTCollectionDetailsMockService(throwsError: false)
+				collectionDetailsService: nftCollectionDetailsService
 			)
 			NFTCollectionDetailsView(
 				viewModel: viewModel,

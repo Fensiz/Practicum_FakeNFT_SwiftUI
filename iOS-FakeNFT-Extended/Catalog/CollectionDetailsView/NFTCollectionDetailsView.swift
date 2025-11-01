@@ -76,6 +76,9 @@ struct NFTCollectionDetailsView: View {
 			} else {
 				UIBlockingProgressHUD.dismiss()
 			}
+			if newValue == .error {
+				isShowingErrorAlert = true
+			}
 		}
 	}
 
