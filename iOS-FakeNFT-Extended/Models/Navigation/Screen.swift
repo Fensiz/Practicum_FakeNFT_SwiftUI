@@ -13,6 +13,7 @@ enum Screen: Hashable {
 	case successPayment(action: () -> Void)
 	case web(url: URL)
     case userCard(user: User)
+    case userCollection(nftIDs: [String])
 
 	static func == (lhs: Screen, rhs: Screen) -> Bool {
 		switch (lhs, rhs) {
@@ -21,6 +22,7 @@ enum Screen: Hashable {
 			case (.web, .web): true
 			case (.successPayment, .successPayment): true
             case (.userCard, .userCard): true
+            case (.userCollection, .userCollection): true
 			default: false
 		}
 	}
@@ -37,6 +39,8 @@ enum Screen: Hashable {
 				hasher.combine(3)
             case .userCard:
                 hasher.combine(4)
+            case .userCollection:
+                hasher.combine(5)
 		}
 	}
 }

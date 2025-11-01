@@ -23,43 +23,55 @@ struct StatisticView: View {
 
     @Environment(StatisticCoordinator.self) private var coordinator
 
-    var body: some View {
-        NavigationStack(path: coordinator.navigationPathBinding){
-            StatisticList(
-                users: viewModel.sortedUsers,
-                sortOption: viewModel.sortOption,
-                onUserTap: { user in
-                    coordinator.open(screen: .userCard(user: user))
-                }
-            )
-            .toolbarPreference(imageName: .sort) { showSortDialog = true }
-            .toolbar(.visible, for: .navigationBar)
-            .confirmationDialog("Сортировка", isPresented: $showSortDialog, titleVisibility: .visible) {
-                Button("По имени") { sortRaw = StatisticList.SortOption.byName.rawValue }
-                Button("По рейтингу") { sortRaw = StatisticList.SortOption.byRating.rawValue }
-                Button("Закрыть", role: .cancel) { }
-            }
-            .navigationDestination(for: Screen.self) { screen in
-                switch screen {
-                    case .userCard(let user):
-                        UserCard(user: user)
-                            .environment(coordinator)
-                    case .web(let url):
-                        WebView(url: url, isAppearenceEnabled: false)
-                    default:
-                        EmptyView()
+    var body: some View { NavigationStack(path: coordinator.navigationPathBinding) {
+        StatisticList(
+            users: viewModel.sortedUsers,
+            sortOption: viewModel.sortOption,
+            onUserTap: { user in
+                coordinator.open(screen: .userCard(user: user))
+            },
+            canLoadMore: viewModel.canLoadMore,
+            onLoadNextPage: {
+                Task {
+                    await viewModel.loadNextPage()
                 }
             }
+        )
+        .toolbarPreference(imageName: .sort) { showSortDialog = true }
+        .toolbar(.visible, for: .navigationBar)
+        .confirmationDialog("Сортировка", isPresented: $showSortDialog, titleVisibility: .visible) {
+            Button("По имени") { sortRaw = StatisticList.SortOption.byName.rawValue }
+            Button("По рейтингу") { sortRaw = StatisticList.SortOption.byRating.rawValue }
+            Button("Закрыть", role: .cancel) { }
         }
-        .task {
-            if viewModel.users.isEmpty {
-                await viewModel.makeLoad()
+        .navigationDestination(for: Screen.self) { screen in
+            switch screen {
+                case .userCard(let user):
+                    UserCard(user: user)
+                        .environment(coordinator)
+                case .web(let url):
+                    WebView(url: url, isAppearenceEnabled: false)
+                case .userCollection(let ids):
+                    UserCollectionView(nftIDs: ids)
+                        .environment(coordinator)
+                default:
+                    EmptyView()
             }
         }
-        .onAppear { viewModel.makeSetSort(selectedSort) }
-        .onChange(of: sortRaw) { _, _ in
-            viewModel.makeSetSort(selectedSort)
+    }
+    .background(
+        Color.ypWhite
+            .ignoresSafeArea()
+    )
+    .task {
+        if viewModel.users.isEmpty {
+            await viewModel.makeLoad()
         }
+    }
+    .onAppear { viewModel.makeSetSort(selectedSort) }
+    .onChange(of: sortRaw) { _, _ in
+        viewModel.makeSetSort(selectedSort)
+    }
     }
 }
 
@@ -75,6 +87,7 @@ struct StatisticView: View {
             .tabItem { Label(Tab.profile.title, image: Tab.profile.image) }
 
         StatisticView()
+            .environment(StatisticCoordinator.shared)
             .tabItem { Label(Tab.statistic.title, image: Tab.statistic.image) }
     }
     .accentColor(.ypUBlue)
