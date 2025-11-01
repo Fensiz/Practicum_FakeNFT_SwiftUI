@@ -16,6 +16,8 @@ struct StatisticList: View {
     let users: [User]
     let sortOption: SortOption
     let onUserTap: ((User) -> Void)
+    let canLoadMore: Bool
+    let onLoadNextPage: (() -> Void)?
 
     var body: some View {
         List {
@@ -24,6 +26,7 @@ struct StatisticList: View {
                     .onTapGesture {
                         onUserTap(user)
                     }
+                    .onAppear {
                     .listRowSeparator(.hidden)
                     .listRowInsets(EdgeInsets(top: 8, leading: 0, bottom: 0, trailing: 0))
             }
