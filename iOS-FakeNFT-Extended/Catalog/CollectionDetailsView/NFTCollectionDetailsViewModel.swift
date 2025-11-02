@@ -59,9 +59,6 @@ final class NFTCollectionDetailsViewModel {
 				}
 				state = .loading
 				try await collectionDetailsService.updateFavoriteStatus(nftID: nft.id)
-				if Bool.random() {
-					throw NetworkClientError.parsingError
-				}
 				self.nfts[index].isFavourite.toggle()
 				state = .loaded
 			} catch {
