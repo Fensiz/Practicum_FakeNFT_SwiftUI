@@ -71,8 +71,12 @@ final class ViewFactory {
 			case let .profileEdit(profile, saveAction, closeAction):
 				let viewModel = ProfileEditViewModel(profile: profile, saveAction: saveAction, closeAction: closeAction)
 				ProfileEditView(viewModel: viewModel, coordinator: profileCoordinator)
-		}
-	}
+            case .userCard(user: let user):
+                UserCard(user: user)
+            case .userCollection(let nftIDs):
+                UserCollectionView(nftIDs: nftIDs)
+        }
+    }
 
 	// сюда вроде бы кроме корзины никто ничего не добавляет,
 	// но мне эта заготовка нужна в корне проекта
@@ -106,7 +110,8 @@ final class ViewFactory {
 			case .profile:
 				profileView
 			case .statistic:
-				EmptyView()
+				StatisticView()
+                    .environment(StatisticCoordinator.shared)
 		}
 	}
 }

@@ -7,15 +7,15 @@
 
 import SwiftUI
 
-struct User: Codable, Identifiable, Sendable, Equatable, Hashable {
-	var name: String
-	var avatar: URL?
-	var description: String?
-	var website: URL?
-	var nfts: [String]
-	var rating: String?
-	let id: String
-	var likes: [String]?
+struct User: Codable, Identifiable, Sendable, Hashable {
+    var name: String
+    var avatar: URL?
+    var description: String?
+    var website: URL?
+    var nfts: [String]
+    var rating: String?
+    let id: String
+    var likes: [String]?
 
 	var ratingValue: Int {
 		nfts.count

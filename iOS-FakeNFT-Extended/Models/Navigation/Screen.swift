@@ -15,6 +15,8 @@ enum Screen: Hashable {
 	case myNfts
 	case favorites(ids: [String], unlikeAction: (String) async -> Void)
 	case profileEdit(_ profile: ShortProfileModel, saveAction: (ShortProfileModel) async -> Void, closeAction: () -> Void)
+    case userCard(user: User)
+    case userCollection(nftIDs: [String])
 
 	static func == (lhs: Screen, rhs: Screen) -> Bool {
 		switch (lhs, rhs) {
@@ -25,6 +27,8 @@ enum Screen: Hashable {
 			case (.myNfts, .myNfts): true
 			case (.favorites, .favorites): true
 			case (.profileEdit, .profileEdit): true
+            case (.userCard, .userCard): true
+            case (.userCollection, .userCollection): true
 			default: false
 		}
 	}
@@ -45,6 +49,10 @@ enum Screen: Hashable {
 				hasher.combine(5)
 			case .profileEdit:
 				hasher.combine(6)
+            case .userCard:
+                hasher.combine(4)
+            case .userCollection:
+                hasher.combine(5)
 		}
 	}
 }

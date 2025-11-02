@@ -1,10 +1,12 @@
 import Foundation
 
-struct NFTRequest: NetworkRequest {
+struct NFTRequest: NetworkRequest, Sendable {
 
     let id: String
 
     var endpoint: URL? {
-        URL(string: "\(RequestConstants.baseURL)/api/v1/nft/\(id)")
+        var comps = URLComponents(string: RequestConstants.baseURL)
+        comps?.path = API.NFT.byId(id)
+        return comps?.url
     }
 }
