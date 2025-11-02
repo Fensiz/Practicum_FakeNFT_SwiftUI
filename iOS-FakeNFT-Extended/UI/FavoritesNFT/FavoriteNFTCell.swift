@@ -9,12 +9,12 @@ import SwiftUI
 import Kingfisher
 
 struct FavoriteNFTCell: View {
-	let nft: NFTEntity
+	let nft: NFT
 	let isToggling: Bool
 	let onLikeTap: () -> Void
 	var body: some View {
 		HStack(spacing: 0) {
-			KFImage(nft.imageURLs.first)
+			KFImage(nft.images.first)
 				.placeholder {
 					Color.gray.opacity(0.3)
 				}
@@ -47,4 +47,15 @@ struct FavoriteNFTCell: View {
 		.opacity(isToggling ? 0.6 : 1.0)
 		.animation(.easeInOut(duration: 0.2), value: isToggling)
 	}
+}
+
+#Preview {
+	let item = FavoriteItem(
+		image: URL(string: "https://code.s3.yandex.net/Mobile/iOS/Currencies/Cardano_(ADA).png")!,
+		name: "test",
+		rating: 2,
+		price: 2.3
+	)
+	FavoritesCell(item: item, action: {})
+		.border(.red)
 }

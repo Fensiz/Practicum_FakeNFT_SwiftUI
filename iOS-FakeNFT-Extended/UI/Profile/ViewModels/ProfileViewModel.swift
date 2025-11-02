@@ -25,8 +25,8 @@ final class ProfileViewModel {
 	}
 	private(set) var editingUser: User?
 	private(set) var isSaveInProgress: Bool = false
-	private(set) var myNfts: [NFTEntity]? = []
-	private(set) var likedNfts: [NFTEntity]? = []
+	private(set) var myNfts: [NFT]? = []
+	private(set) var likedNfts: [NFT]? = []
 	private(set) var errorMessage: String?
 	private(set) var isLoadingMyNFTs = false
 	private(set) var isLoadingLikedNFTs = false
@@ -58,7 +58,7 @@ final class ProfileViewModel {
 		}
 	}
 
-	private func loadNfts(for ids: [String]) async throws -> [NFTEntity] {
+	private func loadNfts(for ids: [String]) async throws -> [NFT] {
 		let nftModels = try await withThrowingTaskGroup(of: NFT.self, returning: [NFT].self) { @MainActor group in
 			for id in ids {
 				group.addTask {
@@ -71,17 +71,7 @@ final class ProfileViewModel {
 			}
 			return result
 		}
-		return nftModels.map { nft in
-			NFTEntity(
-				id: nft.id,
-				name: nft.name,
-				images: nft.images,
-				rating: nft.rating,
-				descriptionText: nft.description,
-				price: nft.price,
-				authorURL: nft.author
-			)
-		}
+		return nftModels
 	}
 
 	func loadMyNFTs() async {

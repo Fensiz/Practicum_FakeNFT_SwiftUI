@@ -9,13 +9,13 @@ import SwiftUI
 import Kingfisher
 
 struct MyNFTCell: View {
-	let nft: NFTEntity
-	let author: String?
+	let nft: NFT
 	let isLiked: Bool
 	let onLikeTap: () -> Void
+
 	var body: some View {
 		HStack(spacing: 0) {
-			KFImage(nft.imageURLs.first)
+			KFImage(nft.images.first)
 				.resizable()
 				.aspectRatio(contentMode: .fit)
 				.frame(width: 108, height: 108)
@@ -36,7 +36,7 @@ struct MyNFTCell: View {
 					Text("ОТ")
 						.foregroundColor(.ypBlack)
 						.font(Font(UIFont.caption1))
-					Text("\(author == nil ? "Не указано" : author!)")
+					Text(nft.author.absoluteString)
 						.foregroundColor(.ypBlack)
 						.font(Font(UIFont.caption2))
 				}
@@ -52,4 +52,20 @@ struct MyNFTCell: View {
 			.foregroundColor(.ypBlack)
 		}
 	}
+}
+
+#Preview {
+	MyNFTCell(
+		nft: .init(
+			id: "asdkoapkdsaokd",
+			name: "test",
+			images: [URL(string: "https://code.s3.yandex.net/Mobile/iOS/Currencies/Cardano_(ADA).png")!],
+			rating: 3,
+			description: "123",
+			price: 2,
+			author: URL(string: "https://code.s3.yandex.net/Mobile/iOS/Currencies/Cardano_(ADA).png")!
+		),
+		isLiked: false,
+		onLikeTap: {}
+	)
 }

@@ -71,7 +71,6 @@ struct MyNFTList: View {
 						ForEach(myNfts) { nft in
 							MyNFTCell(
 								nft: nft,
-								author: viewModel.user?.name,
 								isLiked: viewModel.isLiked(nftId: nft.id),
 								onLikeTap: {
 									let id = nft.id
