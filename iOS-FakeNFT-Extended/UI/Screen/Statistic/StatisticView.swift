@@ -59,18 +59,17 @@ struct StatisticView: View {
 }
 
 #Preview("StatisticView") {
+    let root = RootCoordinatorImpl()
+    let stat = StatisticCoordinator(rootCoordinator: root)
 	TabView {
 		Text("Каталог")
 			.tabItem { Label(Tab.catalog.title, image: Tab.catalog.image) }
-
 		Text("Корзина")
 			.tabItem { Label(Tab.cart.title, image: Tab.cart.image) }
-
 		Text("Профиль")
 			.tabItem { Label(Tab.profile.title, image: Tab.profile.image) }
-
 		StatisticView()
-			.environment(StatisticCoordinator.shared)
+			.environment(stat)
 			.tabItem { Label(Tab.statistic.title, image: Tab.statistic.image) }
 	}
 	.accentColor(.ypUBlue)
