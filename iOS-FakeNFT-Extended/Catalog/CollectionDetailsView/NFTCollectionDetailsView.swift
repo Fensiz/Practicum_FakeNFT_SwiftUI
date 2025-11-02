@@ -65,7 +65,7 @@ struct NFTCollectionDetailsView: View {
 					.font(.system(size: 17, weight: .regular))
 			}
 			Button {
-				viewModel.updateDetails()
+				viewModel.onErrorCallback()
 			} label: {
 				Text("Repeat")
 					.font(.system(size: 17, weight: .bold))

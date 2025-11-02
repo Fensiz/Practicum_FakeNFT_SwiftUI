@@ -12,7 +12,9 @@ import SwiftUI
 @MainActor
 final class NFTCollectionDetailsViewModel {
 
-	let collectionID: NFTCollectionNetworkModel.ID
+	private let collectionID: NFTCollectionNetworkModel.ID
+
+	private(set) var onErrorCallback: () -> Void = { }
 	private(set) var details: NFTCollectionDetailsModel?
 	private(set) var nfts: [NFTModel] = []
 	private(set) var state: State = .empty
@@ -39,6 +41,9 @@ final class NFTCollectionDetailsViewModel {
 				self.nfts = try await nfts
 				state = .loaded
 			} catch {
+				onErrorCallback = { [weak self] in
+					self?.updateDetails()
+				}
 				state = .error
 			}
 		}
@@ -54,9 +59,15 @@ final class NFTCollectionDetailsViewModel {
 				}
 				state = .loading
 				try await collectionDetailsService.updateFavoriteStatus(nftID: nft.id)
+				if Bool.random() {
+					throw NetworkClientError.parsingError
+				}
 				self.nfts[index].isFavourite.toggle()
 				state = .loaded
 			} catch {
+				onErrorCallback = { [weak self] in
+					self?.updateFavoriteState(for: nft)
+				}
 				state = .error
 			}
 		}
@@ -75,6 +86,9 @@ final class NFTCollectionDetailsViewModel {
 				nfts[index].isAddedToCart.toggle()
 				state = .loaded
 			} catch {
+				onErrorCallback = { [weak self] in
+					self?.updateCartState(for: nft)
+				}
 				state = .error
 			}
 		}

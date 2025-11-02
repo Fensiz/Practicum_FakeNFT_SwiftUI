@@ -42,7 +42,7 @@ actor NFTCollectionDetailsService: NFTCollectionDetailsServiceProtocol {
 				group.addTask { try await self.fetchNetworkNFT(id: nftID)}
 			}
 			var result: [NFTNetworkModel] = []
-			for try await nft in group where !result.contains(nft){
+			for try await nft in group where !result.contains(nft) {
 				result.append(nft)
 			}
 			return result
