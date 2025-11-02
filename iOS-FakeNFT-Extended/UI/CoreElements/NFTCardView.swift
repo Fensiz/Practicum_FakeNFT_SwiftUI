@@ -13,44 +13,19 @@ struct NFTCardView: View {
 
 	@State private var shouldUseErrorImage = false
 
-	private let name: String
-	private let imageURL: URL?
-	private let rating: Int
-	private let price: Double
-	private let currency: Currency
-	private let isFavorite: Bool
-	private let isAddedToCart: Bool
-
-	private let onCartTap: () -> Void
-	private let onFavoriteTap: () -> Void
+	private let model: NFTCardViewModel
 
 	private let imageSize: CGFloat = 108
 
 	private var priceString: String {
-		Decimal(price)
+		Decimal(model.price)
 			.formatted(.number.precision(.fractionLength(0...2)))
 	}
 
 	init(
-		name: String,
-		imageURL: URL?,
-		rating: Int,
-		price: Double,
-		currency: Currency,
-		isFavorite: Bool,
-		isAddedToCart: Bool,
-		onCartTap: @escaping () -> Void,
-		onFavoriteTap: @escaping () -> Void
+		model: NFTCardViewModel
 	) {
-		self.name = name
-		self.imageURL = imageURL
-		self.rating = rating
-		self.price = price
-		self.currency = currency
-		self.isFavorite = isFavorite
-		self.isAddedToCart = isAddedToCart
-		self.onCartTap = onCartTap
-		self.onFavoriteTap = onFavoriteTap
+		self.model = model
 	}
 
 	var body: some View {
@@ -73,15 +48,15 @@ struct NFTCardView: View {
 		.frame(width: imageSize, height: imageSize)
 		.clipShape(RoundedRectangle(cornerRadius: 12))
 		.overlay(alignment: .topTrailing) {
-			Button(action: onFavoriteTap) {
-				Image(isFavorite ? .active : .noActive)
-					.foregroundStyle(isFavorite ? .ypURed : .ypUWhite)
+			Button(action: model.onFavoriteTap) {
+				Image(model.isFavorite ? .active : .noActive)
+					.foregroundStyle(model.isFavorite ? .ypURed : .ypUWhite)
 			}
 		}
 	}
 
 	private var kfImage: some View {
-		KFImage(imageURL)
+		KFImage(model.imageURL)
 			.resizable()
 			.placeholder { progress in
 				placeholder(progressFraction: progress.fractionCompleted)
@@ -111,21 +86,21 @@ struct NFTCardView: View {
 
 	private var nftDetails: some View {
 		VStack(alignment: .leading, spacing: 4) {
-			RatingView(rating)
+			RatingView(model.rating)
 			HStack(spacing: .zero) {
 				VStack(alignment: .leading, spacing: 4) {
 					Group {
-						Text(name)
+						Text(model.name)
 							.font(.system(size: 17, weight: .bold))
                             .minimumScaleFactor(0.5)
-						Text("\(priceString) \(currency.rawValue.uppercased())")
+						Text("\(priceString) \(model.currency.rawValue.uppercased())")
 							.font(.system(size: 10, weight: .medium))
 					}
 					.foregroundStyle(.ypBlack)
 				}
 				Spacer()
-				Button(action: onCartTap) {
-					Image(isAddedToCart ? .cartCross : .cart)
+				Button(action: model.onCartTap) {
+					Image(model.isAddedToCart ? .cartCross : .cart)
 						.foregroundStyle(.ypBlack)
 				}
 			}
@@ -137,7 +112,7 @@ struct NFTCardView: View {
 // MARK: - Preview
 #Preview {
 	HStack {
-		NFTCardView(
+		NFTCardView(model: .init(
 			name: "Test name",
 			imageURL: URL(string: "https://code.s3.yandex.net/Mobile/iOS/NFT/Beige/Ellsa/1.png"),
 			rating: 3,
@@ -147,8 +122,8 @@ struct NFTCardView: View {
 			isAddedToCart: true,
 			onCartTap: { },
 			onFavoriteTap: { }
-		)
-		NFTCardView(
+		))
+		NFTCardView(model: .init(
 			name: "Test name",
 			imageURL: URL(string: "https://code.s3.yandex.net/Mobile/iOS/NFT/Beige/Ellsa/1.png"),
 			rating: 0,
@@ -158,8 +133,8 @@ struct NFTCardView: View {
 			isAddedToCart: false,
 			onCartTap: { },
 			onFavoriteTap: { }
-		)
-		NFTCardView(
+		))
+		NFTCardView(model: .init(
 			name: "Test name",
 			imageURL: URL(string: "https://code.s3.yande.net/Mobile/iOS/NFT/Beige/Ellsa/1.png"),
 			rating: 0,
@@ -169,6 +144,6 @@ struct NFTCardView: View {
 			isAddedToCart: false,
 			onCartTap: { },
 			onFavoriteTap: { }
-		)
+		))
 	}
 }
