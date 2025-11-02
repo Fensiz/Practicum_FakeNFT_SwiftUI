@@ -81,8 +81,7 @@ final class ViewFactory {
 				UserCard(user: user)
                     .environment(statisticCoordinator)
 			case .userCollection(let nftIDs):
-				UserCollectionView(nftIDs: nftIDs)
-					.environment(statisticCoordinator)
+				makeUserCollection(nftIDs: nftIDs)
 		}
 	}
 
@@ -120,5 +119,16 @@ final class ViewFactory {
 			case .statistic:
 				statisticView
 		}
+	}
+
+	@ViewBuilder
+	func makeUserCollection(nftIDs: [String]) -> some View {
+		let userCollectionVM = UserCollectionViewModel(
+			nftIDs: nftIDs,
+			service: UserCollectionViewModel.Default.nftService,
+			profileService: UserCollectionViewModel.Default.makeProfileService()
+		)
+		UserCollectionView(viewModel: userCollectionVM)
+			.environment(statisticCoordinator)
 	}
 }
