@@ -30,6 +30,8 @@ final class ViewFactory {
 		viewModel: profileViewModel,
 		coordinator: profileCoordinator
 	)
+	private lazy var statisticView: some View = StatisticView()
+		.environment(StatisticCoordinator.shared)
 
 	init(rootCoordinator: any RootCoordinator) {
 		let networkService = DefaultNetworkClient()
@@ -71,12 +73,14 @@ final class ViewFactory {
 			case let .profileEdit(profile, saveAction, closeAction):
 				let viewModel = ProfileEditViewModel(profile: profile, saveAction: saveAction, closeAction: closeAction)
 				ProfileEditView(viewModel: viewModel, coordinator: profileCoordinator)
-            case .userCard(user: let user):
-                UserCard(user: user)
-            case .userCollection(let nftIDs):
-                UserCollectionView(nftIDs: nftIDs)
-        }
-    }
+			case .userCard(user: let user):
+				UserCard(user: user)
+					.environment(StatisticCoordinator.shared)
+			case .userCollection(let nftIDs):
+				UserCollectionView(nftIDs: nftIDs)
+					.environment(StatisticCoordinator.shared)
+		}
+	}
 
 	// сюда вроде бы кроме корзины никто ничего не добавляет,
 	// но мне эта заготовка нужна в корне проекта
@@ -110,8 +114,7 @@ final class ViewFactory {
 			case .profile:
 				profileView
 			case .statistic:
-				StatisticView()
-                    .environment(StatisticCoordinator.shared)
+				statisticView
 		}
 	}
 }
