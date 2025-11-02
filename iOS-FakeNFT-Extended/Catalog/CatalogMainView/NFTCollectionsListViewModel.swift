@@ -50,6 +50,7 @@ final class NFTCollectionsListViewModel {
 
     func sort(by sortingType: CollectionsSortingType) {
 		guard sortingType != self.sortingType else { return }
+		self.sortingType = sortingType
 		collections.sort(by: sortingType.sortingRule)
     }
 
