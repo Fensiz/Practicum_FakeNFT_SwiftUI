@@ -10,11 +10,6 @@ import SwiftUI
 struct UserRatingCell: View {
 
     private enum Constants {
-        enum Layout {
-            static let horizontalSpacing: CGFloat = 8
-            static let horizontalPadding: CGFloat = 16
-            static let cornerRadius: CGFloat = 12
-        }
         enum Sizes {
             static let avatarSize: CGFloat = 28
             static let cellMinHeight: CGFloat = 80
@@ -30,14 +25,14 @@ struct UserRatingCell: View {
     let user: User
 
     var body: some View {
-        HStack(spacing: Constants.Layout.horizontalSpacing) {
+        HStack(spacing: DesignSystem.Spacing.small) {
             placeRatingLabel
             cardStatistics
                 .clipShape(
-                    RoundedRectangle(cornerRadius: Constants.Layout.cornerRadius, style: .continuous)
+                    RoundedRectangle(cornerRadius: DesignSystem.Radius.small, style: .continuous)
                 )
                 .background(
-                    RoundedRectangle(cornerRadius: Constants.Layout.cornerRadius, style: .continuous)
+                    RoundedRectangle(cornerRadius: DesignSystem.Radius.small, style: .continuous)
                         .fill(Color.ypLightGrey)
                 )
         }
@@ -51,8 +46,8 @@ struct UserRatingCell: View {
             font: Font(UIFont.caption1),
             maxWidth: Constants.Sizes.ratingLabelWidth,
             maxHeight: Constants.Sizes.labelMaxHeight)
-        .background(Color.clear) // Добавьте фон если нужно
-        .clipShape(RoundedRectangle(cornerRadius: Constants.Layout.cornerRadius))
+        .background(Color.clear)
+        .clipShape(RoundedRectangle(cornerRadius: DesignSystem.Radius.small))
     }
 
     private var cardStatistics: some View {
@@ -65,7 +60,7 @@ struct UserRatingCell: View {
             )
         }
         .frame(maxWidth: .infinity, maxHeight: 80)
-        .padding(.horizontal, Constants.Layout.horizontalPadding)
+        .padding(.horizontal, DesignSystem.Padding.medium)
     }
 
     @ViewBuilder

@@ -21,12 +21,12 @@ struct BorderedButtonStyle: ButtonStyle {
             .padding(.vertical, 10)
             .frame(minHeight: 44)
             .background(
-                RoundedRectangle(cornerRadius: 16, style: .continuous)
+                RoundedRectangle(cornerRadius: DesignSystem.Radius.medium, style: .continuous)
                     .fill(color)
             )
             .overlay(
-                RoundedRectangle(cornerRadius: 16, style: .continuous)
-                    .stroke(textColor, lineWidth: 1)
+                RoundedRectangle(cornerRadius: DesignSystem.Radius.medium, style: .continuous)
+                    .stroke(textColor, lineWidth: DesignSystem.BorderWidth.small)
                     .allowsHitTesting(false)
             )
             .scaleEffect(configuration.isPressed ? 0.95 : 1.0)
