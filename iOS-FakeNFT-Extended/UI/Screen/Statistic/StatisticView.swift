@@ -48,8 +48,8 @@ struct StatisticView: View {
                 case .userCard(let user):
                     UserCard(user: user)
                         .environment(coordinator)
-                case .web(let url):
-                    WebView(url: url, isAppearenceEnabled: false)
+                case let .web(url, isAppearenceEnabled):
+                    WebView(url: url, isAppearenceEnabled: isAppearenceEnabled)
                 case .userCollection(let ids):
                     UserCollectionView(nftIDs: ids)
                         .environment(coordinator)

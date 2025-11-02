@@ -84,8 +84,8 @@ struct UserCard: View {
             .environment(coordinator)
             .navigationDestination(for: Screen.self) { screen in
                 switch screen {
-                    case .web(let url):
-                        WebView(url: url, isAppearenceEnabled: false)
+                    case let .web(url, isAppearenceEnabled):
+                        WebView(url: url, isAppearenceEnabled: isAppearenceEnabled)
                     default:
                         EmptyView()
                 }
@@ -102,8 +102,8 @@ struct UserCard: View {
             .environment(coordinator)
             .navigationDestination(for: Screen.self) { screen in
                 switch screen {
-                    case .web(let url):
-                        WebView(url: url, isAppearenceEnabled: false)
+                    case let .web(url, isAppearenceEnabled):
+                        WebView(url: url, isAppearenceEnabled: isAppearenceEnabled)
                     default:
                         EmptyView()
                 }
