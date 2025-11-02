@@ -140,7 +140,7 @@ final class UserCollectionViewModel {
             let user = try await profileService.loadProfile()
             self.likedIds = Set(user.likes ?? [])
         } catch {
-
+			self.errorMessage = "Не удалось загрузить лайки"
         }
     }
 
@@ -154,6 +154,14 @@ final class UserCollectionViewModel {
             self.errorMessage = "Не удалось загрузить корзину"
         }
     }
+
+	func isFavorite(_ id: String) -> Bool {
+		likedIds.contains(id) || likingInProgress.contains(id)
+	}
+
+	func isInCart(_ id: String) -> Bool {
+		cartIds.contains(id) || addingInProgress.contains(id)
+	}
 }
 
 extension UserCollectionViewModel {
