@@ -32,8 +32,13 @@ struct ProfileRequest: NetworkRequest {
 		if let website {
 			params["website"] = website
 		}
-		if let likes = likes?.compactMap({ $0.uuidString.lowercased() }) {
-			params["likes"] = likes.joined(separator: ",")
+		if let likes {
+			let likesAsString = likes.compactMap({ $0.uuidString.lowercased() })
+			if likesAsString.isEmpty {
+				params["likes"] = "null"
+			} else {
+				params["likes"] = likesAsString.joined(separator: ",")
+			}
 		}
 		if !params.isEmpty {
 			dto = params.percentEncoded()
