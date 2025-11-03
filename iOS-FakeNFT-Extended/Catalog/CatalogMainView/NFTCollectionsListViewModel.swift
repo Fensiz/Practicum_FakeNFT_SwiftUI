@@ -63,30 +63,3 @@ extension NFTCollectionsListViewModel {
         case loaded
     }
 }
-
-enum CollectionsSortingType: Int, CaseIterable, Identifiable {
-
-    var id: Self { self }
-
-	case byTitle
-    case bySize
-
-    var description: String {
-        switch self {
-        case .byTitle:
-            NSLocalizedString("Catalog.Sorting.ByTitle", comment: "")
-        case .bySize:
-            NSLocalizedString("Catalog.Sorting.BySize", comment: "")
-        }
-    }
-
-	var sortingRule: (NFTCollectionCardModel, NFTCollectionCardModel) -> Bool {
-		switch self {
-		case .byTitle:
-			{ $0.title < $1.title }
-		case .bySize:
-			{ $0.nftsCount < $1.nftsCount }
-		}
-	}
-
-}
