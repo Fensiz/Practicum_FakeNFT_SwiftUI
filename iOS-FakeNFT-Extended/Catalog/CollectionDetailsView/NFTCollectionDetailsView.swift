@@ -102,18 +102,23 @@ struct NFTCollectionDetailsView: View {
 			)
 	}
 
+	@ViewBuilder
 	private var collectionDetails: some View {
-		HStack {
-			CollectionDetailsHeaderView(
-				collectionTitle: details?.title ?? "",
-				authorName: details?.authorName ?? "",
-				collectionDescription: details?.description ?? "",
-				onAuthorTap: {
-					guard let url = details?.authorWebsite else { return }
-					coordinator.showWebView(for: url)
-				}
-			)
-			Spacer()
+		if let details {
+			HStack {
+				CollectionDetailsHeaderView(
+					collectionTitle: details.title,
+					authorName: details.authorName,
+					collectionDescription: details.description,
+					onAuthorTap: {
+						guard let url = details.authorWebsite else { return }
+						coordinator.showWebView(for: url)
+					}
+				)
+				Spacer()
+			}
+		} else {
+			EmptyView()
 		}
 	}
 
