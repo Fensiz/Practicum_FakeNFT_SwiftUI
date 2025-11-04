@@ -215,9 +215,12 @@
 
 <details>
   <summary>Показать демонстрации</summary>
-  <table>
-    <tr>
-      <td><img src="PreviewGIFs/screencast_cart.gif" width="300"/></td>
-    </tr>
-  </table>
+  <details>
+    <summary>🛒 Корзина</summary>
+    <table>
+      <tr>
+        <td><img src="PreviewGIFs/screencast_cart.gif" width="300"/></td>
+      </tr>
+    </table>
+    </details>
 </details>
