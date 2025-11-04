@@ -30,3 +30,30 @@ struct OrdersRequest: NetworkRequest, Sendable {
 		}
 	}
 }
+
+struct OrdersRequestCatalog: NetworkRequest, Sendable {
+
+	let httpMethod: HttpMethod
+	let dto: Data?
+	var endpoint: URL?
+
+	init(httpMethod: HttpMethod = .get, nftIDs: [NFTNetworkModel.ID]? = nil) {
+		self.httpMethod = httpMethod
+		var params: [String: String] = [:]
+		if let nftIDs {
+			let nfts = nftIDs.compactMap({ $0.uuidString.lowercased() })
+			if nfts.isEmpty {
+				params["nfts"] = "null"
+			} else {
+				params["nfts"] = nfts.joined(separator: ",")
+			}
+		}
+		if !params.isEmpty {
+			dto = params.percentEncoded()
+		} else {
+			dto = nil
+		}
+		endpoint = URL(string: "\(RequestConstants.baseURL)/api/v1/orders/1")
+	}
+
+}

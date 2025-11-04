@@ -27,7 +27,7 @@ enum Tab: Identifiable {
 	var image: String {
 		switch self {
 			case .catalog: "catalog"
-			case .cart: "cart"
+			case .cart: "cart_tab_item"
 			case .profile: "profile"
 			case .statistic: "statistic"
 		}

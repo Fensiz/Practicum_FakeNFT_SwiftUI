@@ -9,12 +9,18 @@ import Foundation
 
 enum Screen: Hashable {
 	case dummy
-	case payment(coordinator: any CartCoordinator, action: () async throws -> Void)
-	case successPayment(action: () -> Void)
+	// web
 	case web(url: URL, isAppearenceEnabled: Bool = false)
+	// profile
 	case myNfts
 	case favorites(ids: [String], unlikeAction: (String) async -> Void)
 	case profileEdit(_ profile: ShortProfileModel, saveAction: (ShortProfileModel) async -> Void, closeAction: () -> Void)
+	// catalog
+	case collectionDetails(collectionID: NFTCollectionNetworkModel.ID)
+	// cart
+	case payment(coordinator: any CartCoordinator, action: () async throws -> Void)
+	case successPayment(action: () -> Void)
+	// stats
     case userCard(user: User)
     case userCollection(nftIDs: [String])
 
@@ -27,8 +33,9 @@ enum Screen: Hashable {
 			case (.myNfts, .myNfts): true
 			case (.favorites, .favorites): true
 			case (.profileEdit, .profileEdit): true
-            case (.userCard, .userCard): true
-            case (.userCollection, .userCollection): true
+			case (.userCard, .userCard): true
+			case (.userCollection, .userCollection): true
+			case (.collectionDetails, .collectionDetails): true
 			default: false
 		}
 	}
@@ -49,10 +56,12 @@ enum Screen: Hashable {
 				hasher.combine(5)
 			case .profileEdit:
 				hasher.combine(6)
-            case .userCard:
-                hasher.combine(4)
-            case .userCollection:
-                hasher.combine(5)
+			case .userCard:
+				hasher.combine(7)
+			case .userCollection:
+				hasher.combine(8)
+			case.collectionDetails:
+				hasher.combine(9)
 		}
 	}
 }

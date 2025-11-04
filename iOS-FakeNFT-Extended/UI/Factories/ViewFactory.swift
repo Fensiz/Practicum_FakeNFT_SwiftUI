@@ -9,7 +9,16 @@ import SwiftUI
 
 @MainActor
 final class ViewFactory {
+
 	private let rootCoordinator: any RootCoordinator
+
+	private let catalogCoordinator: any CatalogCoordinatorProtocol
+	private let nftCollectionsProvider: any NFTCollectionsProviderProtocol
+	private let nftCollectionDetailsService: any NFTCollectionDetailsServiceProtocol
+	private lazy var catalogMainViewModel: NFTCollectionsListViewModel = {
+		NFTCollectionsListViewModel(collectionsProvider: nftCollectionsProvider)
+	}()
+
 	private let cartService: any CartService
 	private let paymentService: any PaymentService
 	private let cartViewModel: CartViewModel
@@ -19,7 +28,7 @@ final class ViewFactory {
 	private let profileService: any ProfileService
 	private let profileViewModel: ProfileViewModel
 	private let profileCoordinator: ProfileCoordinatorImpl
-    private let statisticCoordinator: StatisticCoordinator
+	private let statisticCoordinator: StatisticCoordinator
 
 	// MARK: - Views
 
@@ -27,13 +36,14 @@ final class ViewFactory {
 		viewModel: cartViewModel,
 		coordinator: cartCoordinator
 	)
+
 	private lazy var profileView: some View = ProfileView(
 		viewModel: profileViewModel,
 		coordinator: profileCoordinator
 	)
 
-    private lazy var statisticView: some View = StatisticView()
-        .environment(statisticCoordinator)
+	private lazy var statisticView: some View = StatisticView()
+		.environment(statisticCoordinator)
 
 	init(rootCoordinator: any RootCoordinator) {
 		let networkService = DefaultNetworkClient()
@@ -42,6 +52,11 @@ final class ViewFactory {
 		nftService = NftServiceImpl(networkClient: networkService, storage: storageService)
 
 		self.rootCoordinator = rootCoordinator
+
+		self.catalogCoordinator = CatalogCoordinator(rootCoordinator: rootCoordinator)
+		self.nftCollectionsProvider = NFTCollectionsProvider(pageSize: 10, networkClient: networkService)
+		self.nftCollectionDetailsService = NFTCollectionDetailsService(networkClient: networkService)
+
 		self.cartService = CartServiceImpl(networkService: networkService, nftService: nftService)
 		self.cartViewModel = CartViewModel(cartService: cartService)
 		self.cartCoordinator = CartCoordinatorImpl(rootCoordinator: rootCoordinator)
@@ -52,7 +67,7 @@ final class ViewFactory {
 		self.profileViewModel = ProfileViewModel(profileService: profileService, nftsService: nftService)
 		self.profileCoordinator = ProfileCoordinatorImpl(rootCoordinator: rootCoordinator)
 
-        self.statisticCoordinator = StatisticCoordinator(rootCoordinator: rootCoordinator)
+		self.statisticCoordinator = StatisticCoordinator(rootCoordinator: rootCoordinator)
 	}
 
 	// сюда добавляются все экраны, которые перекрывают tabView,
@@ -62,24 +77,47 @@ final class ViewFactory {
 		switch screen {
 			case .dummy:
 				EmptyView()
-			case let .payment(coordinartor, action):
-				let viewModel = PaymentViewModel(paymentService: paymentService, onSuccess: action)
-				PaymentView(viewModel: viewModel, coordinator: coordinartor)
+
+			// web
 			case let .web(url, isAppearenceEnabled):
 				WebView(url: url, isAppearenceEnabled: isAppearenceEnabled)
-			case .successPayment(let action):
-				SuccessPaymentScreen(action: action)
+
+			// profile
 			case .myNfts:
 				MyNFTList(viewModel: profileViewModel)
+
 			case let .favorites(ids, unlikeAction):
 				let viewModel = FavoritesListViewModel(nftService: nftService, nftIDs: ids, unlikeAction: unlikeAction)
 				FavoritesList(viewModel: viewModel, backAction: rootCoordinator.goBack)
+
 			case let .profileEdit(profile, saveAction, closeAction):
 				let viewModel = ProfileEditViewModel(profile: profile, saveAction: saveAction, closeAction: closeAction)
 				ProfileEditView(viewModel: viewModel, coordinator: profileCoordinator)
+
+			// catalog
+			case .collectionDetails(collectionID: let collectionID):
+				let viewModel = NFTCollectionDetailsViewModel(
+					collectionID: collectionID,
+					collectionDetailsService: nftCollectionDetailsService
+				)
+				NFTCollectionDetailsView(
+					viewModel: viewModel,
+					coordinator: catalogCoordinator
+				)
+
+			// cart
+			case let .payment(coordinartor, action):
+				let viewModel = PaymentViewModel(paymentService: paymentService, onSuccess: action)
+				PaymentView(viewModel: viewModel, coordinator: coordinartor)
+
+			case .successPayment(let action):
+				SuccessPaymentScreen(action: action)
+
+			// stats
 			case .userCard(user: let user):
 				UserCard(user: user)
-                    .environment(statisticCoordinator)
+					.environment(statisticCoordinator)
+
 			case .userCollection(let nftIDs):
 				makeUserCollection(nftIDs: nftIDs)
 		}
@@ -110,12 +148,15 @@ final class ViewFactory {
 	@ViewBuilder
 	func makeTabView(for tab: Tab) -> some View {
 		switch tab {
-			case .catalog:
-				TestCatalogView()
-			case .cart:
-				cartView
 			case .profile:
 				profileView
+			case .catalog:
+				NFTCollectionsListView(
+					viewModel: catalogMainViewModel,
+					coordinator: catalogCoordinator
+				)
+			case .cart:
+				cartView
 			case .statistic:
 				statisticView
 		}
