@@ -21,16 +21,18 @@ struct UserCollectionView: View {
 	var body: some View {
 		ZStack {
 			ScrollView {
-				LazyVGrid(columns: columns, spacing: 2) {
+				LazyVGrid(columns: columns, spacing: 28) {
 					ForEach(model.items) { nft in
 						let model = makeCardModel(for: nft)
-						NFTCardView(
-							model: model,
-							onCartTap: { cartTap(for: nft.id) },
-							onFavoriteTap: { favoriteTap(for: nft.id)}
-						)
-						.frame(minWidth: 108, maxWidth: .infinity)
-						.frame(maxHeight: 192)
+						VStack {
+							NFTCardView(
+								model: model,
+								onCartTap: { cartTap(for: nft.id) },
+								onFavoriteTap: { favoriteTap(for: nft.id)}
+							)
+							.frame(minWidth: 108, maxWidth: .infinity)
+						}
+						.frame(maxHeight: .infinity, alignment: .top)
 					}
 				}
 				.padding(.horizontal, 16)

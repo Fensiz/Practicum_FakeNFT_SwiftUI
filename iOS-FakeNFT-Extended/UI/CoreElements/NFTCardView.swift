@@ -61,6 +61,7 @@ struct NFTCardView: View {
 				VStack(alignment: .leading, spacing: 4) {
 					Group {
 						Text(model.name)
+							.lineLimit(2)
 							.font(.system(size: 17, weight: .bold))
                             .minimumScaleFactor(0.5)
 						Text("\(priceString) \(model.currency.rawValue.uppercased())")
