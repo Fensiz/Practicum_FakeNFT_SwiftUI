@@ -131,19 +131,17 @@ struct NFTCollectionDetailsView: View {
 			ForEach(viewModel.nfts) { nft in
 				VStack(spacing: .zero) {
 					NFTCardView(
-						name: nft.title,
-						imageURL: nft.primaryImageURL,
-						rating: nft.rating,
-						price: nft.price,
-						currency: nft.currency,
-						isFavorite: nft.isFavourite,
-						isAddedToCart: nft.isAddedToCart,
-						onCartTap: {
-							viewModel.updateCartState(for: nft)
-						},
-						onFavoriteTap: {
-							viewModel.updateFavoriteState(for: nft)
-						}
+						model: .init(
+							name: nft.title,
+							imageURL: nft.primaryImageURL,
+							rating: nft.rating,
+							price: nft.price,
+							currency: nft.currency,
+							favorite: nft.isFavourite,
+							addedToCart: nft.isAddedToCart
+						),
+						onCartTap: { viewModel.updateCartState(for: nft) },
+						onFavoriteTap: { viewModel.updateFavoriteState(for: nft) }
 					)
 				}
 				.frame(maxHeight: .infinity, alignment: .top)

@@ -21,7 +21,7 @@ let project = Project(
 			product: .app,
 			bundleId: "com.example.iOS-FakeNFT-Extended",
 			deploymentTargets: .iOS("17.4"),
-			infoPlist: .file(path: "iOS-FakeNFT-Extended/Info.plist"),
+			infoPlist: .file(path: "iOS-FakeNFT-Extended/App/Info.plist"),
 			sources: ["iOS-FakeNFT-Extended/**"],
 			resources: [
 				"Resources/Assets.xcassets",
