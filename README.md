@@ -233,4 +233,13 @@
       </tr>
     </table>
   </details>
+  <details>
+	<summary>Каталог</summary>
+	<table>
+		<tr>
+			<td><img src="Catalog-Dark-Russian.gif" width="300"/></td>
+			<td><img src="Catalog-Light-English.gif" width="300"/></td>
+		</tr>
+	</table>
+  </details>
 </details>
