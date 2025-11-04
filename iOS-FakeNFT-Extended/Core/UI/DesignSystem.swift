@@ -64,10 +64,14 @@ extension DesignSystem {
 	enum Sizes {
 		static let elementSmallHeight: CGFloat = 38
 		static let elementMediumHeight: CGFloat = 76
+		static let elementLargeHeight: CGFloat = 80
+		static let elementXSmallWidth: CGFloat = 27
 		static let buttonSmallHeight: CGFloat = 44
 		static let buttonLargeHeight: CGFloat = 60
 		static let buttonSmallWidth: CGFloat = 127
 		static let buttonMediumWidth: CGFloat = 240
+		static let imageXXSmall: CGFloat = 13
+		static let imageSmall3: CGFloat = 28
 		static let imageXSmall: CGFloat = 36
 		static let imageSmall: CGFloat = 48
 		static let imageSmall2: CGFloat = 23
