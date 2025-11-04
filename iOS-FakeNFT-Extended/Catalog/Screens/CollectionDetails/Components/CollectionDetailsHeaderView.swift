@@ -29,27 +29,27 @@ struct CollectionDetailsHeaderView: View {
 
 	var body: some View {
 		VStack(alignment: .leading, spacing: .zero) {
-			VStack(alignment: .leading, spacing: 8) {
+			VStack(alignment: .leading, spacing: DesignSystem.Spacing.small) {
 				Text(collectionTitle)
-					.font(.system(size: 22, weight: .bold))
+					.font(DesignSystem.Font.headline3)
 					.foregroundStyle(.ypBlack)
 				authorDetails
 			}
 			Text(collectionDescription)
 				.multilineTextAlignment(.leading)
-				.font(.system(size: 13, weight: .regular))
+				.font(DesignSystem.Font.caption2)
 				.foregroundStyle(.ypBlack)
 		}
 	}
 
 	private var authorDetails: some View {
-		HStack(spacing: 4) {
+		HStack(spacing: DesignSystem.Spacing.xsmall) {
 			Text("Author of the collection" + ":")
-				.font(.system(size: 13, weight: .regular))
+				.font(DesignSystem.Font.caption2)
 				.foregroundStyle(.ypBlack)
 			Button(action: onAuthorTap) {
 				Text(authorName)
-					.font(.system(size: 15, weight: .regular))
+					.font(DesignSystem.Font.caption1)
 					.foregroundStyle(.ypUBlue)
 			}
 		}

@@ -42,13 +42,13 @@ struct NFTCollectionsListView: View {
 			) {
 				Button { } label: {
 					Text("Cancel")
-						.font(.system(size: 17, weight: .regular))
+						.font(DesignSystem.Font.bodyRegular)
 				}
 				Button {
 					viewModel.fetchCollections(isInitialFetch: false)
 				} label: {
 					Text("Repeat")
-						.font(.system(size: 17, weight: .bold))
+						.font(DesignSystem.Font.bodyBold)
 				}
 			}
 			.onChange(of: viewModel.state) { oldValue, newValue in
@@ -64,10 +64,10 @@ struct NFTCollectionsListView: View {
 				}
 			}
 	}
-	
+
 	private var scrollView: some View {
 		ScrollView {
-			VStack(spacing: 8) {
+			VStack(spacing: DesignSystem.Spacing.small) {
 				ForEach(viewModel.collections) { collection in
 					button(for: collection)
 						.onAppear {
@@ -77,8 +77,8 @@ struct NFTCollectionsListView: View {
 						}
 				}
 			}
-			.padding(.horizontal, 16)
-			.padding(.vertical, 20)
+			.padding(.horizontal, DesignSystem.Padding.medium)
+			.padding(.vertical, DesignSystem.Padding.large)
 		}
 		.frame(maxWidth: .infinity)
 		.background(.ypWhite)

@@ -9,38 +9,38 @@
 import SwiftUI
 
 struct NFTCollectionCellView: View {
-	
+
 	private let model: NFTCollectionCardModel
-	
+
 	var body: some View {
-		VStack(alignment: .center, spacing: 4) {
+		VStack(alignment: .center, spacing: DesignSystem.Spacing.xsmall) {
 			BasicImage(
 				imageURL: model.imageURL,
 				contentMode: .fill
 			)
 			.frame(height: 140)
-			.clipShape(RoundedRectangle(cornerRadius: 12))
+			.clipShape(RoundedRectangle(cornerRadius: DesignSystem.Radius.small))
 			title
 		}
-		.padding(.bottom, 13)
+		.padding(.bottom, DesignSystem.Padding.small)
 	}
-	
+
 	private var title: some View {
-		HStack(spacing: 4) {
+		HStack(spacing: DesignSystem.Spacing.xsmall) {
 			Group {
 				Text("\(model.title.capitalized)")
 				Text("(\(model.nftsCount))")
 				Spacer()
 			}
-			.font(.system(size: 17, weight: .bold))
+			.font(DesignSystem.Font.bodyBold)
 			.foregroundStyle(.ypBlack)
 		}
 	}
-	
+
 	init(collection: NFTCollectionCardModel) {
 		self.model = collection
 	}
-	
+
 }
 
 #Preview {
