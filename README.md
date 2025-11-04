@@ -242,4 +242,13 @@
 		</tr>
 	</table>
   </details>
+  <details>
+	<summary>👤 Профиль</summary>
+	<table>
+		<tr>
+			<td><img src="PreviewGIFs/profile_dark.gif" width="300"/></td>
+			<td><img src="PreviewGIFs/profile_light.gif" width="300"/></td>
+		</tr>
+	</table>
+  </details>
 </details>
