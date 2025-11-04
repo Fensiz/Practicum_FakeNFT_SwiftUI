@@ -71,7 +71,7 @@ struct UserCard: View {
 	}
 
 	private func openWebsite() {
-		coordinator.open(screen: .web(url: websiteURL))
+		coordinator.open(screen: .web(url: websiteURL, isAppearenceEnabled: true))
 	}
 }
 
