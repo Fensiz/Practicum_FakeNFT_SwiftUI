@@ -16,11 +16,11 @@ struct User: Codable, Identifiable, Sendable, Hashable {
 	var rating: String?
 	let id: String
 	var likes: [String]?
-	
+
 	var ratingValue: Int {
 		nfts.count
 	}
-	
+
 	init(
 		id: String,
 		name: String,

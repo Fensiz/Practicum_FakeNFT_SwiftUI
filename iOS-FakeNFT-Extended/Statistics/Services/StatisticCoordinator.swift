@@ -13,28 +13,28 @@ import Observation
 final class StatisticCoordinator {
 
 	private var isNavigating = false
-	
+
 	private let rootCoordinator: any RootCoordinator
-	
+
 	var navigationPathBinding: Binding<[Screen]> {
 		Binding(
 			get: { self.rootCoordinator.navigationPath },
 			set: { self.rootCoordinator.navigationPath = $0 }
 		)
 	}
-	
+
 	init(rootCoordinator: any RootCoordinator) {
 		self.rootCoordinator = rootCoordinator
 	}
-	
+
 	func show(cover: Cover) {
 		rootCoordinator.show(cover: cover)
 	}
-	
+
 	func hideCover() {
 		rootCoordinator.hideCover()
 	}
-	
+
 	func open(screen: Screen) {
 		guard !isNavigating else { return }
 		isNavigating = true
@@ -44,11 +44,11 @@ final class StatisticCoordinator {
 			self.isNavigating = false
 		}
 	}
-	
+
 	func popToRoot() {
 		rootCoordinator.popToRoot()
 	}
-	
+
 	func goBack() {
 		rootCoordinator.goBack()
 	}

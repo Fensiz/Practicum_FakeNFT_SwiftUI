@@ -9,9 +9,9 @@
 import SwiftUI
 
 struct NFTCollectionCellView: View {
-	
+
 	private let model: NFTCollectionCardModel
-	
+
 	var body: some View {
 		VStack(alignment: .center, spacing: 4) {
 			BasicImage(
@@ -24,7 +24,7 @@ struct NFTCollectionCellView: View {
 		}
 		.padding(.bottom, 13)
 	}
-	
+
 	private var title: some View {
 		HStack(spacing: 4) {
 			Group {
@@ -36,11 +36,11 @@ struct NFTCollectionCellView: View {
 			.foregroundStyle(.ypBlack)
 		}
 	}
-	
+
 	init(collection: NFTCollectionCardModel) {
 		self.model = collection
 	}
-	
+
 }
 
 #Preview {

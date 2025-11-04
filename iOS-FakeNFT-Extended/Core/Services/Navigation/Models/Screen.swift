@@ -23,23 +23,23 @@ enum Screen: Hashable {
 	// stats
 	case userCard(user: User)
 	case userCollection(nftIDs: [String])
-	
+
 	static func == (lhs: Screen, rhs: Screen) -> Bool {
 		switch (lhs, rhs) {
-			case (.dummy, .dummy): true
-			case (.payment, .payment): true
-			case (.web, .web): true
-			case (.successPayment, .successPayment): true
-			case (.myNfts, .myNfts): true
-			case (.favorites, .favorites): true
-			case (.profileEdit, .profileEdit): true
-			case (.userCard, .userCard): true
-			case (.userCollection, .userCollection): true
-			case (.collectionDetails, .collectionDetails): true
+			case (.dummy, .dummy),
+				(.payment, .payment),
+				(.web, .web),
+				(.successPayment, .successPayment),
+				(.myNfts, .myNfts),
+				(.favorites, .favorites),
+				(.profileEdit, .profileEdit),
+				(.userCard, .userCard),
+				(.userCollection, .userCollection),
+				(.collectionDetails, .collectionDetails): true
 			default: false
 		}
 	}
-	
+
 	func hash(into hasher: inout Hasher) {
 		switch self {
 			case .dummy:

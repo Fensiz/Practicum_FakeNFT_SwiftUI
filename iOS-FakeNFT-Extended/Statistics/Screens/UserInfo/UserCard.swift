@@ -19,14 +19,14 @@ struct UserCard: View {
 		static let profileTrailingFix: CGFloat = DesignSystem.Padding.xxsmall
 		static let bioTrailing: CGFloat = DesignSystem.Padding.medium
 	}
-	
+
 	let user: User
 	@Environment(StatisticCoordinator.self) private var coordinator
-	
+
 	private var websiteURL: URL {
 		user.website ?? MockWebsiteURL.url
 	}
-	
+
 	var body: some View {
 		ScrollView {
 			VStack(spacing: Constants.containerSpacing) {
@@ -62,14 +62,14 @@ struct UserCard: View {
 		}
 		.padding(.trailing, Constants.bioTrailing)
 	}
-	
+
 	private var contentButton: some View {
 		NFTCollectionRow(user: user) {
 			coordinator.open(screen: .userCollection(nftIDs: user.nfts))
 		}
 		.frame(maxWidth: .infinity)
 	}
-	
+
 	private func openWebsite() {
 		coordinator.open(screen: .web(url: websiteURL))
 	}

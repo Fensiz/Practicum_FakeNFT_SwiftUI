@@ -10,7 +10,7 @@ import Foundation
 
 struct UserByIDRequest: NetworkRequest, Sendable {
 	let userID: String
-	
+
 	var endpoint: URL? {
 		var comps = URLComponents(string: RequestConstants.baseURL)
 		comps?.path = API.Users.byId(userID)

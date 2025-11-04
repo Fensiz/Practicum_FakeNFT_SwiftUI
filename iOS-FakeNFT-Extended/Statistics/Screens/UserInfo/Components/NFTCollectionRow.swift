@@ -8,19 +8,19 @@
 import SwiftUI
 
 struct NFTCollectionRow: View {
-	
+
 	private enum Constants {
 		static let verticalPadding: CGFloat = 16
 		static let horizontalPadding: CGFloat = 16
 		static let chevronSize: CGFloat = 13
 	}
-	
+
 	let user: User
 	let onTap: () -> Void
-	
+
 	private var count: Int { user.nfts.count }
 	private var hasNFTs: Bool { count > 0 }
-	
+
 	var body: some View {
 		Button(action: {
 			guard hasNFTs else { return }
@@ -36,7 +36,7 @@ struct NFTCollectionRow: View {
 		.accessibilityLabel("Коллекция NFT, \(count) шт.")
 		.accessibilityAddTraits(.isButton)
 	}
-	
+
 	private var rowContent: some View {
 		Text("Коллекция NFT  (\(count))")
 			.font(DesignSystem.Font.bodyBold)
@@ -49,7 +49,7 @@ struct NFTCollectionRow: View {
 					.padding(.trailing, 16)
 			}
 	}
-	
+
 	private var chevronIcon: some View {
 		Image(systemName: "chevron.right")
 			.foregroundColor(.ypBlack)

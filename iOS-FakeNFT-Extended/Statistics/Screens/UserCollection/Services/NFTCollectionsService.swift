@@ -13,11 +13,11 @@ protocol NFTItemCollectionService: Actor {
 
 final actor NFTCollectionsServiceImpl: NFTItemCollectionService {
 	private let networkClient: any NetworkClient
-	
+
 	init(networkClient: any NetworkClient) {
 		self.networkClient = networkClient
 	}
-	
+
 	func loadNft(id: String) async throws -> NFTItem {
 		let request = NFTRequest(id: id)
 		return try await networkClient.send(request: request)

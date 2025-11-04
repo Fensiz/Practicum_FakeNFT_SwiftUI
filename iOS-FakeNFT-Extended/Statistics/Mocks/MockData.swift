@@ -19,10 +19,10 @@ enum Avatar {
 
 enum Bio {
 	static let statisticCard =
-		"""
-		Дизайнер из Казани, люблю цифровое искусство и бейглы. В моей коллекции уже 100+ NFT,
-		и еще больше — на моём сайте. Открыт к коллаборациям.
-		"""
+  """
+  Дизайнер из Казани, люблю цифровое искусство и бейглы. В моей коллекции уже 100+ NFT,
+  и еще больше — на моём сайте. Открыт к коллаборациям.
+  """
 }
 
 enum MockNFTIDs {
@@ -38,7 +38,7 @@ enum MockNFTIDs {
 		"db196ee3-07ef-44e7-8ff5-16548fc6f434",
 		"82570704-14ac-4679-9436-050f4a32a8a0"
 	]
-	
+
 	static func make(_ itemsCount: Int) -> [String] {
 		(0..<itemsCount).map { sample[$0 % sample.count] }
 	}
@@ -107,7 +107,7 @@ enum MockNFT {
 			price: 75.25
 		)
 	]
-	
+
 	static func make(_ count: Int) -> [NFTItem] {
 		Array(sampleNFTs.prefix(count))
 	}
@@ -152,6 +152,6 @@ struct MockData {
 		User(id: "8", name: "Joaquin Phoenix", avatar: URL(string: Avatar.user8), nfts: MockNFTIDs.make(112),
 			 rating: "1", description: Bio.statisticCard, website: URL(string: WebsiteUser.web7))
 	]
-	
+
 	static let nftCollections: [NFTItem] = MockNFT.sampleNFTs
 }

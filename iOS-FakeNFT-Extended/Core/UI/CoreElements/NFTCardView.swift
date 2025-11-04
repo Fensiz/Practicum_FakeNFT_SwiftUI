@@ -10,20 +10,20 @@ import SwiftUI
 import Kingfisher
 
 struct NFTCardView: View {
-	
+
 	private let model: NFTCardModel
 	private let onCartTap: () -> Void
 	private let onFavoriteTap: () -> Void
-	
+
 	@State private var shouldUseErrorImage = false
-	
+
 	private let imageSize: CGFloat = 108
-	
+
 	private var priceString: String {
 		Decimal(model.price)
 			.formatted(.number.precision(.fractionLength(0...2)))
 	}
-	
+
 	init(
 		model: NFTCardModel,
 		onCartTap: @escaping () -> Void,
@@ -33,7 +33,7 @@ struct NFTCardView: View {
 		self.onCartTap = onCartTap
 		self.onFavoriteTap = onFavoriteTap
 	}
-	
+
 	var body: some View {
 		VStack(spacing: 8) {
 			image
@@ -41,7 +41,7 @@ struct NFTCardView: View {
 		}
 		.frame(width: imageSize)
 	}
-	
+
 	private var image: some View {
 		BasicImage(imageURL: model.imageURL, contentMode: .fill)
 			.frame(width: imageSize, height: imageSize)
@@ -53,7 +53,7 @@ struct NFTCardView: View {
 				}
 			}
 	}
-	
+
 	private var nftDetails: some View {
 		VStack(alignment: .leading, spacing: 4) {
 			RatingView(model.rating)
@@ -77,7 +77,7 @@ struct NFTCardView: View {
 			}
 		}
 	}
-	
+
 }
 
 // MARK: - Preview

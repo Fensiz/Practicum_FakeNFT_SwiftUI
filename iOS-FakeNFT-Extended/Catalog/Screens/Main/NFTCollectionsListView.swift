@@ -9,13 +9,13 @@
 import SwiftUI
 
 struct NFTCollectionsListView: View {
-	
+
 	@State private var viewModel: NFTCollectionsListViewModel
 	@State private var isSelectingSortingType = false
 	@State private var isShowingErrorAlert = false
-	
+
 	private let coordinator: any CatalogCoordinatorProtocol
-	
+
 	var body: some View {
 		scrollView
 			.confirmationDialog(
@@ -64,7 +64,7 @@ struct NFTCollectionsListView: View {
 				}
 			}
 	}
-	
+
 	private var scrollView: some View {
 		ScrollView {
 			VStack(spacing: 8) {
@@ -83,7 +83,7 @@ struct NFTCollectionsListView: View {
 		.frame(maxWidth: .infinity)
 		.background(.ypWhite)
 	}
-	
+
 	private func button(for collectionCard: NFTCollectionCardModel) -> some View {
 		Button {
 			coordinator.showDetails(collectionID: collectionCard.id)
@@ -92,7 +92,7 @@ struct NFTCollectionsListView: View {
 		}
 		.buttonStyle(.plain)
 	}
-	
+
 	init(
 		viewModel: NFTCollectionsListViewModel,
 		coordinator: any CatalogCoordinatorProtocol
@@ -100,7 +100,7 @@ struct NFTCollectionsListView: View {
 		self.viewModel = viewModel
 		self.coordinator = coordinator
 	}
-	
+
 }
 
 #Preview {
@@ -114,5 +114,5 @@ struct NFTCollectionsListView: View {
 			coordinator: catalogCoordinator
 		)
 	}
-	
+
 }

@@ -9,18 +9,18 @@ import SwiftUI
 struct StatisticView: View {
 	@AppStorage(AppStorageKeys.statisticSortOption)
 	private var sortRaw = StatisticList.SortOption.byRating.rawValue
-	
+
 	private var selectedSort: StatisticList.SortOption {
 		StatisticList.SortOption(rawValue: sortRaw) ?? .byRating
 	}
-	
+
 	@State private var showSortDialog = false
 	@State private var viewModel = StatisticViewModel(
 		usersService: UsersServiceImpl(networkClient: DefaultNetworkClient())
 	)
-	
+
 	@Environment(StatisticCoordinator.self) private var coordinator
-	
+
 	var body: some View {
 		StatisticList(
 			users: viewModel.sortedUsers,

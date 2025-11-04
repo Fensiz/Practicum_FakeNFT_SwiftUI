@@ -47,5 +47,5 @@ struct ProfileRequestCatalog: NetworkRequest {
 		}
 		endpoint = URL(string: "\(RequestConstants.baseURL)/api/v1/profile/1")
 	}
-	
+
 }
