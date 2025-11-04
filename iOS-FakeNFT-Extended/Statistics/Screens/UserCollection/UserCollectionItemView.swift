@@ -21,7 +21,7 @@ struct UserCollectionView: View {
 	var body: some View {
 		ZStack {
 			ScrollView {
-				LazyVGrid(columns: columns, spacing: 28) {
+				LazyVGrid(columns: columns, spacing: DesignSystem.Spacing.xlarge) {
 					ForEach(model.items) { nft in
 						let model = makeCardModel(for: nft)
 						VStack {
@@ -35,9 +35,9 @@ struct UserCollectionView: View {
 						.frame(maxHeight: .infinity, alignment: .top)
 					}
 				}
-				.padding(.horizontal, 16)
-				.padding(.top, 12)
-				.padding(.bottom, 24)
+				.padding(.horizontal, DesignSystem.Padding.medium)
+				.padding(.top, DesignSystem.Padding.small)
+				.padding(.bottom, DesignSystem.Padding.xlarge)
 			}
 			.scrollIndicators(.hidden)
 			.loading(model.isLoading)
@@ -50,7 +50,7 @@ struct UserCollectionView: View {
 		}
 		.navigationTitle("Коллекция NFT")
 		.navigationBarTitleDisplayMode(.inline)
-		.background(Color.ypWhite)
+		.background(DesignSystem.Color.background)
 		.task {
 			await model.makeLoadLikes()
 			await model.makeLoadCart()

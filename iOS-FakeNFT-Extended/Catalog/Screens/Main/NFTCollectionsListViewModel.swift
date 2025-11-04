@@ -11,12 +11,12 @@ import SwiftUI
 @Observable
 @MainActor
 final class NFTCollectionsListViewModel {
-	
+
 	private(set) var collections: [NFTCollectionCardModel] = []
 	private(set) var state: ModelState = .empty
-	
+
 	private let collectionsProvider: any NFTCollectionsProviderProtocol
-	
+
 	private var sortingType: CollectionsSortingType {
 		get {
 			let savedValue = UserDefaults.standard.integer(forKey: "CollectionsSortingKey")
@@ -26,7 +26,7 @@ final class NFTCollectionsListViewModel {
 			UserDefaults.standard.set(newValue.rawValue, forKey: "CollectionsSortingKey")
 		}
 	}
-	
+
 	func fetchCollections(isInitialFetch: Bool) {
 		let guardCondition = isInitialFetch ? (state == .empty) : (state != .loading)
 		Task {
@@ -42,15 +42,15 @@ final class NFTCollectionsListViewModel {
 			}
 		}
 	}
-	
+
 	func sort(by sortingType: CollectionsSortingType) {
 		guard sortingType != self.sortingType else { return }
 		self.sortingType = sortingType
 		collections.sort(by: sortingType.sortingRule)
 	}
-	
+
 	init(collectionsProvider: any NFTCollectionsProviderProtocol) {
 		self.collectionsProvider = collectionsProvider
 	}
-	
+
 }

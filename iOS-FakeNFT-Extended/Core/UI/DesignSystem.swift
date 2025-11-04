@@ -24,17 +24,21 @@ extension DesignSystem {
 	enum Spacing {
 		static let xxsmall: CGFloat = 2
 		static let xsmall: CGFloat = 4
+		static let xxxsmall: CGFloat = 5
 		static let small: CGFloat = 8
 		static let small2: CGFloat = 7
 		static let medium: CGFloat = 12
 		static let medium2: CGFloat = 16
 		static let large: CGFloat = 20
+		static let xlarge:  CGFloat = 28
 		static let large2: CGFloat = 40
-//		static let xl: CGFloat = 32
+		static let xxlarge: CGFloat = 41
 	}
 	enum Padding {
-		static let xsmall: CGFloat = 5
+		static let xxsmall: CGFloat = 2
 		static let xsmall2: CGFloat = 4
+		static let xsmall: CGFloat = 5
+		static let small2: CGFloat = 8
 		static let small: CGFloat = 12
 		static let medium: CGFloat = 16
 		static let large: CGFloat = 20

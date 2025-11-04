@@ -8,11 +8,11 @@
 import SwiftUI
 
 struct BorderedButtonStyle: ButtonStyle {
-	
+
 	let font: Font
 	let textColor: Color
 	let color: Color
-	
+
 	func makeBody(configuration: Configuration) -> some View {
 		configuration.label
 			.font(font)
@@ -36,7 +36,7 @@ struct BorderedButtonStyle: ButtonStyle {
 
 #Preview {
 	let title = "Перейти на сайт пользователя"
-	
+
 	Button(title) { print("Tapped button") }
 		.buttonStyle(
 			BorderedButtonStyle(

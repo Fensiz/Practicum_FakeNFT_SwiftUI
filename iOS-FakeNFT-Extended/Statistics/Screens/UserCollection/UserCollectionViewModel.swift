@@ -10,22 +10,22 @@ import Observation
 
 @Observable
 final class UserCollectionViewModel {
-	
+
 	private let nftIDs: [String]
 	private let service: any NFTItemCollectionService
 	private let profileService: any ProfileService
-	
+
 	var items: [NFTItem] = []
 	var isLoading = false
 	var errorMessage: String?
 	var failedIDs: [String] = []
 	var addingInProgress: Set<String> = []
 	var cartIds: Set<String> = []
-	
+
 	var likedIds: Set<String> = []
 	var likingInProgress: Set<String> = []
 	private let profileId: String = "1"
-	
+
 	init(
 		nftIDs: [String],
 		service: any NFTItemCollectionService,
@@ -36,7 +36,7 @@ final class UserCollectionViewModel {
 		self.service = service
 		self.profileService = profileService
 	}
-	
+
 	@MainActor
 	func makeLoad() async {
 		guard !isLoading else { return }
@@ -44,28 +44,29 @@ final class UserCollectionViewModel {
 		errorMessage = nil
 		failedIDs = []
 		items = []
-		
+
 		let ids = self.nftIDs
 		let svc = self.service
-		
+
 		let (orderedItems, failed) = await Self.fetchItems(ids: ids, service: svc)
-		
+
 		self.items = orderedItems
 		self.failedIDs = failed
-		
+
 		if items.isEmpty && !failed.isEmpty {
 			self.errorMessage = "Не удалось загрузить NFT. Повторите попытку позже."
 		}
 		self.isLoading = false
 	}
-	
-	private static func fetchItems (ids: [String],
-									service: any NFTItemCollectionService
+
+	private static func fetchItems (
+		ids: [String],
+		service: any NFTItemCollectionService
 	) async -> ([NFTItem], [String]) {
-		
+
 		var results: [Int: NFTItem] = [:]
 		var failed: [String] = []
-		
+
 		await withTaskGroup(of: (Int, String, NFTItem?).self) { group in
 			for (index, id) in ids.enumerated() {
 				group.addTask {
@@ -77,7 +78,7 @@ final class UserCollectionViewModel {
 					}
 				}
 			}
-			
+
 			for await (index, id, item) in group {
 				if let item {
 					results[index] = item
@@ -86,24 +87,24 @@ final class UserCollectionViewModel {
 				}
 			}
 		}
-		
+
 		let ordered = (0..<ids.count).compactMap { results[$0] }
 		return (ordered, failed)
 	}
-	
+
 	@MainActor
 	func makeToggleCart(nftId: String) async {
 		guard !addingInProgress.contains(nftId) else { return }
 		addingInProgress.insert(nftId)
 		defer { addingInProgress.remove(nftId) }
-		
+
 		let willAdd = !cartIds.contains(nftId)
 		if willAdd {
 			cartIds.insert(nftId)
 		} else {
 			cartIds.remove(nftId)
 		}
-		
+
 		do {
 			let client = DefaultNetworkClient()
 			let request = OrdersRequest(httpMethod: .put, nfts: Array(cartIds))
@@ -117,15 +118,15 @@ final class UserCollectionViewModel {
 			errorMessage = willAdd ? "Не удалось добавить в корзину" : "Не удалось удалить из корзины"
 		}
 	}
-	
+
 	@MainActor
 	func makeToggleLike(nftId: String) async {
 		guard !likingInProgress.contains(nftId) else { return }
 		likingInProgress.insert(nftId); defer { likingInProgress.remove(nftId) }
-		
+
 		let willLike = !likedIds.contains(nftId)
 		if willLike { likedIds.insert(nftId) } else { likedIds.remove(nftId) }
-		
+
 		do {
 			_ = try await profileService.updateLikes(to: Array(likedIds))
 		} catch {
@@ -133,7 +134,7 @@ final class UserCollectionViewModel {
 			errorMessage = willLike ? "Не удалось поставить лайк" : "Не удалось убрать лайк"
 		}
 	}
-	
+
 	@MainActor
 	func makeLoadLikes() async {
 		do {
@@ -143,7 +144,7 @@ final class UserCollectionViewModel {
 			self.errorMessage = "Не удалось загрузить лайки"
 		}
 	}
-	
+
 	@MainActor
 	func makeLoadCart() async {
 		do {
@@ -154,11 +155,11 @@ final class UserCollectionViewModel {
 			self.errorMessage = "Не удалось загрузить корзину"
 		}
 	}
-	
+
 	func isFavorite(_ id: String) -> Bool {
 		likedIds.contains(id) || likingInProgress.contains(id)
 	}
-	
+
 	func isInCart(_ id: String) -> Bool {
 		cartIds.contains(id) || addingInProgress.contains(id)
 	}
@@ -168,7 +169,7 @@ extension UserCollectionViewModel {
 	enum Default {
 		static let nftService: any NFTItemCollectionService =
 		NFTCollectionsServiceImpl(networkClient: DefaultNetworkClient())
-		
+
 		@MainActor
 		static func makeProfileService() -> any ProfileService {
 			ProfileServiceImpl(networkClient: DefaultNetworkClient())

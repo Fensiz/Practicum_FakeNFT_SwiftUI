@@ -19,10 +19,10 @@ struct UserRatingCell: View {
 			static let placeholder = "person.crop.circle.fill"
 		}
 	}
-	
+
 	let ranking: Int
 	let user: User
-	
+
 	var body: some View {
 		HStack(spacing: DesignSystem.Spacing.small) {
 			placeRatingLabel
@@ -38,7 +38,7 @@ struct UserRatingCell: View {
 		.frame(maxWidth: .infinity, minHeight: Constants.Sizes.cellMinHeight)
 		.background(Color.clear)
 	}
-	
+
 	private var placeRatingLabel: some View {
 		StatisticLabel(
 			text: "\(ranking)",
@@ -48,7 +48,7 @@ struct UserRatingCell: View {
 		.background(Color.clear)
 		.clipShape(RoundedRectangle(cornerRadius: DesignSystem.Radius.small))
 	}
-	
+
 	private var cardStatistics: some View {
 		HStack {
 			avatarView
@@ -65,7 +65,7 @@ struct UserRatingCell: View {
 		.frame(maxWidth: .infinity, maxHeight: 80)
 		.padding(.horizontal, DesignSystem.Padding.medium)
 	}
-	
+
 	@ViewBuilder
 	private var avatarView: some View {
 		let placeholder = Image(systemName: Constants.Images.placeholder)
@@ -74,7 +74,7 @@ struct UserRatingCell: View {
 			.frame(width: Constants.Sizes.avatarSize, height: Constants.Sizes.avatarSize)
 			.clipShape(Circle())
 			.foregroundStyle(.ypUGrey)
-		
+
 		if let url = user.avatar {
 			KFImage(url)
 				.placeholder { placeholder }
