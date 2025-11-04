@@ -9,9 +9,7 @@ import SwiftUI
 
 struct UserRatingCell: View {
 	private enum Constants {
-		enum Images {
-			static let placeholder = "person.crop.circle.fill"
-		}
+		static let placeholder = "person.crop.circle.fill"
 	}
 
 	let ranking: Int
@@ -62,7 +60,7 @@ struct UserRatingCell: View {
 
 	@ViewBuilder
 	private var avatarView: some View {
-		let placeholder = Image(systemName: Constants.Images.placeholder)
+		let placeholder = Image(systemName: Constants.placeholder)
 			.resizable()
 			.aspectRatio(contentMode: .fill)
 			.frame(width: DesignSystem.Sizes.imageSmall3, height: DesignSystem.Sizes.imageSmall3)
