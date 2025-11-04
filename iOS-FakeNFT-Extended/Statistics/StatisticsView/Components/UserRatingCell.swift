@@ -42,7 +42,7 @@ struct UserRatingCell: View {
     private var placeRatingLabel: some View {
         StatisticLabel(
             text: "\(ranking)",
-            font: Font(UIFont.caption1),
+			font: DesignSystem.Font.caption1,
             maxWidth: Constants.Sizes.ratingLabelWidth,
             maxHeight: Constants.Sizes.labelMaxHeight)
         .background(Color.clear)
@@ -52,10 +52,14 @@ struct UserRatingCell: View {
     private var cardStatistics: some View {
         HStack {
             avatarView
-            StatisticLabel(text: "\(user.name)", font: Font(UIFont.headline3))
+			StatisticLabel(
+				text: "\(user.name)",
+				font: DesignSystem.Font.headline3
+			)
             Spacer()
-            StatisticLabel(text: "\(user.ratingValue)",
-                           font: Font(UIFont.headline3)
+			StatisticLabel(
+				text: "\(user.ratingValue)",
+				font: DesignSystem.Font.headline3
             )
         }
         .frame(maxWidth: .infinity, maxHeight: 80)

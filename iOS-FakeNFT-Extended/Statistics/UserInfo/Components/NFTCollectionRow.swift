@@ -39,7 +39,7 @@ struct NFTCollectionRow: View {
 
     private var rowContent: some View {
         Text("Коллекция NFT  (\(count))")
-            .font(Font(UIFont.bodyBold))
+			.font(DesignSystem.Font.bodyBold)
             .foregroundStyle(.ypBlack)
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.vertical, Constants.verticalPadding)

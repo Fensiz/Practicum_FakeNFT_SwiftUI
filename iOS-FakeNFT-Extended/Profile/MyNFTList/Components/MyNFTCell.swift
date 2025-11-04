@@ -30,24 +30,24 @@ struct MyNFTCell: View {
 			VStack(alignment: .leading, spacing: 5) {
 				Text(nft.name)
 					.foregroundColor(.ypBlack)
-					.font(Font(UIFont.bodyBold))
+					.font(DesignSystem.Font.bodyBold)
 				RatingView(nft.rating)
 				HStack(spacing: 4) {
 					Text("ОТ")
 						.foregroundColor(.ypBlack)
-						.font(Font(UIFont.caption1))
+						.font(DesignSystem.Font.caption1)
 					Text(nft.author.absoluteString)
 						.foregroundColor(.ypBlack)
-						.font(Font(UIFont.caption2))
+						.font(DesignSystem.Font.caption2)
 				}
 			}
 			.padding(.leading, 20)
 			Spacer()
 			VStack(alignment: .leading, spacing: 2) {
 				Text("Цена")
-					.font(Font(UIFont.caption2))
+					.font(DesignSystem.Font.caption2)
 				Text("\(String(format: "%.2f", nft.price)) ETH")
-					.font(Font(UIFont.bodyBold))
+					.font(DesignSystem.Font.bodyBold)
 			}
 			.foregroundColor(.ypBlack)
 		}

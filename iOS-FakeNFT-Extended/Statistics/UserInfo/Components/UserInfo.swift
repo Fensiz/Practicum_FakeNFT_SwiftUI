@@ -15,10 +15,10 @@ struct UserInfo: View {
                 AvatarView(imageURL: user.avatar)
                 Text(user.name)
                     .foregroundColor(.ypBlack)
-                    .font(Font(UIFont.headline3))
+					.font(DesignSystem.Font.headline3)
             }
             Text(user.description ?? "")
-                .font(Font(UIFont.caption2))
+				.font(DesignSystem.Font.caption2)
                 .foregroundColor(.ypBlack)
         }
     }

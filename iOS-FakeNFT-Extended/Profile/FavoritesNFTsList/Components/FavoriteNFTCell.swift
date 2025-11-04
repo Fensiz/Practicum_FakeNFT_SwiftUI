@@ -34,12 +34,12 @@ struct FavoriteNFTCell: View {
 			VStack(alignment: .leading, spacing: 5) {
 				Text(nft.name)
 					.foregroundColor(.ypBlack)
-					.font(Font(UIFont.bodyBold))
+					.font(DesignSystem.Font.bodyBold)
 				RatingView(nft.rating)
 				HStack(spacing: 4) {
 					Text("\(String(format: "%.2f", nft.price)) ETH")
 						.foregroundColor(.ypBlack)
-						.font(Font(UIFont.caption1))
+						.font(DesignSystem.Font.caption1)
 				}
 			}
 			.padding(.leading, 20)

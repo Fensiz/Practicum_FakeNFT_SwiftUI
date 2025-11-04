@@ -21,7 +21,7 @@ struct FavoriteNFTsList: View {
 			} else {
 				Text("У Вас ещё нет избранных NFT")
 					.foregroundColor(.ypBlack)
-					.font(Font(UIFont.bodyBold))
+					.font(DesignSystem.Font.bodyBold)
 					.frame(maxWidth: .infinity, maxHeight: .infinity)
 					.multilineTextAlignment(.center)
 			}

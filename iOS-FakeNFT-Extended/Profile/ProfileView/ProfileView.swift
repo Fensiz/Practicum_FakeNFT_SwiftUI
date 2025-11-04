@@ -82,7 +82,7 @@ private struct ProfileCellButtonView: View {
 		Button(action: action) {
 			HStack {
 				Text("\(title) (\(count))")
-					.font(Font(UIFont.bodyBold))
+					.font(DesignSystem.Font.bodyBold)
 				Spacer()
 				Image(systemName: "chevron.forward")
 			}

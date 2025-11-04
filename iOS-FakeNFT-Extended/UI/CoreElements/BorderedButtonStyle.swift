@@ -40,7 +40,7 @@ struct BorderedButtonStyle: ButtonStyle {
     Button(title) { print("Tapped button") }
         .buttonStyle(
             BorderedButtonStyle(
-                font: Font(UIFont.caption1),
+				font: DesignSystem.Font.caption1,
                 textColor: .ypBlack,
                 color: .ypWhite
             )

@@ -56,7 +56,7 @@ struct UserCard: View {
                 .padding(.trailing, Constants.profileTrailingFix)
             Button(Constants.titleButton, action: openWebsite)
                 .buttonStyle(BorderedButtonStyle(
-                    font: Font(UIFont.caption1),
+					font: DesignSystem.Font.caption1,
                     textColor: .ypBlack,
                     color: Color(.clear)
                 ))
