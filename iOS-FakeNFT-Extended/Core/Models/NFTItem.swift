@@ -8,9 +8,9 @@
 import Foundation
 
 struct NFTItem: Identifiable, Hashable, Sendable, Decodable {
-    let id: String
-    let name: String
-    let images: [URL]
-    let rating: Int
-    let price: Double
+	let id: String
+	let name: String
+	let images: [URL]
+	let rating: Int
+	let price: Double
 }

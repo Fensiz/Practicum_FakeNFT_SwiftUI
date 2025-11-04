@@ -9,9 +9,9 @@
 import SwiftUI
 
 struct NFTCollectionCellView: View {
-
-    private let model: NFTCollectionCardModel
-
+	
+	private let model: NFTCollectionCardModel
+	
 	var body: some View {
 		VStack(alignment: .center, spacing: 4) {
 			BasicImage(
@@ -24,23 +24,23 @@ struct NFTCollectionCellView: View {
 		}
 		.padding(.bottom, 13)
 	}
-
-    private var title: some View {
-        HStack(spacing: 4) {
-            Group {
-                Text("\(model.title.capitalized)")
-                Text("(\(model.nftsCount))")
+	
+	private var title: some View {
+		HStack(spacing: 4) {
+			Group {
+				Text("\(model.title.capitalized)")
+				Text("(\(model.nftsCount))")
 				Spacer()
-            }
-            .font(.system(size: 17, weight: .bold))
-            .foregroundStyle(.ypBlack)
-        }
-    }
-
-    init(collection: NFTCollectionCardModel) {
-        self.model = collection
-    }
-
+			}
+			.font(.system(size: 17, weight: .bold))
+			.foregroundStyle(.ypBlack)
+		}
+	}
+	
+	init(collection: NFTCollectionCardModel) {
+		self.model = collection
+	}
+	
 }
 
 #Preview {

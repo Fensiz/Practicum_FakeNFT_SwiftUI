@@ -9,21 +9,21 @@
 import Foundation
 
 struct NFTCollectionNetworkModel: Identifiable, Decodable {
-
-    let id: UUID
-    let title: String
-    let coverURL: String
+	
+	let id: UUID
+	let title: String
+	let coverURL: String
 	let nftIDs: [NFTNetworkModel.ID]
-    let description: String
+	let description: String
 	let authorName: String
-
-    enum CodingKeys: String, CodingKey {
-        case id
-        case title = "name"
-        case coverURL = "cover"
-        case nftIDs = "nfts"
-        case description
-        case authorName = "author"
-    }
+	
+	enum CodingKeys: String, CodingKey {
+		case id
+		case title = "name"
+		case coverURL = "cover"
+		case nftIDs = "nfts"
+		case description
+		case authorName = "author"
+	}
 	
 }

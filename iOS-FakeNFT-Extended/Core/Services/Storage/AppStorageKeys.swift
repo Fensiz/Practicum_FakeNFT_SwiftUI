@@ -8,5 +8,5 @@
 import Foundation
 
 enum AppStorageKeys {
-    static let statisticSortOption = "statistic.sortOption"
+	static let statisticSortOption = "statistic.sortOption"
 }

@@ -8,18 +8,18 @@
 import Foundation
 
 protocol NFTItemCollectionService: Actor {
-    func loadNft(id: String) async throws -> NFTItem
+	func loadNft(id: String) async throws -> NFTItem
 }
 
 final actor NFTCollectionsServiceImpl: NFTItemCollectionService {
-    private let networkClient: any NetworkClient
-
-    init(networkClient: any NetworkClient) {
-        self.networkClient = networkClient
-    }
-
-    func loadNft(id: String) async throws -> NFTItem {
-        let request = NFTRequest(id: id)
-        return try await networkClient.send(request: request)
-    }
+	private let networkClient: any NetworkClient
+	
+	init(networkClient: any NetworkClient) {
+		self.networkClient = networkClient
+	}
+	
+	func loadNft(id: String) async throws -> NFTItem {
+		let request = NFTRequest(id: id)
+		return try await networkClient.send(request: request)
+	}
 }

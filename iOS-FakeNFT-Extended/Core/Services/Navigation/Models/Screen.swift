@@ -21,9 +21,9 @@ enum Screen: Hashable {
 	case payment(coordinator: any CartCoordinator, action: () async throws -> Void)
 	case successPayment(action: () -> Void)
 	// stats
-    case userCard(user: User)
-    case userCollection(nftIDs: [String])
-
+	case userCard(user: User)
+	case userCollection(nftIDs: [String])
+	
 	static func == (lhs: Screen, rhs: Screen) -> Bool {
 		switch (lhs, rhs) {
 			case (.dummy, .dummy): true
@@ -39,7 +39,7 @@ enum Screen: Hashable {
 			default: false
 		}
 	}
-
+	
 	func hash(into hasher: inout Hasher) {
 		switch self {
 			case .dummy:

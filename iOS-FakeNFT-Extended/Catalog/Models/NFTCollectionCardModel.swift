@@ -11,6 +11,6 @@ import Foundation
 struct NFTCollectionCardModel: Identifiable, Equatable {
 	let id: NFTCollectionNetworkModel.ID
 	let title: String
-    let imageURL: URL?
+	let imageURL: URL?
 	let nftsCount: Int
 }

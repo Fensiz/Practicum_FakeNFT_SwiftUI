@@ -8,18 +8,18 @@
 import SwiftUI
 
 struct UserInfo: View {
-    let user: User
-    var body: some View {
-        VStack(alignment: .leading, spacing: 20) {
-            HStack(spacing: 16) {
-                AvatarView(imageURL: user.avatar)
-                Text(user.name)
-                    .foregroundColor(.ypBlack)
+	let user: User
+	var body: some View {
+		VStack(alignment: .leading, spacing: 20) {
+			HStack(spacing: 16) {
+				AvatarView(imageURL: user.avatar)
+				Text(user.name)
+					.foregroundColor(.ypBlack)
 					.font(DesignSystem.Font.headline3)
-            }
-            Text(user.description ?? "")
+			}
+			Text(user.description ?? "")
 				.font(DesignSystem.Font.caption2)
-                .foregroundColor(.ypBlack)
-        }
-    }
+				.foregroundColor(.ypBlack)
+		}
+	}
 }
