@@ -11,14 +11,7 @@ import Kingfisher
 
 struct NFTCardView: View {
 
-	private let name: String
-	private let imageURL: URL?
-	private let rating: Int
-	private let price: Double
-	private let currency: Currency
-	private let isFavorite: Bool
-	private let isAddedToCart: Bool
-
+	private let model: NFTCardModel
 	private let onCartTap: () -> Void
 	private let onFavoriteTap: () -> Void
 
@@ -27,42 +20,16 @@ struct NFTCardView: View {
 	private let imageSize: CGFloat = 108
 
 	private var priceString: String {
-		Decimal(price)
+		Decimal(model.price)
 			.formatted(.number.precision(.fractionLength(0...2)))
 	}
 
 	init(
-		model: NFTCardViewModel
-	) {
-		self.name = model.name
-		self.imageURL = model.imageURL
-		self.rating = model.rating
-		self.price = model.price
-		self.currency = model.currency
-		self.isFavorite = model.isFavorite
-		self.isAddedToCart = model.isAddedToCart
-		self.onCartTap = model.onCartTap
-		self.onFavoriteTap = model.onFavoriteTap
-	}
-
-	init (
-		name: String,
-		imageURL: URL?,
-		rating: Int,
-		price: Double,
-		currency: Currency,
-		isFavorite: Bool,
-		isAddedToCart: Bool,
+		model: NFTCardModel,
 		onCartTap: @escaping () -> Void,
 		onFavoriteTap: @escaping () -> Void
 	) {
-		self.name = name
-		self.imageURL = imageURL
-		self.rating = rating
-		self.price = price
-		self.currency = currency
-		self.isFavorite = isFavorite
-		self.isAddedToCart = isAddedToCart
+		self.model = model
 		self.onCartTap = onCartTap
 		self.onFavoriteTap = onFavoriteTap
 	}
@@ -76,34 +43,34 @@ struct NFTCardView: View {
 	}
 
 	private var image: some View {
-		BasicImage(imageURL: imageURL, contentMode: .fill)
+		BasicImage(imageURL: model.imageURL, contentMode: .fill)
 		.frame(width: imageSize, height: imageSize)
 		.clipShape(RoundedRectangle(cornerRadius: 12))
 		.overlay(alignment: .topTrailing) {
 			Button(action: onFavoriteTap) {
-				Image(isFavorite ? .active : .noActive)
-					.foregroundStyle(isFavorite ? .ypURed : .ypUWhite)
+				Image(model.favorite ? .active : .noActive)
+					.foregroundStyle(model.favorite ? .ypURed : .ypUWhite)
 			}
 		}
 	}
 
 	private var nftDetails: some View {
 		VStack(alignment: .leading, spacing: 4) {
-			RatingView(rating)
+			RatingView(model.rating)
 			HStack(alignment: .top, spacing: .zero) {
 				VStack(alignment: .leading, spacing: 4) {
 					Group {
-						Text(name)
+						Text(model.name)
 							.font(.system(size: 17, weight: .bold))
                             .minimumScaleFactor(0.5)
-						Text("\(priceString) \(currency.rawValue.uppercased())")
+						Text("\(priceString) \(model.currency.rawValue.uppercased())")
 							.font(.system(size: 10, weight: .medium))
 					}
 					.foregroundStyle(.ypBlack)
 				}
 				Spacer()
 				Button(action: onCartTap) {
-					Image(isAddedToCart ? .cartCross : .cart)
+					Image(model.addedToCart ? .cartCross : .cart)
 						.foregroundStyle(.ypBlack)
 				}
 			}
@@ -121,32 +88,35 @@ struct NFTCardView: View {
 			rating: 3,
 			price: 31.12,
 			currency: .eth,
-			isFavorite: true,
-			isAddedToCart: true,
-			onCartTap: { },
-			onFavoriteTap: { }
-		))
+			favorite: true,
+			addedToCart: true,
+		),
+					onCartTap: {},
+					onFavoriteTap: {}
+		)
 		NFTCardView(model: .init(
 			name: "Test name",
 			imageURL: URL(string: "https://code.s3.yandex.net/Mobile/iOS/NFT/Beige/Ellsa/1.png"),
 			rating: 0,
 			price: 31,
 			currency: .eth,
-			isFavorite: false,
-			isAddedToCart: false,
-			onCartTap: { },
-			onFavoriteTap: { }
-		))
+			favorite: false,
+			addedToCart: false,
+		),
+					onCartTap: {},
+					onFavoriteTap: {}
+		)
 		NFTCardView(model: .init(
 			name: "Test name",
 			imageURL: URL(string: "https://code.s3.yande.net/Mobile/iOS/NFT/Beige/Ellsa/1.png"),
 			rating: 0,
 			price: 31.1,
 			currency: .eth,
-			isFavorite: false,
-			isAddedToCart: false,
-			onCartTap: { },
-			onFavoriteTap: { }
-		))
+			favorite: false,
+			addedToCart: false,
+		),
+					onCartTap: {},
+					onFavoriteTap: {}
+		)
 	}
 }

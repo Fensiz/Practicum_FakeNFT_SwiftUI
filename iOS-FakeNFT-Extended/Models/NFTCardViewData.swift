@@ -7,14 +7,12 @@
 //
 import Foundation
 
-struct NFTCardViewModel {
+struct NFTCardModel {
 	let name: String
 	let imageURL: URL?
 	let rating: Int
 	let price: Double
 	let currency: Currency
-	let isFavorite: Bool
-	let isAddedToCart: Bool
-	let onCartTap: () -> Void
-	let onFavoriteTap: () -> Void
+	let favorite: Bool
+	let addedToCart: Bool
 }
