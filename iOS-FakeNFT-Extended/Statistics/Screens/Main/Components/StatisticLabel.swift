@@ -15,7 +15,7 @@ struct StatisticLabel: View {
 	
 	let text: String
 	let font: Font
-	var foregroundColor: Color = .ypBlack
+	var foregroundColor: Color = DesignSystem.Color.textPrimary
 	var maxWidth: CGFloat?
 	var maxHeight: CGFloat?
 	

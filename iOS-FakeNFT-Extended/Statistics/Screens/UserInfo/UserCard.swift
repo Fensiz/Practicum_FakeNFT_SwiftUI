@@ -10,15 +10,14 @@ import SwiftUI
 struct UserCard: View {
 	enum Constants {
 		static let titleButton = "Перейти на сайт пользователя"
-		static let safeTop: CGFloat = 20
-		static let safeLeading: CGFloat = 16
-		static let containerSpacing: CGFloat = 41
-		static let bioSpacing: CGFloat = 28
+		static let safeTop: CGFloat = DesignSystem.Padding.large
+		static let safeLeading: CGFloat = DesignSystem.Padding.medium
+		static let containerSpacing: CGFloat = DesignSystem.Spacing.xxlarge
+		static let bioSpacing: CGFloat = DesignSystem.Spacing.xlarge
 		static let profileLineLimit: Int = 4
-		static let profileLineSpacing: CGFloat = 5
-		static let profileTrailingFix: CGFloat = 2
-		static let bioTrailing: CGFloat = 16
-		static let buttonMinHeight: CGFloat = 44
+		static let profileLineSpacing: CGFloat = DesignSystem.Spacing.xxxsmall
+		static let profileTrailingFix: CGFloat = DesignSystem.Padding.xxsmall
+		static let bioTrailing: CGFloat = DesignSystem.Padding.medium
 	}
 	
 	let user: User
@@ -43,9 +42,9 @@ struct UserCard: View {
 			.safeAreaPadding(.top, Constants.safeTop)
 			.safeAreaPadding(.leading, Constants.safeLeading)
 		}
-		.background(Color.ypWhite)
+		.background(DesignSystem.Color.background)
 	}
-	
+
 	private var bioContent: some View {
 		VStack(spacing: Constants.bioSpacing) {
 			UserInfo(user: user)
@@ -57,7 +56,7 @@ struct UserCard: View {
 			Button(Constants.titleButton, action: openWebsite)
 				.buttonStyle(BorderedButtonStyle(
 					font: DesignSystem.Font.caption1,
-					textColor: .ypBlack,
+					textColor: DesignSystem.Color.textPrimary,
 					color: Color(.clear)
 				))
 		}

@@ -11,7 +11,7 @@ import Observation
 @MainActor
 @Observable
 final class StatisticCoordinator {
-	
+
 	private var isNavigating = false
 	
 	private let rootCoordinator: any RootCoordinator

@@ -20,7 +20,7 @@ final class StatisticViewModel {
 	
 	private let usersService: any UsersService
 	private var currentPage = 0
-	private let pageSize = 7
+	private let pageSize = 10
 	private var loadedUserIDs = Set<String>()
 	
 	var sortedUsers: [User] {

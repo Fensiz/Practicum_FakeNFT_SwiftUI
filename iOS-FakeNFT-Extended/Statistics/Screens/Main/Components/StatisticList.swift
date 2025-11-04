@@ -7,18 +7,18 @@
 import SwiftUI
 
 struct StatisticList: View {
-	
+
 	enum SortOption: String, CaseIterable, Sendable {
 		case byName
 		case byRating
 	}
-	
+
 	let users: [User]
 	let sortOption: SortOption
 	let onUserTap: ((User) -> Void)
 	let canLoadMore: Bool
 	let onLoadNextPage: (() -> Void)?
-	
+
 	var body: some View {
 		List {
 			ForEach(Array(users.enumerated()), id: \.1.id) { index, user in
@@ -32,13 +32,23 @@ struct StatisticList: View {
 						}
 					}
 					.listRowSeparator(.hidden)
-					.listRowInsets(EdgeInsets(top: 8, leading: 0, bottom: 0, trailing: 0))
+					.listRowInsets(EdgeInsets(
+						top: DesignSystem.Padding.small2,
+						leading: 0,
+						bottom: 0,
+						trailing: 0)
+					)
 					.listRowBackground(Color.clear)
 			}
 		}
 		.listStyle(.plain)
 		.scrollIndicators(.hidden)
-		.safeAreaPadding(EdgeInsets(top: 20, leading: 16, bottom: 0, trailing: 16))
+		.safeAreaPadding(EdgeInsets(
+			top: DesignSystem.Padding.large,
+			leading: DesignSystem.Padding.medium,
+			bottom: 0,
+			trailing: DesignSystem.Padding.medium)
+		)
 		.animation(.easeInOut, value: sortOption)
 	}
 }

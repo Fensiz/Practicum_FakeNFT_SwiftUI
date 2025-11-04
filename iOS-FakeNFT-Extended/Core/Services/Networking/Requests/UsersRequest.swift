@@ -12,7 +12,7 @@ struct UsersRequest: NetworkRequest, Sendable {
 	let size: Int
 	let sortBy: String?
 	
-	init(page: Int = 0, size: Int = 7, sortBy: String? = nil) {
+	init(page: Int = 0, size: Int = 10, sortBy: String? = nil) {
 		self.page = page
 		self.size = size
 		self.sortBy = sortBy

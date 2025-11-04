@@ -43,7 +43,7 @@ struct StatisticView: View {
 			Button("Закрыть", role: .cancel) { }
 		}
 		.background(
-			Color.ypWhite
+			DesignSystem.Color.background
 				.ignoresSafeArea()
 		)
 		.task {
