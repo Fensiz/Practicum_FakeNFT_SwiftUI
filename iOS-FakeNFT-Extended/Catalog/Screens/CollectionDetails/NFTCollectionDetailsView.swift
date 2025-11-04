@@ -18,7 +18,7 @@ struct NFTCollectionDetailsView: View {
 
 	@Environment(\.dismiss) private var dismiss
 	private let columns: [GridItem] = [
-		GridItem(.adaptive(minimum: 108))
+		GridItem(.adaptive(minimum: DesignSystem.Sizes.imageMedium))
 	]
 
 	private var details: NFTCollectionDetailsModel? {
@@ -41,11 +41,11 @@ struct NFTCollectionDetailsView: View {
 		ScrollView {
 			collectionImage
 			collectionDetails
-				.padding(.horizontal, 16)
-				.padding(.top, 16)
+				.padding(.horizontal, DesignSystem.Padding.medium)
+				.padding(.top, DesignSystem.Padding.medium)
 			nftsGrid
-				.padding(.horizontal, 16)
-				.padding(.vertical, 24)
+				.padding(.horizontal, DesignSystem.Padding.medium)
+				.padding(.vertical, DesignSystem.Padding.xlarge)
 			Spacer()
 		}
 		.scrollIndicators(.hidden)
@@ -62,13 +62,13 @@ struct NFTCollectionDetailsView: View {
 		) {
 			Button { } label: {
 				Text("Cancel")
-					.font(.system(size: 17, weight: .regular))
+					.font(DesignSystem.Font.bodyRegular)
 			}
 			Button {
 				viewModel.onErrorCallback()
 			} label: {
 				Text("Repeat")
-					.font(.system(size: 17, weight: .bold))
+					.font(DesignSystem.Font.bodyBold)
 			}
 		}
 		.onChange(of: viewModel.state) { _, newValue in
@@ -96,8 +96,8 @@ struct NFTCollectionDetailsView: View {
 			.frame(height: 310)
 			.clipShape(
 				UnevenRoundedRectangle(
-					bottomLeadingRadius: 12,
-					bottomTrailingRadius: 12
+					bottomLeadingRadius: DesignSystem.Radius.small,
+					bottomTrailingRadius: DesignSystem.Radius.small
 				)
 			)
 	}
@@ -126,7 +126,7 @@ struct NFTCollectionDetailsView: View {
 		LazyVGrid(
 			columns: columns,
 			alignment: .center,
-			spacing: 28
+			spacing: DesignSystem.Spacing.large + DesignSystem.Spacing.small
 		) {
 			ForEach(viewModel.nfts) { nft in
 				VStack(spacing: .zero) {

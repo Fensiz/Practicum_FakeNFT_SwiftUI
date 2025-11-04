@@ -15,15 +15,6 @@ enum CollectionsSortingType: Int, CaseIterable, Identifiable {
 	case byTitle
 	case bySize
 
-	var description: String {
-		switch self {
-		case .byTitle:
-			NSLocalizedString("Catalog.Sorting.ByTitle", comment: "")
-		case .bySize:
-			NSLocalizedString("Catalog.Sorting.BySize", comment: "")
-		}
-	}
-
 	var sortingRule: (NFTCollectionCardModel, NFTCollectionCardModel) -> Bool {
 		switch self {
 		case .byTitle:

@@ -19,16 +19,16 @@ struct NFTCollectionsListView: View {
 	var body: some View {
 		scrollView
 			.confirmationDialog(
-				"sorting",
+				"Sorting",
 				isPresented: $isSelectingSortingType
 			) {
 				ForEach(CollectionsSortingType.allCases) { sorting in
-					Button(sorting.description) {
+					Button(sortingDescription(for: sorting)) {
 						viewModel.sort(by: sorting)
 					}
 				}
 			} message: {
-				Text(NSLocalizedString("Catalog.Sorting", comment: ""))
+				Text("Sorting")
 			}
 			.toolbarPreference(imageName: .sort) {
 				isSelectingSortingType = true
@@ -42,13 +42,13 @@ struct NFTCollectionsListView: View {
 			) {
 				Button { } label: {
 					Text("Cancel")
-						.font(.system(size: 17, weight: .regular))
+						.font(DesignSystem.Font.bodyRegular)
 				}
 				Button {
 					viewModel.fetchCollections(isInitialFetch: false)
 				} label: {
 					Text("Repeat")
-						.font(.system(size: 17, weight: .bold))
+						.font(DesignSystem.Font.bodyBold)
 				}
 			}
 			.onChange(of: viewModel.state) { oldValue, newValue in
@@ -67,7 +67,7 @@ struct NFTCollectionsListView: View {
 
 	private var scrollView: some View {
 		ScrollView {
-			VStack(spacing: 8) {
+			VStack(spacing: DesignSystem.Spacing.small) {
 				ForEach(viewModel.collections) { collection in
 					button(for: collection)
 						.onAppear {
@@ -77,8 +77,8 @@ struct NFTCollectionsListView: View {
 						}
 				}
 			}
-			.padding(.horizontal, 16)
-			.padding(.vertical, 20)
+			.padding(.horizontal, DesignSystem.Padding.medium)
+			.padding(.vertical, DesignSystem.Padding.large)
 		}
 		.frame(maxWidth: .infinity)
 		.background(.ypWhite)
@@ -91,6 +91,15 @@ struct NFTCollectionsListView: View {
 			NFTCollectionCellView(collection: collectionCard)
 		}
 		.buttonStyle(.plain)
+	}
+
+	private func sortingDescription(for sortingType: CollectionsSortingType) -> String {
+		switch sortingType {
+			case .byTitle:
+				NSLocalizedString("By Title", comment: "")
+			case .bySize:
+				NSLocalizedString("By number of NFTs", comment: "")
+		}
 	}
 
 	init(

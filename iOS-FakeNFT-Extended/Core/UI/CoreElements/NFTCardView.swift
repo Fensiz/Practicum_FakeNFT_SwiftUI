@@ -62,7 +62,7 @@ struct NFTCardView: View {
 					Group {
 						Text(model.name)
 							.lineLimit(2)
-							.font(.system(size: 17, weight: .bold))
+							.font(DesignSystem.Font.bodyBold)
 							.minimumScaleFactor(0.5)
 						Text("\(priceString) \(model.currency.rawValue.uppercased())")
 							.font(.system(size: 10, weight: .medium))
