@@ -9,26 +9,26 @@
 import SwiftUI
 
 struct NFTCollectionsListView: View {
-	
+
 	@State private var viewModel: NFTCollectionsListViewModel
 	@State private var isSelectingSortingType = false
 	@State private var isShowingErrorAlert = false
-	
+
 	private let coordinator: any CatalogCoordinatorProtocol
-	
+
 	var body: some View {
 		scrollView
 			.confirmationDialog(
-				"sorting",
+				"Sorting",
 				isPresented: $isSelectingSortingType
 			) {
 				ForEach(CollectionsSortingType.allCases) { sorting in
-					Button(sorting.description) {
+					Button(sortingDescription(for: sorting)) {
 						viewModel.sort(by: sorting)
 					}
 				}
 			} message: {
-				Text(NSLocalizedString("Catalog.Sorting", comment: ""))
+				Text("Sorting")
 			}
 			.toolbarPreference(imageName: .sort) {
 				isSelectingSortingType = true
@@ -83,7 +83,7 @@ struct NFTCollectionsListView: View {
 		.frame(maxWidth: .infinity)
 		.background(.ypWhite)
 	}
-	
+
 	private func button(for collectionCard: NFTCollectionCardModel) -> some View {
 		Button {
 			coordinator.showDetails(collectionID: collectionCard.id)
@@ -92,7 +92,16 @@ struct NFTCollectionsListView: View {
 		}
 		.buttonStyle(.plain)
 	}
-	
+
+	private func sortingDescription(for sortingType: CollectionsSortingType) -> String {
+		switch sortingType {
+			case .byTitle:
+				NSLocalizedString("By Title", comment: "")
+			case .bySize:
+				NSLocalizedString("By number of NFTs", comment: "")
+		}
+	}
+
 	init(
 		viewModel: NFTCollectionsListViewModel,
 		coordinator: any CatalogCoordinatorProtocol
@@ -100,7 +109,7 @@ struct NFTCollectionsListView: View {
 		self.viewModel = viewModel
 		self.coordinator = coordinator
 	}
-	
+
 }
 
 #Preview {
@@ -114,5 +123,5 @@ struct NFTCollectionsListView: View {
 			coordinator: catalogCoordinator
 		)
 	}
-	
+
 }

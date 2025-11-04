@@ -44,7 +44,7 @@ struct CollectionDetailsHeaderView: View {
 
 	private var authorDetails: some View {
 		HStack(spacing: 4) {
-			Text("\(NSLocalizedString("CatalogDetails.CollectionAuthor", comment: "")):")
+			Text("Author of the collection" + ":")
 				.font(.system(size: 13, weight: .regular))
 				.foregroundStyle(.ypBlack)
 			Button(action: onAuthorTap) {
