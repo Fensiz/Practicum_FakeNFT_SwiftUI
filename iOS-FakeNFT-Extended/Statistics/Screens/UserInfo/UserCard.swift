@@ -9,7 +9,6 @@ import SwiftUI
 
 struct UserCard: View {
 	enum Constants {
-		static let titleButton = "Перейти на сайт пользователя"
 		static let safeTop: CGFloat = DesignSystem.Padding.large
 		static let safeLeading: CGFloat = DesignSystem.Padding.medium
 		static let containerSpacing: CGFloat = DesignSystem.Spacing.xxlarge
@@ -53,7 +52,7 @@ struct UserCard: View {
 				.frame(maxWidth: .infinity, alignment: .leading)
 				.multilineTextAlignment(.leading)
 				.padding(.trailing, Constants.profileTrailingFix)
-			Button(Constants.titleButton, action: openWebsite)
+			Button("Перейти на сайт пользователя", action: openWebsite)
 				.buttonStyle(BorderedButtonStyle(
 					font: DesignSystem.Font.caption1,
 					textColor: DesignSystem.Color.textPrimary,

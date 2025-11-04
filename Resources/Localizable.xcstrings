@@ -11,16 +11,6 @@
     "%@" : {
 
     },
-    "%@ (%lld)" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "%1$@ (%2$lld)"
-          }
-        }
-      }
-    },
     "%@ %@" : {
       "localizations" : {
         "en" : {
@@ -454,6 +444,22 @@
         }
       }
     },
+    "Имя" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Name"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Имя"
+          }
+        }
+      }
+    },
     "К оплате" : {
       "localizations" : {
         "en" : {
@@ -551,7 +557,8 @@
       }
     },
     "Описание" : {
-      "extractionState" : "stale",
+      "comment" : "A section header shown above the user’s profile bio",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -647,6 +654,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ошибка"
+          }
+        }
+      }
+    },
+    "Перейти на сайт пользователя" : {
+      "comment" : "A button that opens the selected user’s external website",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open User’s Website"
           }
         }
       }

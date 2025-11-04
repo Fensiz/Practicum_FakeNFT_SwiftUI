@@ -208,11 +208,11 @@ struct FormField: View {
 		case textField
 		case textEditor
 	}
-	let title: String
+	let title: LocalizedStringKey
 	@Binding var value: String
 	let fieldType: FieldType
 
-	init(title: String, value: Binding<String>, fieldType: FieldType = .textField) {
+	init(title: LocalizedStringKey, value: Binding<String>, fieldType: FieldType = .textField) {
 		self.title = title
 		self._value = value
 		self.fieldType = fieldType
@@ -227,7 +227,7 @@ struct FormField: View {
 				value.wrappedValue = newValue.isEmpty ? nil : newValue
 			}
 		)
-		self.init(title: title, value: binding, fieldType: fieldType)
+		self.init(title: LocalizedStringKey(title), value: binding, fieldType: fieldType)
 	}
 
 	var body: some View {
