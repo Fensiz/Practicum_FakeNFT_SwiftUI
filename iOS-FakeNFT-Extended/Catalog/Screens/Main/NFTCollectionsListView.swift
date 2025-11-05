@@ -90,7 +90,6 @@ struct NFTCollectionsListView: View {
 		} label: {
 			NFTCollectionCellView(collection: collectionCard)
 		}
-		.buttonStyle(.plain)
 	}
 
 	private func sortingDescription(for sortingType: CollectionsSortingType) -> String {
