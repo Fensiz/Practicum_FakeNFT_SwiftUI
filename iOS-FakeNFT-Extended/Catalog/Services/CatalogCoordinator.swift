@@ -32,7 +32,7 @@ final class CatalogCoordinator: CatalogCoordinatorProtocol {
 	}
 
 	func showWebView(for url: URL) {
-		rootCoordinator.open(screen: .web(url: url))
+		rootCoordinator.open(screen: .web(url: url, isAppearenceEnabled: true))
 	}
 
 }
